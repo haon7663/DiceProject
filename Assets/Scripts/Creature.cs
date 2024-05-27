@@ -14,13 +14,11 @@ public class Creature : MonoBehaviour
     }
 
     public CreatureData creatureData;
+    [SerializeField] private bool isPlayer;
     
     [Header("체력")]
     public float maxHp;
     public float curHp;
-    public Image healthBar;
-    public TMP_Text healthTMP;
-    public TMP_Text valueTMP;
 
     public void SetUp()
     {
@@ -40,7 +38,7 @@ public class Creature : MonoBehaviour
             value = DiceManager.inst.totalValue + cardData.basicValue;
         }
 
-        valueTMP.text = value.ToString();
+        UIManager.inst.SetValue(value, isPlayer);
         
         yield return YieldInstructionCache.WaitForSeconds(0.4f);
         target.OnDamage(value);
@@ -60,7 +58,6 @@ public class Creature : MonoBehaviour
         transform.position = new Vector3(typeInt * 1.5f, 2.25f);
         
         CameraMovement.inst.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
-        valueTMP.text = "";
         TurnManager.inst.TurnEnd();
         
         DiceManager.inst.dicePanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(99999, 0);
@@ -71,7 +68,6 @@ public class Creature : MonoBehaviour
     public void OnDamage(int damage)
     {
         curHp -= damage;
-        healthBar.fillAmount = curHp / maxHp;
-        healthTMP.text = curHp + " / " + maxHp;
+        UIManager.inst.SetHealth(curHp, maxHp, isPlayer);
     }
 }

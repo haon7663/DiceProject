@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2646546551053114896}
   - component: {fileID: 938303641312754684}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: DiceTMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 5366194871614270108}
   - component: {fileID: 5026122086413273672}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: HealthTMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

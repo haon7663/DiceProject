@@ -713,6 +713,56 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd18fc99145d9b46bd247b260df67d7, type: 3}
+--- !u!1 &177539767
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 177539769}
+  - component: {fileID: 177539768}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &177539768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177539767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff37ae4dae30bfd47b9c752a19e0b70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealthBar: {fileID: 1360063922}
+  playerHealthTMP: {fileID: 735995956}
+  playerDiceTMP: {fileID: 1937326142}
+  enemyHealthBar: {fileID: 1228191913}
+  enemyHealthTMP: {fileID: 442804575}
+  enemyDiceTMP: {fileID: 200066520}
+--- !u!4 &177539769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177539767}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &180271342
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,6 +820,10 @@ PrefabInstance:
     - target: {fileID: 938303641312754684, guid: 3e01464afa95e2545b54fc5126f46e35, type: 3}
       propertyPath: m_text
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 971733826082396096, guid: 3e01464afa95e2545b54fc5126f46e35, type: 3}
+      propertyPath: m_Name
+      value: DiceTMP
       objectReference: {fileID: 0}
     - target: {fileID: 3030605684914839673, guid: 3e01464afa95e2545b54fc5126f46e35, type: 3}
       propertyPath: m_Pivot.x
@@ -870,6 +924,10 @@ PrefabInstance:
     - target: {fileID: 5863480429137213150, guid: 3e01464afa95e2545b54fc5126f46e35, type: 3}
       propertyPath: m_LocalScale.x
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5947224477604965803, guid: 3e01464afa95e2545b54fc5126f46e35, type: 3}
+      propertyPath: m_Name
+      value: HealthTMP
       objectReference: {fileID: 0}
     - target: {fileID: 6110374344716186406, guid: 3e01464afa95e2545b54fc5126f46e35, type: 3}
       propertyPath: m_FillAmount
@@ -1080,11 +1138,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creatureData: {fileID: 11400000, guid: 601a962621b401e419bc574d3c04ad09, type: 2}
+  isPlayer: 0
   maxHp: 50
   curHp: 50
-  healthBar: {fileID: 1228191913}
-  healthTMP: {fileID: 442804575}
-  valueTMP: {fileID: 200066520}
 --- !u!1 &403834443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1873,11 +1929,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creatureData: {fileID: 11400000, guid: 571697318f8dd664c850a055b9188c44, type: 2}
+  isPlayer: 1
   maxHp: 50
   curHp: 50
-  healthBar: {fileID: 1360063922}
-  healthTMP: {fileID: 735995956}
-  valueTMP: {fileID: 1937326142}
 --- !u!1 &1037753443
 GameObject:
   m_ObjectHideFlags: 0
@@ -3281,6 +3335,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 944775131}
     m_Modifications:
+    - target: {fileID: 938303641312754684, guid: 3e01464afa95e2545b54fc5126f46e35, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3030605684914839673, guid: 3e01464afa95e2545b54fc5126f46e35, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3378,6 +3436,7 @@ SceneRoots:
   - {fileID: 180271343}
   - {fileID: 580874291}
   - {fileID: 306435019}
+  - {fileID: 177539769}
   - {fileID: 519420032}
   - {fileID: 1029982718}
   - {fileID: 375646694}
