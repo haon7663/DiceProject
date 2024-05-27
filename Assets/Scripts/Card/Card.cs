@@ -25,10 +25,10 @@ public class Card : MonoBehaviour
         descriptionTMP.text = data.description;
         cardImage.sprite = data.sprite;
 
-        for (var i = 0; i < data.diceTypes.Count; i++)
+        for (var i = 0; i < data.dices.diceTypes.Count; i++)
         {
             diceImages[i].gameObject.SetActive(true);
-            diceImages[i].sprite = DiceManager.inst.GetDiceSprite(data.diceTypes[i]);
+            diceImages[i].sprite = DiceManager.inst.GetDiceSprite(data.dices.diceTypes[i]);
         }
     }
 

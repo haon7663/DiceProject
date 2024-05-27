@@ -16,9 +16,10 @@ public class Creature : MonoBehaviour
     public CreatureData creatureData;
     [SerializeField] private bool isPlayer;
     
-    [Header("체력")]
+    [Header("스탯")]
     public float maxHp;
     public float curHp;
+    public float defence;
 
     public void SetUp()
     {
@@ -30,12 +31,12 @@ public class Creature : MonoBehaviour
         var value = 0;
         if (creatureData.creatureType == CreatureType.Enemy)
         {
-            value = cardData.diceTypes.Aggregate(cardData.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t));
+            value = cardData.dices.diceTypes.Aggregate(cardData.dices.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t));
         }
         else
         {
-            yield return StartCoroutine(DiceManager.inst.SpinDice(cardData.diceTypes, cardData.basicValue));
-            value = DiceManager.inst.totalValue + cardData.basicValue;
+            yield return StartCoroutine(DiceManager.inst.SpinDice(cardData.dices.diceTypes, cardData.dices.basicValue));
+            value = DiceManager.inst.totalValue + cardData.dices.basicValue;
         }
 
         UIManager.inst.SetValue(value, isPlayer);
@@ -65,8 +66,37 @@ public class Creature : MonoBehaviour
         DiceManager.inst.DestroyDices();
     }
     
-    public void OnDamage(int damage)
+    public IEnumerator DefenceCoroutine()
     {
+        var value = 0;
+        var dices = creatureData.defenceDices;
+        
+        if (creatureData.creatureType == CreatureType.Enemy)
+        {
+            value = dices.diceTypes.Aggregate(dices.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t));
+        }
+        else
+        {
+            yield return StartCoroutine(DiceManager.inst.SpinDice(dices.diceTypes, dices.basicValue));
+            value = DiceManager.inst.totalValue + dices.basicValue;
+        }
+        
+        defence = value;
+        UIManager.inst.SetValue(value, isPlayer);
+        
+        yield return YieldInstructionCache.WaitForSeconds(0.5f);
+        
+        DiceManager.inst.dicePanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(99999, 0);
+        DiceManager.inst.cardPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        DiceManager.inst.DestroyDices();
+    }
+    
+    public void OnDamage(float damage)
+    {
+        damage -= defence;
+        if (damage <= 1)
+            damage = 1;
+        
         curHp -= damage;
         UIManager.inst.SetHealth(curHp, maxHp, isPlayer);
     }

@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public enum DiceType { Four, Six, Eight, Twelve, Twenty }
 public class DiceManager : MonoBehaviour
@@ -14,7 +16,7 @@ public class DiceManager : MonoBehaviour
         inst = this;
     }
 
-    [SerializeField] private Dice dicePrefab;
+    [SerializeField] private DiceObject dicePrefab;
     [SerializeField] private Sprite[] diceSprites;
     
     [SerializeField] private TMP_Text totalValueTMP;
@@ -24,7 +26,7 @@ public class DiceManager : MonoBehaviour
 
     public int totalValue = 0;
 
-    private List<Dice> _dices;
+    private List<DiceObject> _dices = new List<DiceObject>();
 
     public IEnumerator SpinDice(List<DiceType> diceTypes, int basicValue)
     {
@@ -32,16 +34,15 @@ public class DiceManager : MonoBehaviour
         dicePanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         cardPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(99999, 0);
         
-        Dice dice = null;
         totalValue = 0;
 
-        _dices = new List<Dice>();
+        _dices = new List<DiceObject>();
         for (var i = -diceTypes.Count / 2; i < (float)diceTypes.Count / 2; i++)
         {
             var diceType = diceTypes[i + diceTypes.Count / 2];
-            dice = Instantiate(dicePrefab, new Vector3(1.3f * (i + (diceTypes.Count % 2 == 0 ? 0.5f : 0)) - 10, 0), Quaternion.identity);
+            var dice = Instantiate(dicePrefab, new Vector3(1.3f * (i + (diceTypes.Count % 2 == 0 ? 0.5f : 0)) - 10, 0), Quaternion.identity);
             _dices.Add(dice); //나중ㅇ ㅔ지워
-            int value = GetDiceValue(diceType);
+            var value = GetDiceValue(diceType);
             dice.SetUp(diceType, value);
             totalValue += value;
 
@@ -74,7 +75,6 @@ public class DiceManager : MonoBehaviour
                 maxSize = 20;
                 break;
             default:
-                Debug.LogError("없는 주사위 타입");
                 return 0;
         }
         return Random.Range(1, maxSize + 1);;
@@ -92,6 +92,18 @@ public class DiceManager : MonoBehaviour
             Destroy(dice.gameObject);
         }
 
-        _dices = new List<Dice>();
+        _dices = new List<DiceObject>();
+    }
+}
+
+[Serializable]
+public struct Dices
+{
+    public List<DiceType> diceTypes;
+    public int basicValue;
+    public Dices(List<DiceType> diceTypes, int basicValue)
+    {
+        this.diceTypes = diceTypes;
+        this.basicValue = basicValue;
     }
 }

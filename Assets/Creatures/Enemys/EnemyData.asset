@@ -20,9 +20,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1d03c8f250c574a4aa6f204050174d80, type: 2}
   - {fileID: 11400000, guid: 1d03c8f250c574a4aa6f204050174d80, type: 2}
   hp: 50
-  defDiceTypes: 02000000
-  basicDef: 0
-  counterDiceTypes: 00000000
-  basicCounter: 0
-  dodgeDiceTypes: 00000000
-  basicDodge: 0
+  defenceDices:
+    diceTypes: 00000000
+    basicValue: 3
+  avoidDices:
+    diceTypes: 
+    basicValue: 0
+  counterDices:
+    diceTypes: 
+    basicValue: 0

@@ -20,3 +20,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1d03c8f250c574a4aa6f204050174d80, type: 2}
   - {fileID: 11400000, guid: 1d03c8f250c574a4aa6f204050174d80, type: 2}
   hp: 50
+  defenceDices:
+    diceTypes: 00000000
+    basicValue: 3

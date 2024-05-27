@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Dice : MonoBehaviour
+public class DiceObject : MonoBehaviour
 {
     [SerializeField] private GameObject fourDice;
     [SerializeField] private GameObject sixDice;
@@ -33,7 +33,6 @@ public class Dice : MonoBehaviour
                 diceObject = twentyDice;
                 break;
             default:
-                Debug.LogError("없는 주사위 타입");
                 return;
         }
         diceObject.SetActive(true);

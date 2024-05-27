@@ -10,7 +10,6 @@ public class CardData : ScriptableObject
     public Sprite sprite;
     public string cardName;
     public string description;
-    
-    public List<DiceType> diceTypes;
-    public int basicValue;
+
+    public Dices dices;
 }

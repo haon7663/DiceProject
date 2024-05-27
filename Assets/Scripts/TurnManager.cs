@@ -26,9 +26,13 @@ public class TurnManager : MonoBehaviour
     {
         while (GameManager.inst.onPlaying)
         {
+            GameManager.inst.player.defence = 0;
+            GameManager.inst.enemy.defence = 0;
+            
             playerTurn = true;
             turnTMP.text = "Player Turn";
-
+            
+            yield return StartCoroutine(GameManager.inst.enemy.DefenceCoroutine());
             yield return new WaitUntil(() => _actionTrigger);
             _actionTrigger = false;
 
@@ -43,6 +47,7 @@ public class TurnManager : MonoBehaviour
                 var cardData = creature.creatureData.cardDatas;
                 yield return StartCoroutine(creature.CardCoroutine(cardData[Random.Range(0, cardData.Count)], GameManager.inst.player.GetComponent<Health>()));
             }*/
+            
             var cardData = GameManager.inst.enemy.creatureData.cardDatas;
             yield return StartCoroutine(GameManager.inst.enemy.CardCoroutine(cardData[Random.Range(0, cardData.Count)], GameManager.inst.player));
 
