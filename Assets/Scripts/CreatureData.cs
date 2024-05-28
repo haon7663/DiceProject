@@ -14,14 +14,8 @@ public class CreatureData : ScriptableObject
     public Sprite attackSprite;
 
     [Header("카드")] 
-    public List<CardData> cardDatas;
+    public List<Card> cards;
 
     [Header("스탯")] 
     public int hp;
-    [Header("방어")] 
-    public Dices defenceDices;
-    [Header("회피")] 
-    public Dices avoidDices;
-    [Header("반격")] 
-    public Dices counterDices;
 }

@@ -30,17 +30,22 @@ public class TurnManager : MonoBehaviour
             GameManager.inst.enemy.defence = 0;
             
             playerTurn = true;
-            turnTMP.text = "Player Turn";
+            turnTMP.text = "Attack Turn";
+            UIManager.inst.ChangeCardPanel(true);
             
             yield return StartCoroutine(GameManager.inst.enemy.DefenceCoroutine());
             yield return new WaitUntil(() => _actionTrigger);
             _actionTrigger = false;
 
-            playerTurn = false;
-            turnTMP.text = "Enemy Turn";
-
             yield return YieldInstructionCache.WaitForSeconds(0.25f);
-
+            
+            playerTurn = false;
+            turnTMP.text = "Defence Turn";
+            UIManager.inst.ChangeCardPanel(false);
+            
+            yield return new WaitUntil(() => _actionTrigger);
+            _actionTrigger = false;
+            
             /*foreach (var creature in FindObjectsOfType<Creature>())
             {
                 print("EnemyUseCard");
@@ -48,7 +53,7 @@ public class TurnManager : MonoBehaviour
                 yield return StartCoroutine(creature.CardCoroutine(cardData[Random.Range(0, cardData.Count)], GameManager.inst.player.GetComponent<Health>()));
             }*/
             
-            var cardData = GameManager.inst.enemy.creatureData.cardDatas;
+            var cardData = GameManager.inst.enemy.creatureData.cards;
             yield return StartCoroutine(GameManager.inst.enemy.CardCoroutine(cardData[Random.Range(0, cardData.Count)], GameManager.inst.player));
 
             yield return new WaitUntil(() => _actionTrigger);

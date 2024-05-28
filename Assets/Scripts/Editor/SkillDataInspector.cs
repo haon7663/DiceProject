@@ -3,14 +3,14 @@ using PlasticGui.Configuration.CloudEdition;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(CardData))]
+[CustomEditor(typeof(Card))]
 public class SkillDataInspector : Editor
 {
-    private CardData _cardData;
+    private Card _cardData;
 
     private void OnEnable()
     {
-        _cardData = serializedObject.targetObject as CardData;
+        _cardData = serializedObject.targetObject as Card;
     }
 
     public override void OnInspectorGUI()

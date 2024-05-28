@@ -26,7 +26,7 @@ public class Creature : MonoBehaviour
         maxHp = creatureData.hp;
         curHp = maxHp;
     }
-    public IEnumerator CardCoroutine(CardData cardData, Creature target)
+    public IEnumerator CardCoroutine(Card cardData, Creature target)
     {
         var value = 0;
         if (creatureData.creatureType == CreatureType.Enemy)
@@ -61,15 +61,13 @@ public class Creature : MonoBehaviour
         CameraMovement.inst.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
         TurnManager.inst.TurnEnd();
         
-        DiceManager.inst.dicePanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(99999, 0);
-        DiceManager.inst.cardPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         DiceManager.inst.DestroyDices();
     }
     
     public IEnumerator DefenceCoroutine()
     {
-        var value = 0;
-        var dices = creatureData.defenceDices;
+        /*var value = 0;
+        var dices = creatureData;
         
         if (creatureData.creatureType == CreatureType.Enemy)
         {
@@ -83,12 +81,12 @@ public class Creature : MonoBehaviour
         
         defence = value;
         UIManager.inst.SetValue(value, isPlayer);
-        
+        */
         yield return YieldInstructionCache.WaitForSeconds(0.5f);
-        
+        /*
         DiceManager.inst.dicePanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(99999, 0);
         DiceManager.inst.cardPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        DiceManager.inst.DestroyDices();
+        DiceManager.inst.DestroyDices();*/
     }
     
     public void OnDamage(float damage)

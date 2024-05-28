@@ -14,15 +14,39 @@ public class UIManager : MonoBehaviour
     {
         inst = this;
     }
+    
+    [Header("카드")]
+    [SerializeField] private GameObject attackCardPanel;
+    [SerializeField] private GameObject defenceCardPanel;
+    
+    [Header("주사위")]
+    [SerializeField] private GameObject dicePanel;
+    [SerializeField] private TMP_Text diceTotalTMP;
 
-    public Image playerHealthBar;
-    public TMP_Text playerHealthTMP;
-    public TMP_Text playerDiceTMP;
-    
-    public Image enemyHealthBar;
-    public TMP_Text enemyHealthTMP;
-    public TMP_Text enemyDiceTMP;
-    
+    [Header("상태")]
+    [SerializeField] private Image playerHealthBar;
+    [SerializeField] private TMP_Text playerHealthTMP;
+    [SerializeField] private TMP_Text playerDiceTMP;
+    [Space]
+    [SerializeField] private Image enemyHealthBar;
+    [SerializeField] private TMP_Text enemyHealthTMP;
+    [SerializeField] private TMP_Text enemyDiceTMP;
+
+
+    public void ChangeCardPanel(bool attack)
+    {
+        attackCardPanel.SetActive(attack);
+        defenceCardPanel.SetActive(!attack);
+    }
+    public void OpenDicePanel()
+    {
+        dicePanel.SetActive(true);
+    }
+    public void SetDiceTotalTMP(int total)
+    {
+        diceTotalTMP.text = total.ToString();
+    }
+
     public void SetHealth(float curHp, float maxHp, bool isPlayer)
     {
         if (isPlayer)

@@ -1,78 +1,16 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
-public class Card : MonoBehaviour
+[CreateAssetMenu(fileName = "CardSO", menuName = "Scriptable Object/CardSO")]
+public class Card : ScriptableObject
 {
-    [SerializeField] private CardData cardData;
+    [Header("정보")]
+    public Sprite sprite;
+    public string cardName;
+    public string description;
+    public bool isAttack;
 
-    [SerializeField] private Image cardImage;
-    [SerializeField] private TMP_Text nameTMP;
-    [SerializeField] private TMP_Text descriptionTMP;
-    [SerializeField] private GameObject usePanel;
-
-    [SerializeField] private Image[] diceImages;
-
-    private bool _useAble;
-
-    public void SetUp(CardData data, bool useAble)
-    {
-        cardData = data;
-        _useAble = useAble;
-
-        nameTMP.text = data.cardName;
-        descriptionTMP.text = data.description;
-        cardImage.sprite = data.sprite;
-
-        for (var i = 0; i < data.dices.diceTypes.Count; i++)
-        {
-            diceImages[i].gameObject.SetActive(true);
-            diceImages[i].sprite = DiceManager.inst.GetDiceSprite(data.dices.diceTypes[i]);
-        }
-    }
-
-    public void OnPointClick()
-    {
-        if (!_useAble)
-            return;
-
-        if (CardManager.inst.onCard)
-        {
-            if (usePanel.activeSelf)
-            {
-                UseCard();
-                return;
-            }
-            else
-                CardManager.inst.CancelCard();
-        }
-        
-        usePanel.SetActive(true);
-        CardManager.inst.CopyCard(cardData);
-    }
-
-    public void UseCard()
-    {
-        if (!_useAble)
-            return;
-        
-        CardManager.inst.UseCard();
-        CardCoroutine();
-        usePanel.SetActive(false);
-    }
-
-    public void CloseUsePanel() 
-    {
-        usePanel.SetActive(false);
-    }
-    
-    
-    private void CardCoroutine()
-    {
-        if (!TurnManager.inst.playerTurn)
-            return;
-
-        StartCoroutine(GameManager.inst.player.CardCoroutine(cardData, GameManager.inst.enemy));
-    }
+    [Header("능력치")]
+    public Dices dices;
 }

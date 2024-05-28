@@ -15,6 +15,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 80c19b4cae572624b998815343e46793, type: 3}
   cardName: "2\uC5F0\uACA9"
   description: "\uC801\uC5D0\uAC8C 4 + [D] \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
+  isAttack: 1
   dices:
     diceTypes: 0000000002000000
     basicValue: 4

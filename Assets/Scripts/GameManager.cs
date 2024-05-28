@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour
     public bool onPlaying;
     public Creature player;
     public Creature enemy;
-
-    public List<CardData> playerCardDatas;
+    
     private void Start()
     {
         TurnManager.inst.SetUpTurn();

@@ -19,20 +19,14 @@ public class DiceManager : MonoBehaviour
     [SerializeField] private DiceObject dicePrefab;
     [SerializeField] private Sprite[] diceSprites;
     
-    [SerializeField] private TMP_Text totalValueTMP;
-
-    public GameObject dicePanel;
-    public GameObject cardPanel;
 
     public int totalValue = 0;
 
     private List<DiceObject> _dices = new List<DiceObject>();
 
     public IEnumerator SpinDice(List<DiceType> diceTypes, int basicValue)
-    {
-        totalValueTMP.text = basicValue.ToString();
-        dicePanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        cardPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(99999, 0);
+    {   
+        UIManager.inst.SetDiceTotalTMP(basicValue);
         
         totalValue = 0;
 
@@ -50,7 +44,7 @@ public class DiceManager : MonoBehaviour
         }
         
         yield return YieldInstructionCache.WaitForSeconds(1.4f);
-        totalValueTMP.text = (totalValue + basicValue).ToString();
+        UIManager.inst.SetDiceTotalTMP(totalValue + basicValue);
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
     }
     
