@@ -16,8 +16,8 @@ MonoBehaviour:
   idleSprite: {fileID: 21300000, guid: b57a556947292db4ea78261b040b1981, type: 3}
   attackSprite: {fileID: 21300000, guid: c588ef517c833c24c8311b5d93f3722c, type: 3}
   cards:
-  - {fileID: 11400000, guid: 1d03c8f250c574a4aa6f204050174d80, type: 2}
-  - {fileID: 11400000, guid: aa0e1bd5ea256374f99cf3a89631e404, type: 2}
-  - {fileID: 11400000, guid: 46cb35f67d466cd48932f99ac89b42b3, type: 2}
-  - {fileID: 11400000, guid: 034f48851aeda604cb7c3c299df7a122, type: 2}
+  - {fileID: 11400000, guid: 8cf7ad694acc87f4fb6e4b07a47ddc41, type: 2}
+  - {fileID: 11400000, guid: 3ac81be69b1745a43801780a3bbd1893, type: 2}
+  - {fileID: 11400000, guid: 0c520f6e32adade43b4ad4af75b6f630, type: 2}
+  - {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
   hp: 50

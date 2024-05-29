@@ -5,7 +5,7 @@ using TMPro;
 
 public class CardObject : MonoBehaviour
 {
-    [SerializeField] private Card cardData;
+    [SerializeField] private CardSO cardData;
 
     [SerializeField] private Image cardImage;
     [SerializeField] private TMP_Text nameTMP;
@@ -15,7 +15,7 @@ public class CardObject : MonoBehaviour
 
     private bool _useAble;
 
-    public void SetUp(Card data, bool useAble)
+    public void SetUp(CardSO data, bool useAble)
     {
         cardData = data;
         _useAble = useAble;
@@ -24,10 +24,10 @@ public class CardObject : MonoBehaviour
         descriptionTMP.text = data.description;
         cardImage.sprite = data.sprite;
 
-        for (var i = 0; i < data.dices.diceTypes.Count; i++)
+        for (var i = 0; i < data.cardState.diceTypes.Count; i++)
         {
             diceImages[i].gameObject.SetActive(true);
-            diceImages[i].sprite = DiceManager.inst.GetDiceSprite(data.dices.diceTypes[i]);
+            diceImages[i].sprite = DiceManager.inst.GetDiceSprite(data.cardState.diceTypes[i]);
         }
     }
 

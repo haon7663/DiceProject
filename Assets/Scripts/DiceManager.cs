@@ -26,11 +26,15 @@ public class DiceManager : MonoBehaviour
 
     public IEnumerator SpinDice(List<DiceType> diceTypes, int basicValue)
     {   
-        UIManager.inst.SetDiceTotalTMP(basicValue);
-        
         totalValue = 0;
+        UIManager.inst.SetDiceTotalTMP(basicValue);
 
-        _dices = new List<DiceObject>();
+        var diceAndValue = new Dictionary<int, int>();
+        for (var i = 0; i < diceTypes.Count; i++)
+        {
+            diceAndValue.Add(i, GetDiceValue(diceType));
+        }
+        
         for (var i = -diceTypes.Count / 2; i < (float)diceTypes.Count / 2; i++)
         {
             var diceType = diceTypes[i + diceTypes.Count / 2];
@@ -87,17 +91,5 @@ public class DiceManager : MonoBehaviour
         }
 
         _dices = new List<DiceObject>();
-    }
-}
-
-[Serializable]
-public struct Dices
-{
-    public List<DiceType> diceTypes;
-    public int basicValue;
-    public Dices(List<DiceType> diceTypes, int basicValue)
-    {
-        this.diceTypes = diceTypes;
-        this.basicValue = basicValue;
     }
 }

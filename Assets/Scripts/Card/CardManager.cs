@@ -33,7 +33,7 @@ public class CardManager : MonoBehaviour
     {
         _cards = new List<CardObject>();
         
-        var attackCards = GameManager.inst.player.creatureData.cards.FindAll(x => x.isAttack);
+        var attackCards = GameManager.inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Attack);
         for (var i = 0; i < attackCards.Count; i++)
         {
             if (i > 8)
@@ -42,7 +42,7 @@ public class CardManager : MonoBehaviour
             card.SetUp(attackCards[i], true);
             _cards.Add(card);
         }
-        var defenceCards = GameManager.inst.player.creatureData.cards.FindAll(x => !x.isAttack);
+        var defenceCards = GameManager.inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Defence);
         for (var i = 0; i < defenceCards.Count; i++)
         {
             if (i > 8)
@@ -53,7 +53,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public void CopyCard(Card cardData)
+    public void CopyCard(CardSO cardData)
     {
         _copyCardObject = Instantiate(cardPrefab, _mainCamera.WorldToScreenPoint(new Vector3(0, 2.25f)), Quaternion.identity, canvas);
         _copyCardObject.SetUp(cardData, false);

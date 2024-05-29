@@ -1217,6 +1217,7 @@ GameObject:
   - component: {fileID: 375646694}
   - component: {fileID: 375646693}
   - component: {fileID: 375646696}
+  - component: {fileID: 375646697}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1303,11 +1304,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc00f110ca540f843a5d32de3cafb436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creatureData: {fileID: 11400000, guid: 601a962621b401e419bc574d3c04ad09, type: 2}
+  creatureSO: {fileID: 11400000, guid: 601a962621b401e419bc574d3c04ad09, type: 2}
   isPlayer: 0
   maxHp: 50
   curHp: 50
   defence: 0
+--- !u!114 &375646697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375646692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6e969f5c7e59d44291e9adafb5cee6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabledEffects: []
 --- !u!1 &403834443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,9 +1903,6 @@ MonoBehaviour:
   - {fileID: 1980193252, guid: 0a8e45d5ef34dbd43a01b500afbc90d0, type: 3}
   - {fileID: 1837954326, guid: 0a8e45d5ef34dbd43a01b500afbc90d0, type: 3}
   - {fileID: -1379925065, guid: 0a8e45d5ef34dbd43a01b500afbc90d0, type: 3}
-  totalValueTMP: {fileID: 70005212}
-  dicePanel: {fileID: 1886984976}
-  cardPanel: {fileID: 1328270815}
   totalValue: 0
 --- !u!114 &735995956 stripped
 MonoBehaviour:
@@ -2067,6 +2078,7 @@ GameObject:
   - component: {fileID: 1029982718}
   - component: {fileID: 1029982717}
   - component: {fileID: 1029982720}
+  - component: {fileID: 1029982721}
   m_Layer: 1
   m_Name: Player
   m_TagString: Untagged
@@ -2153,11 +2165,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc00f110ca540f843a5d32de3cafb436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creatureData: {fileID: 11400000, guid: 571697318f8dd664c850a055b9188c44, type: 2}
+  creatureSO: {fileID: 11400000, guid: 571697318f8dd664c850a055b9188c44, type: 2}
   isPlayer: 1
   maxHp: 50
   curHp: 50
   defence: 0
+--- !u!114 &1029982721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029982716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6e969f5c7e59d44291e9adafb5cee6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabledEffects: []
 --- !u!1 &1037753443
 GameObject:
   m_ObjectHideFlags: 0

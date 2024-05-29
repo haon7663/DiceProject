@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class Creature : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Creature : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public CreatureData creatureData;
+    [FormerlySerializedAs("creatureData")] public CreatureSO creatureSO;
     [SerializeField] private bool isPlayer;
     
     [Header("스탯")]
@@ -23,20 +24,20 @@ public class Creature : MonoBehaviour
 
     public void SetUp()
     {
-        maxHp = creatureData.hp;
+        maxHp = creatureSO.hp;
         curHp = maxHp;
     }
-    public IEnumerator CardCoroutine(Card cardData, Creature target)
+    public IEnumerator CardCoroutine(CardSO cardData, Creature target)
     {
         var value = 0;
-        if (creatureData.creatureType == CreatureType.Enemy)
+        if (creatureSO.creatureType == CreatureType.Enemy)
         {
-            value = cardData.dices.diceTypes.Aggregate(cardData.dices.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t));
+            value = cardData.cardState.diceTypes.Aggregate(cardData.cardState.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t));
         }
         else
         {
-            yield return StartCoroutine(DiceManager.inst.SpinDice(cardData.dices.diceTypes, cardData.dices.basicValue));
-            value = DiceManager.inst.totalValue + cardData.dices.basicValue;
+            yield return StartCoroutine(DiceManager.inst.SpinDice(cardData.cardState.diceTypes, cardData.cardState.basicValue));
+            value = DiceManager.inst.totalValue + cardData.cardState.basicValue;
         }
 
         UIManager.inst.SetValue(value, isPlayer);
@@ -44,9 +45,9 @@ public class Creature : MonoBehaviour
         yield return YieldInstructionCache.WaitForSeconds(0.4f);
         target.OnDamage(value);
 
-        var typeInt = creatureData.creatureType == CreatureType.Enemy ? 1 : -1;
+        var typeInt = creatureSO.creatureType == CreatureType.Enemy ? 1 : -1;
         
-        _spriteRenderer.sprite = creatureData.attackSprite;
+        _spriteRenderer.sprite = creatureSO.attackSprite;
         transform.position = new Vector3(typeInt * 0.8f, 2.25f);
         transform.DOMove(new Vector3(typeInt * 0.7f, 2.25f), 1);
         
@@ -55,7 +56,7 @@ public class Creature : MonoBehaviour
         
         yield return YieldInstructionCache.WaitForSeconds(1.5f);
         
-        _spriteRenderer.sprite = creatureData.idleSprite;
+        _spriteRenderer.sprite = creatureSO.idleSprite;
         transform.position = new Vector3(typeInt * 1.5f, 2.25f);
         
         CameraMovement.inst.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);

@@ -53,7 +53,7 @@ public class TurnManager : MonoBehaviour
                 yield return StartCoroutine(creature.CardCoroutine(cardData[Random.Range(0, cardData.Count)], GameManager.inst.player.GetComponent<Health>()));
             }*/
             
-            var cardData = GameManager.inst.enemy.creatureData.cards;
+            var cardData = GameManager.inst.enemy.creatureSO.cards;
             yield return StartCoroutine(GameManager.inst.enemy.CardCoroutine(cardData[Random.Range(0, cardData.Count)], GameManager.inst.player));
 
             yield return new WaitUntil(() => _actionTrigger);
