@@ -14,7 +14,7 @@ public class Creature : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    [FormerlySerializedAs("creatureData")] public CreatureSO creatureSO;
+    public CreatureSO creatureSO;
     [SerializeField] private bool isPlayer;
     
     [Header("스탯")]
@@ -32,12 +32,12 @@ public class Creature : MonoBehaviour
         var value = 0;
         if (creatureSO.creatureType == CreatureType.Enemy)
         {
-            value = cardData.cardState.diceTypes.Aggregate(cardData.cardState.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t));
+            //value = cardData.cardState.diceTypes.Aggregate(cardData.cardState.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t));
         }
         else
         {
-            yield return StartCoroutine(DiceManager.inst.SpinDice(cardData.cardState.diceTypes, cardData.cardState.basicValue));
-            value = DiceManager.inst.totalValue + cardData.cardState.basicValue;
+            //yield return StartCoroutine(DiceManager.inst.SpinDice(cardData.cardState.diceTypes, cardData.cardState.basicValue));
+            //value = DiceManager.inst.totalValue + cardData.cardState.basicValue;
         }
 
         UIManager.inst.SetValue(value, isPlayer);

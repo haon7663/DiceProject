@@ -19,13 +19,20 @@ public class CardSO : ScriptableObject
 
 public enum CardType { Attack, Defence }
 public enum BehaviorType { Damage, StatusEffect }
+public enum CompareType { More, Less, Same }
 
 [Serializable]
 public struct CardState
 {
-    public BehaviorType behaviorType;
     public bool onSelf;
-    
-    public List<DiceType> diceTypes;
+    public BehaviorType behaviorType;
+    [DrawIf("behaviorType", BehaviorType.StatusEffect)] public StatusEffectSO statusEffectSO;
+    [Header("스탯")]
     public int basicValue;
+    public List<DiceType> diceTypes;
+    [Header("조건")] 
+    public bool useCondition;
+
+    [DrawIf("useCondition", true)] public int standardValue;
+    [DrawIf("useCondition", true)] public CompareType compareType;
 }

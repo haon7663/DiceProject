@@ -29,11 +29,11 @@ public class DiceManager : MonoBehaviour
         totalValue = 0;
         UIManager.inst.SetDiceTotalTMP(basicValue);
 
-        var diceAndValue = new Dictionary<int, int>();
+        /*var diceAndValue = new Dictionary<int, int>();
         for (var i = 0; i < diceTypes.Count; i++)
         {
             diceAndValue.Add(i, GetDiceValue(diceType));
-        }
+        }*/
         
         for (var i = -diceTypes.Count / 2; i < (float)diceTypes.Count / 2; i++)
         {

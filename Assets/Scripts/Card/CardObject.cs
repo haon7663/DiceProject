@@ -24,11 +24,11 @@ public class CardObject : MonoBehaviour
         descriptionTMP.text = data.description;
         cardImage.sprite = data.sprite;
 
-        for (var i = 0; i < data.cardState.diceTypes.Count; i++)
+        /*for (var i = 0; i < data.cardState.diceTypes.Count; i++)
         {
             diceImages[i].gameObject.SetActive(true);
             diceImages[i].sprite = DiceManager.inst.GetDiceSprite(data.cardState.diceTypes[i]);
-        }
+        }*/
     }
 
     public void OnPointClick()
