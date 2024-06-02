@@ -1,31 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public enum StatusEffectStackType { Sum, Renewal, Each }
+public enum StatusEffectStackType { Duration, Intensity, IntensityAndDuration, Counter, No }
+public enum StatusEffectCalculateType { Sum, Renewal, Each }
+
 public abstract class StatusEffectSO : ScriptableObject
 {
-    public string effectName;
+    public new string name;
     public StatusEffectStackType statusEffectStackType;
+    public StatusEffectCalculateType statusEffectCalculateType;
     
-    private int remainingDuration;
+    private int _stack;
     
-    public virtual void ApplyEffect(GameObject target, int duration)
+    public virtual void ApplyEffect(GameObject gameObject, int stack)
     {
-        remainingDuration = duration;
+        _stack = stack;
     }
     
     public bool DuplicateEffect(int duration)
     {
-        switch (statusEffectStackType)
+        switch (statusEffectCalculateType)
         {
-            case StatusEffectStackType.Sum:
-                remainingDuration += duration;
+            case StatusEffectCalculateType.Sum:
+                _stack += duration;
                 break;
-            case StatusEffectStackType.Renewal:
-                remainingDuration = duration;
+            case StatusEffectCalculateType.Renewal:
+                _stack = duration;
                 break;
-            case StatusEffectStackType.Each:
+            case StatusEffectCalculateType.Each:
                 return false;
             default:
                 return false;
@@ -33,23 +35,36 @@ public abstract class StatusEffectSO : ScriptableObject
         return true;
     }
 
-    public void UpdateCall(GameObject target)
+    public void UpdateCall(GameObject gameObject)
     {
-        remainingDuration--;
+        switch (statusEffectStackType)
+        {
+            case StatusEffectStackType.Duration:
+                _stack--;
+                break;
+            case StatusEffectStackType.IntensityAndDuration:
+                _stack--;
+                break;
+            case StatusEffectStackType.Intensity:
+                break;
+            case StatusEffectStackType.Counter:
+                break;
+            case StatusEffectStackType.No:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
-    public void UpdateEffect(GameObject target)
+    public virtual void UpdateEffect(GameObject gameObject)
     {
-        
+
     }
     
-    public virtual void RemoveEffect(GameObject target)
+    public virtual void RemoveEffect(GameObject gameObject)
     {
-        remainingDuration = 0;
+        _stack = 0;
     }
 
-    public int GetCurrentDuration()
-    {
-        return remainingDuration;
-    }
+    public int GetCurrentStack() => _stack;
 }

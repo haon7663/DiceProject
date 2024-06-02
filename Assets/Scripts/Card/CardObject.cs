@@ -68,6 +68,6 @@ public class CardObject : MonoBehaviour
     
     private void CardCoroutine()
     {
-        StartCoroutine(GameManager.inst.player.CardCoroutine(cardData, GameManager.inst.enemy));
+        StartCoroutine(GameManager.Inst.player.CardCoroutine(cardData, GameManager.Inst.enemy));
     }
 }

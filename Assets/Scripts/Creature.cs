@@ -1,10 +1,10 @@
 using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using UnityEngine.Serialization;
+
+public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600, }
 
 public class Creature : MonoBehaviour
 {
@@ -15,17 +15,29 @@ public class Creature : MonoBehaviour
     }
 
     public CreatureSO creatureSO;
+    public Dictionary<StatType, CreatureStat> Stats = new();
+    
+    private Creature _targetCreature;
     [SerializeField] private bool isPlayer;
     
     [Header("스탯")]
     public float maxHp;
     public float curHp;
-    public float defence;
 
     public void SetUp()
     {
-        maxHp = creatureSO.hp;
+        maxHp = Stats[StatType.MaxHealth].GetValue(creatureSO.hp);
         curHp = maxHp;
+        
+        Stats = new Dictionary<StatType, CreatureStat>
+        {
+            { StatType.MaxHealth, new CreatureStat() },
+            { StatType.Cost, new CreatureStat() },
+            { StatType.GetDamage, new CreatureStat() },
+            { StatType.TakeDamage, new CreatureStat() },
+            { StatType.TakeDefence, new CreatureStat() },
+            { StatType.TakeRecovery, new CreatureStat() }
+        };
     }
     public IEnumerator CardCoroutine(CardSO cardData, Creature target)
     {
@@ -92,10 +104,6 @@ public class Creature : MonoBehaviour
     
     public void OnDamage(float damage)
     {
-        damage -= defence;
-        if (damage <= 1)
-            damage = 1;
-        
         curHp -= damage;
         UIManager.inst.SetHealth(curHp, maxHp, isPlayer);
     }

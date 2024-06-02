@@ -1308,7 +1308,6 @@ MonoBehaviour:
   isPlayer: 0
   maxHp: 50
   curHp: 50
-  defence: 0
 --- !u!114 &375646697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1759,7 +1758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f397f18910dbb94b81f78fc854c180e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onPlaying: 1
   player: {fileID: 1029982720}
   enemy: {fileID: 375646696}
 --- !u!4 &536465747
@@ -2169,7 +2167,6 @@ MonoBehaviour:
   isPlayer: 1
   maxHp: 50
   curHp: 50
-  defence: 0
 --- !u!114 &1029982721
 MonoBehaviour:
   m_ObjectHideFlags: 0

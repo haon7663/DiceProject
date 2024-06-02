@@ -24,16 +24,16 @@ public class TurnManager : MonoBehaviour
     
     private IEnumerator TurnCoroutine()
     {
-        while (GameManager.inst.onPlaying)
+        while (true)
         {
-            GameManager.inst.player.defence = 0;
-            GameManager.inst.enemy.defence = 0;
+            //GameManager.Inst.player.defence = 0;
+            //GameManager.Inst.enemy.defence = 0;
             
             playerTurn = true;
             turnTMP.text = "Attack Turn";
             UIManager.inst.ChangeCardPanel(true);
             
-            yield return StartCoroutine(GameManager.inst.enemy.DefenceCoroutine());
+            yield return StartCoroutine(GameManager.Inst.enemy.DefenceCoroutine());
             yield return new WaitUntil(() => _actionTrigger);
             _actionTrigger = false;
 
@@ -53,8 +53,8 @@ public class TurnManager : MonoBehaviour
                 yield return StartCoroutine(creature.CardCoroutine(cardData[Random.Range(0, cardData.Count)], GameManager.inst.player.GetComponent<Health>()));
             }*/
             
-            var cardData = GameManager.inst.enemy.creatureSO.cards;
-            yield return StartCoroutine(GameManager.inst.enemy.CardCoroutine(cardData[Random.Range(0, cardData.Count)], GameManager.inst.player));
+            var cardData = GameManager.Inst.enemy.creatureSO.cards;
+            yield return StartCoroutine(GameManager.Inst.enemy.CardCoroutine(cardData[Random.Range(0, cardData.Count)], GameManager.Inst.player));
 
             yield return new WaitUntil(() => _actionTrigger);
             _actionTrigger = false;

@@ -33,7 +33,7 @@ public class CardManager : MonoBehaviour
     {
         _cards = new List<CardObject>();
         
-        var attackCards = GameManager.inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Attack);
+        var attackCards = GameManager.Inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Attack);
         for (var i = 0; i < attackCards.Count; i++)
         {
             if (i > 8)
@@ -42,7 +42,7 @@ public class CardManager : MonoBehaviour
             card.SetUp(attackCards[i], true);
             _cards.Add(card);
         }
-        var defenceCards = GameManager.inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Defence);
+        var defenceCards = GameManager.Inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Defence);
         for (var i = 0; i < defenceCards.Count; i++)
         {
             if (i > 8)
@@ -79,6 +79,7 @@ public class CardManager : MonoBehaviour
         Destroy(_copyCardObject.gameObject, 0.5f);
         _copyCardObject = null;
     }
+    
     public void CancelCard()
     {
         foreach (var card in _cards)

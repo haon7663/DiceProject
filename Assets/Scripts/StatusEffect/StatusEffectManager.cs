@@ -8,7 +8,7 @@ public class StatusEffectManager : MonoBehaviour
     
     private void AddEffect(StatusEffectSO effectSO, int duration)
     {
-        if (!enabledEffects.Exists(effect => effect.effectName == effectSO.effectName))
+        if (!enabledEffects.Exists(effect => effect.name == effectSO.name))
         {
             var effect = CreateEffectObject(effectSO);
             effect.ApplyEffect(gameObject, duration);
@@ -16,11 +16,11 @@ public class StatusEffectManager : MonoBehaviour
         }
         else
         {
-            var effect = enabledEffects.Find(effect => effect.effectName == effectSO.effectName);
+            var effect = enabledEffects.Find(effect => effect.name == effectSO.name);
             if (effect.DuplicateEffect(duration))
                 return;
-            CreateEffectObject(effectSO);
-            effect.ApplyEffect(gameObject, duration);
+            
+            CreateEffectObject(effectSO).ApplyEffect(gameObject, duration);
         }
     }
 
@@ -31,16 +31,16 @@ public class StatusEffectManager : MonoBehaviour
         return effect;
     }
     
-    public void UpdateEffects(GameObject target)
+    public void UpdateEffects()
     {
         foreach (var effect in enabledEffects)
         {
-            
+            effect.UpdateEffect(gameObject);
         }
     }
 
-    public void RemoveEffect()
+    public void RemoveEffect(StatusEffectSO effectSO)
     {
-        
+        enabledEffects.Remove(effectSO);
     }
 }

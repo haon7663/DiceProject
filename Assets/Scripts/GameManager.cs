@@ -1,22 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager inst;
-    private void Awake()
-    {
-        inst = this;
-    }
-
-    public bool onPlaying;
     public Creature player;
     public Creature enemy;
-    
-    private void Start()
-    {
-        TurnManager.inst.SetUpTurn();
-    }
 }
 
 public static class YieldInstructionCache
@@ -27,8 +15,7 @@ public static class YieldInstructionCache
 
     public static WaitForSeconds WaitForSeconds(float seconds)
     {
-        WaitForSeconds wfs;
-        if (!waitForSeconds.TryGetValue(seconds, out wfs))
+        if (!waitForSeconds.TryGetValue(seconds, out var wfs))
             waitForSeconds.Add(seconds, wfs = new WaitForSeconds(seconds));
         return wfs;
     }

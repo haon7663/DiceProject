@@ -16,8 +16,4 @@ MonoBehaviour:
   cardName: "\uC774\uC5F0\uACA9"
   description: "2 + [D] [D] \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
   cardType: 0
-  cardState:
-  - behaviorType: 0
-    onSelf: 0
-    basicValue: 0
-    diceTypes: 0000000001000000
+  cardState: []
