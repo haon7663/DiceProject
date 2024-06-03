@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum StatModifierType { Add = 100, Multiply = 200 }
+public enum StatModifierType { Add, Multiply }
 
 [Serializable]
 public class StatModifier

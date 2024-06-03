@@ -39,20 +39,25 @@ public class Creature : MonoBehaviour
             { StatType.TakeRecovery, new CreatureStat() }
         };
     }
-    public IEnumerator CardCoroutine(CardSO cardData, Creature target)
+    public IEnumerator CardCoroutine(CardSO cardSO, Creature target)
     {
         var value = 0;
         if (creatureSO.creatureType == CreatureType.Enemy)
         {
-            //value = cardData.cardState.diceTypes.Aggregate(cardData.cardState.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t));
+            value = cardSO.cardData.Sum(cardData => cardData.diceTypes.Aggregate(cardData.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t)));
         }
         else
         {
-            //yield return StartCoroutine(DiceManager.inst.SpinDice(cardData.cardState.diceTypes, cardData.cardState.basicValue));
-            //value = DiceManager.inst.totalValue + cardData.cardState.basicValue;
+            foreach (var cardData in cardSO.cardData)
+            {
+                yield return StartCoroutine(DiceManager.inst.RollTheDices(cardData.diceTypes, cardData.basicValue,
+                    diceValue => { value += diceValue; }));
+                
+                UIManager.inst.SetValue(value, isPlayer);
+                yield return YieldInstructionCache.WaitForSeconds(0.4f);
+            }
         }
-
-        UIManager.inst.SetValue(value, isPlayer);
+        
         
         yield return YieldInstructionCache.WaitForSeconds(0.4f);
         target.OnDamage(value);

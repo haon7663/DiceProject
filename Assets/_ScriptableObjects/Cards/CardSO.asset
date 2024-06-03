@@ -16,17 +16,9 @@ MonoBehaviour:
   cardName: "\uD0C0\uACA9"
   description: "3 + [D] \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
   cardType: 0
-  cardState:
+  cardData:
   - onSelf: 0
     behaviorType: 0
-    statusEffectSO: {fileID: 0}
-    basicValue: 3
-    diceTypes: 00000000
-    useCondition: 0
-    standardValue: 0
-    compareType: 0
-  - onSelf: 0
-    behaviorType: 1
     statusEffectSO: {fileID: 0}
     basicValue: 3
     diceTypes: 00000000

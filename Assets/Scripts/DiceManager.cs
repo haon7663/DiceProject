@@ -19,38 +19,38 @@ public class DiceManager : MonoBehaviour
     [SerializeField] private DiceObject dicePrefab;
     [SerializeField] private Sprite[] diceSprites;
     
-
     public int totalValue = 0;
 
     private List<DiceObject> _dices = new List<DiceObject>();
 
-    public IEnumerator SpinDice(List<DiceType> diceTypes, int basicValue)
+    public IEnumerator RollTheDices(List<DiceType> diceTypes, int basicValue, Action<int> callback)
     {   
         totalValue = 0;
         UIManager.inst.SetDiceTotalTMP(basicValue);
-
-        /*var diceAndValue = new Dictionary<int, int>();
+        
         for (var i = 0; i < diceTypes.Count; i++)
         {
-            diceAndValue.Add(i, GetDiceValue(diceType));
-        }*/
-        
-        for (var i = -diceTypes.Count / 2; i < (float)diceTypes.Count / 2; i++)
-        {
-            var diceType = diceTypes[i + diceTypes.Count / 2];
-            var dice = Instantiate(dicePrefab, new Vector3(1.3f * (i + (diceTypes.Count % 2 == 0 ? 0.5f : 0)) - 10, 0), Quaternion.identity);
-            _dices.Add(dice); //나중ㅇ ㅔ지워
+            var diceType = diceTypes[i];
+            var dicePos = new Vector3(1.3f * (i - (float)diceTypes.Count / 2 + (diceTypes.Count % 2 == 0 ? 0.5f : 0)) - 10, 0);
+            var dice = Instantiate(dicePrefab, dicePos, Quaternion.identity);
             var value = GetDiceValue(diceType);
             dice.SetUp(diceType, value);
             totalValue += value;
-
+            
             yield return YieldInstructionCache.WaitForSeconds(0.25f);
         }
-        
-        yield return YieldInstructionCache.WaitForSeconds(1.4f);
+
+        yield return YieldInstructionCache.WaitForSeconds(1);
         UIManager.inst.SetDiceTotalTMP(totalValue + basicValue);
-        yield return YieldInstructionCache.WaitForSeconds(1.2f);
+
+        callback(totalValue + basicValue);
     }
+    
+    /*public IEnumerator RollTheDice(DiceType diceType, int value)
+    {   
+        totalValue = 0;
+        var dice = Instantiate(dicePrefab, new Vector3(1.3f * (i + (diceTypes.Count % 2 == 0 ? 0.5f : 0)) - 10, 0), Quaternion.identity);
+    }*/
     
     public int GetDiceValue(DiceType diceType)
     {

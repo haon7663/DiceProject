@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
 
-public enum StatusEffectStackType { Duration, Intensity, IntensityAndDuration, Counter, No }
-public enum StatusEffectCalculateType { Sum, Renewal, Each }
+public enum StatusEffectStackType { Duration = 100, Intensity = 200, IntensityAndDuration = 300, Counter = 400, No = 500 }
+public enum StatusEffectCalculateType { Accumulate = 100, Initialize = 200, Each = 300 }
 
 public abstract class StatusEffectSO : ScriptableObject
 {
@@ -21,10 +21,10 @@ public abstract class StatusEffectSO : ScriptableObject
     {
         switch (statusEffectCalculateType)
         {
-            case StatusEffectCalculateType.Sum:
+            case StatusEffectCalculateType.Accumulate:
                 _stack += duration;
                 break;
-            case StatusEffectCalculateType.Renewal:
+            case StatusEffectCalculateType.Initialize:
                 _stack = duration;
                 break;
             case StatusEffectCalculateType.Each:

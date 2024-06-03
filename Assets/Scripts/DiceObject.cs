@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class DiceObject : MonoBehaviour
 {
@@ -14,28 +14,26 @@ public class DiceObject : MonoBehaviour
 
     public void SetUp(DiceType diceType, int value)
     {
-        var diceObject = fourDice;
         switch (diceType)
         {
             case DiceType.Four:
-                diceObject = fourDice;
+                fourDice.SetActive(true);
                 break;
             case DiceType.Six:
-                diceObject = sixDice;
+                sixDice.SetActive(true);
                 break;
             case DiceType.Eight:
-                diceObject = eightDice;
+                eightDice.SetActive(true);
                 break;
             case DiceType.Twelve:
-                diceObject = twelveDice;
+                twelveDice.SetActive(true);
                 break;
             case DiceType.Twenty:
-                diceObject = twentyDice;
+                twentyDice.SetActive(true);
                 break;
             default:
-                return;
+                throw new ArgumentOutOfRangeException(nameof(diceType), diceType, null);
         }
-        diceObject.SetActive(true);
         valueTMP.text = value.ToString();
     }
-} 
+}

@@ -37,7 +37,7 @@ public class CardManager : MonoBehaviour
         for (var i = 0; i < attackCards.Count; i++)
         {
             if (i > 8)
-                return;
+                break;
             var card = Instantiate(cardPrefab, atkCardBundles[i / 4]);
             card.SetUp(attackCards[i], true);
             _cards.Add(card);
@@ -46,7 +46,7 @@ public class CardManager : MonoBehaviour
         for (var i = 0; i < defenceCards.Count; i++)
         {
             if (i > 8)
-                return;
+                break;
             var card = Instantiate(cardPrefab, defCardBundles[i / 4]);
             card.SetUp(defenceCards[i], true);
             _cards.Add(card);
