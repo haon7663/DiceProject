@@ -1,10 +1,12 @@
-using System.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
-public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600, }
+public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600, Barrier = 700 }
 
 public class Creature : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class Creature : MonoBehaviour
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        SetUp();
     }
 
     public CreatureSO creatureSO;
@@ -23,12 +26,9 @@ public class Creature : MonoBehaviour
     [Header("스탯")]
     public float maxHp;
     public float curHp;
-
-    public void SetUp()
+    
+    private void SetUp()
     {
-        maxHp = Stats[StatType.MaxHealth].GetValue(creatureSO.hp);
-        curHp = maxHp;
-        
         Stats = new Dictionary<StatType, CreatureStat>
         {
             { StatType.MaxHealth, new CreatureStat() },
@@ -36,11 +36,16 @@ public class Creature : MonoBehaviour
             { StatType.GetDamage, new CreatureStat() },
             { StatType.TakeDamage, new CreatureStat() },
             { StatType.TakeDefence, new CreatureStat() },
-            { StatType.TakeRecovery, new CreatureStat() }
+            { StatType.TakeRecovery, new CreatureStat() },
+            { StatType.Barrier, new CreatureStat() }
         };
+        
+        maxHp = Stats[StatType.MaxHealth].GetValue(creatureSO.hp);
+        curHp = maxHp;
     }
     public IEnumerator CardCoroutine(CardSO cardSO, Creature target)
     {
+        UnityEvent actionEvent;
         var value = 0;
         if (creatureSO.creatureType == CreatureType.Enemy)
         {
@@ -59,9 +64,10 @@ public class Creature : MonoBehaviour
                                 value += diceValue;
                                 break;
                             case BehaviorType.StatusEffect:
-                                target.GetComponent<StatusEffectManager>()
-                                    .AddEffect(cardData.statusEffectSO, diceValue);
+                                target.GetComponent<StatusEffectManager>().AddEffect(cardData.statusEffectSO, diceValue);
                                 break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
                         }
                     }));
                 
@@ -71,7 +77,7 @@ public class Creature : MonoBehaviour
         }
         
         yield return YieldInstructionCache.WaitForSeconds(0.4f);
-        target.OnDamage(value);
+        target.OnDamage(StatManager.inst.CalculateOffence(this, target, value));
 
         var typeInt = creatureSO.creatureType == CreatureType.Enemy ? 1 : -1;
         
@@ -91,31 +97,6 @@ public class Creature : MonoBehaviour
         TurnManager.inst.TurnEnd();
         
         DiceManager.inst.DestroyDices();
-    }
-    
-    public IEnumerator DefenceCoroutine()
-    {
-        /*var value = 0;
-        var dices = creatureData;
-        
-        if (creatureData.creatureType == CreatureType.Enemy)
-        {
-            value = dices.diceTypes.Aggregate(dices.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t));
-        }
-        else
-        {
-            yield return StartCoroutine(DiceManager.inst.SpinDice(dices.diceTypes, dices.basicValue));
-            value = DiceManager.inst.totalValue + dices.basicValue;
-        }
-        
-        defence = value;
-        UIManager.inst.SetValue(value, isPlayer);
-        */
-        yield return YieldInstructionCache.WaitForSeconds(0.5f);
-        /*
-        DiceManager.inst.dicePanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(99999, 0);
-        DiceManager.inst.cardPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
-        DiceManager.inst.DestroyDices();*/
     }
     
     public void OnDamage(float damage)

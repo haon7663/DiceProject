@@ -33,7 +33,6 @@ public class TurnManager : MonoBehaviour
             turnTMP.text = "Attack Turn";
             UIManager.inst.ChangeCardPanel(true);
             
-            yield return StartCoroutine(GameManager.Inst.enemy.DefenceCoroutine());
             yield return new WaitUntil(() => _actionTrigger);
             _actionTrigger = false;
 

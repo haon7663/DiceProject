@@ -7,8 +7,8 @@ public enum StatusEffectCalculateType { Accumulate = 100, Initialize = 200, Each
 public abstract class StatusEffectSO : ScriptableObject
 {
     public new string name;
-    public StatusEffectStackType statusEffectStackType;
-    public StatusEffectCalculateType statusEffectCalculateType;
+    public StatusEffectStackType statusEffectStackType = StatusEffectStackType.Duration;
+    public StatusEffectCalculateType statusEffectCalculateType = StatusEffectCalculateType.Accumulate;
     
     private int _stack;
     
@@ -30,7 +30,7 @@ public abstract class StatusEffectSO : ScriptableObject
             case StatusEffectCalculateType.Each:
                 return false;
             default:
-                return false;
+                throw new ArgumentOutOfRangeException();
         }
         return true;
     }
@@ -54,11 +54,16 @@ public abstract class StatusEffectSO : ScriptableObject
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        if (_stack > 0)
+            return;
+        
+        RemoveEffect(gameObject);
     }
 
     public virtual void UpdateEffect(GameObject gameObject)
     {
-
+        
     }
     
     public virtual void RemoveEffect(GameObject gameObject)

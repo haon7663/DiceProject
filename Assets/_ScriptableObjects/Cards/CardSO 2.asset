@@ -16,6 +16,12 @@ MonoBehaviour:
   cardName: "\uBC29\uC5B4"
   description: "[D] \uB9CC\uD07C \uBCF4\uD638\uB9C9\uC744 \uC5BB\uC2B5\uB2C8\uB2E4"
   cardType: 1
-  dices:
-    diceTypes: 00000000
+  cardData:
+  - onSelf: 0
+    behaviorType: 1
+    statusEffectSO: {fileID: 0}
     basicValue: 0
+    diceTypes: 
+    useCondition: 0
+    standardValue: 0
+    compareType: 0
