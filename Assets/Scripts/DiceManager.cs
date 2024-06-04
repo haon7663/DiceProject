@@ -31,10 +31,11 @@ public class DiceManager : MonoBehaviour
         for (var i = 0; i < diceTypes.Count; i++)
         {
             var diceType = diceTypes[i];
-            var dicePos = new Vector3(1.3f * (i - (float)diceTypes.Count / 2 + (diceTypes.Count % 2 == 0 ? 0.5f : 0)) - 10, 0);
+            var dicePos = new Vector3(1.3f * (i - (float)(diceTypes.Count - 1) / 2) - 10, 0);
             var dice = Instantiate(dicePrefab, dicePos, Quaternion.identity);
             var value = GetDiceValue(diceType);
             dice.SetUp(diceType, value);
+            _dices.Add(dice);
             totalValue += value;
             
             yield return YieldInstructionCache.WaitForSeconds(0.25f);

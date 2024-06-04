@@ -6,7 +6,7 @@ public class StatusEffectManager : MonoBehaviour
 {
     public List<StatusEffectSO> enabledEffects = new();
     
-    private void AddEffect(StatusEffectSO effectSO, int duration)
+    public void AddEffect(StatusEffectSO effectSO, int duration)
     {
         if (!enabledEffects.Exists(effect => effect.name == effectSO.name))
         {

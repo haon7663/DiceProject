@@ -51,13 +51,24 @@ public class Creature : MonoBehaviour
             foreach (var cardData in cardSO.cardData)
             {
                 yield return StartCoroutine(DiceManager.inst.RollTheDices(cardData.diceTypes, cardData.basicValue,
-                    diceValue => { value += diceValue; }));
+                    diceValue =>
+                    {
+                        switch (cardData.behaviorType)
+                        {
+                            case BehaviorType.Damage:
+                                value += diceValue;
+                                break;
+                            case BehaviorType.StatusEffect:
+                                target.GetComponent<StatusEffectManager>()
+                                    .AddEffect(cardData.statusEffectSO, diceValue);
+                                break;
+                        }
+                    }));
                 
                 UIManager.inst.SetValue(value, isPlayer);
                 yield return YieldInstructionCache.WaitForSeconds(0.4f);
             }
         }
-        
         
         yield return YieldInstructionCache.WaitForSeconds(0.4f);
         target.OnDamage(value);
