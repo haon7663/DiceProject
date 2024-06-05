@@ -6,7 +6,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600, Barrier = 700 }
+public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600 }
 
 public class Creature : MonoBehaviour
 {
@@ -37,7 +37,6 @@ public class Creature : MonoBehaviour
             { StatType.TakeDamage, new CreatureStat() },
             { StatType.TakeDefence, new CreatureStat() },
             { StatType.TakeRecovery, new CreatureStat() },
-            { StatType.Barrier, new CreatureStat() }
         };
         
         maxHp = Stats[StatType.MaxHealth].GetValue(creatureSO.hp);

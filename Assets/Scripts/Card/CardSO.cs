@@ -18,7 +18,7 @@ public class CardSO : ScriptableObject
 }
 
 public enum CardType { Attack, Defence }
-public enum BehaviorType { Damage, StatusEffect }
+public enum BehaviorType { Damage, StatusEffect, Barrier, Avoid, Counter }
 public enum CompareType { More, Less, Same }
 
 [Serializable]
@@ -34,29 +34,5 @@ public class CardData
     
     [Header("조건")] 
     public bool useCondition;
-
-    [DrawIf("useCondition", true)] public int standardValue;
     [DrawIf("useCondition", true)] public CompareType compareType;
-
-    public void UseCard()
-    {
-        foreach (var diceType in diceTypes)
-        {
-            
-        }
-    }
-
-    public int GetDiceValue(DiceType diceType)
-    {
-        var maxSize = diceType switch
-        {
-            DiceType.Four => 4,
-            DiceType.Six => 6,
-            DiceType.Eight => 8,
-            DiceType.Twelve => 12,
-            DiceType.Twenty => 20,
-            _ => 0
-        };
-        return Random.Range(1, maxSize + 1);;
-    }
 }
