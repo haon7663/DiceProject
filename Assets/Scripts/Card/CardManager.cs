@@ -25,6 +25,8 @@ public class CardManager : MonoBehaviour
     [SerializeField] private Transform[] defCardBundles;
 
     [HideInInspector] public bool onCard;
+    [HideInInspector] public CardObject playerPrepareCard;
+    [HideInInspector] public CardObject enemyPrepareCard;
 
     private List<CardObject> _cards;
     private CardObject _copyCardObject;
@@ -53,14 +55,22 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    public void CopyCard(CardSO cardData)
+    public void CopyToShowCard(CardSO cardData)
     {
         _copyCardObject = Instantiate(cardPrefab, _mainCamera.WorldToScreenPoint(new Vector3(0, 2.25f)), Quaternion.identity, canvas);
         _copyCardObject.SetUp(cardData, false);
-        _copyCardObject.transform.localScale = new Vector3(0, 1.4f);
-        _copyCardObject.transform.DOScale(Vector3.one * 1.6f, 0.5f).SetEase(Ease.OutCirc);
+        _copyCardObject.Show();
         onCard = true;
     }
+    
+    public void CopyToPrepareCard(CardSO cardData, bool isPlayer)
+    {
+        var copyCard = Instantiate(cardPrefab, _mainCamera.WorldToScreenPoint(new Vector3(0, 2.25f)), Quaternion.identity, canvas);
+        copyCard.SetUp(cardData, false, isPlayer);
+        copyCard.Show();
+        copyCard.Prepare();
+    }
+
 
     public void UseCard()
     {
@@ -70,13 +80,12 @@ public class CardManager : MonoBehaviour
         }
         
         onCard = false;
+        TurnManager.inst.TurnEnd();
 
         if (!_copyCardObject)
             return;
 
-        _copyCardObject.transform.DOKill();
-        _copyCardObject.transform.DOScale(new Vector3(1.1f, 1.1f), 0.5f).SetEase(Ease.InBack);
-        Destroy(_copyCardObject.gameObject, 0.5f);
+        _copyCardObject.Prepare();
         _copyCardObject = null;
     }
     
@@ -92,9 +101,7 @@ public class CardManager : MonoBehaviour
         if (!_copyCardObject)
             return;
 
-        _copyCardObject.transform.DOKill();
-        _copyCardObject.transform.DOScale(new Vector3(0, 1.4f), 0.3f).SetEase(Ease.OutCirc);
-        Destroy(_copyCardObject.gameObject, 0.3f);
+        _copyCardObject.Close();
         _copyCardObject = null;
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600 }
 
@@ -21,11 +22,12 @@ public class Creature : MonoBehaviour
     public Dictionary<StatType, CreatureStat> Stats = new();
     
     private Creature _targetCreature;
-    [SerializeField] private bool isPlayer;
+    public CardSO CardSO { get; private set; }
     
     [Header("스탯")]
     public float maxHp;
     public float curHp;
+    public float defence;
     
     private void SetUp()
     {
@@ -42,65 +44,28 @@ public class Creature : MonoBehaviour
         maxHp = Stats[StatType.MaxHealth].GetValue(creatureSO.hp);
         curHp = maxHp;
     }
-    public IEnumerator CardCoroutine(CardSO cardSO, Creature target)
-    {
-        UnityEvent actionEvent;
-        var value = 0;
-        if (creatureSO.creatureType == CreatureType.Enemy)
-        {
-            value = cardSO.cardData.Sum(cardData => cardData.diceTypes.Aggregate(cardData.basicValue, (current, t) => current + DiceManager.inst.GetDiceValue(t)));
-        }
-        else
-        {
-            foreach (var cardData in cardSO.cardData)
-            {
-                yield return StartCoroutine(DiceManager.inst.RollTheDices(cardData.diceTypes, cardData.basicValue,
-                    diceValue =>
-                    {
-                        switch (cardData.behaviorType)
-                        {
-                            case BehaviorType.Damage:
-                                value += diceValue;
-                                break;
-                            case BehaviorType.StatusEffect:
-                                target.GetComponent<StatusEffectManager>().AddEffect(cardData.statusEffectSO, diceValue);
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }));
-                
-                UIManager.inst.SetValue(value, isPlayer);
-                yield return YieldInstructionCache.WaitForSeconds(0.4f);
-            }
-        }
-        
-        yield return YieldInstructionCache.WaitForSeconds(0.4f);
-        target.OnDamage(StatManager.inst.CalculateOffence(this, target, value));
 
-        var typeInt = creatureSO.creatureType == CreatureType.Enemy ? 1 : -1;
-        
-        _spriteRenderer.sprite = creatureSO.attackSprite;
-        transform.position = new Vector3(typeInt * 0.8f, 2.25f);
-        transform.DOMove(new Vector3(typeInt * 0.7f, 2.25f), 1);
-        
-        CameraMovement.inst.VibrationForTime(0.5f);
-        CameraMovement.inst.ProductionAtTime(new Vector3(typeInt * -0.6f, 0.65f, -10), typeInt * -5f, 4f);
-        
-        yield return YieldInstructionCache.WaitForSeconds(1.5f);
-        
-        _spriteRenderer.sprite = creatureSO.idleSprite;
-        transform.position = new Vector3(typeInt * 1.5f, 2.25f);
-        
-        CameraMovement.inst.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
-        TurnManager.inst.TurnEnd();
-        
-        DiceManager.inst.DestroyDices();
+    public void SetSprite(Sprite sprite)
+    {
+        _spriteRenderer.sprite = sprite;
+    }
+
+    public void SetCard(CardSO cardSO)
+    {
+        CardSO = cardSO;
     }
     
-    public void OnDamage(float damage)
+    public void OnDamage(int damage)
     {
         curHp -= damage;
-        UIManager.inst.SetHealth(curHp, maxHp, isPlayer);
+        UIManager.inst.PopDamageText(transform.position, damage);
+        UIManager.inst.SetHealth(curHp, maxHp, creatureSO.creatureType == CreatureType.Player);
+    }
+
+    private void OnEnable()
+    {
+    }
+    private void OnDisable()
+    {
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StatusEffectSO", menuName = "Scriptable Object/StatusEffectSO/StatStatusEffectSO")]
+[CreateAssetMenu(fileName = "StatStatusEffectSO", menuName = "Scriptable Object/StatusEffectSO/StatStatusEffectSO")]
 public class StatStatusEffectSO : StatusEffectSO
 {
     [Header("능력치 변경")]
@@ -13,17 +13,17 @@ public class StatStatusEffectSO : StatusEffectSO
 
     private StatModifier _statModifier;
     
-    public override void ApplyEffect(GameObject gameObject, int stack)
+    public override void ApplyEffect(Creature creature, int stack)
     {
-        base.ApplyEffect(gameObject, stack);
+        base.ApplyEffect(creature, stack);
         SetModifier();
-        gameObject.GetComponent<Creature>().Stats[statType].AddModifier(_statModifier);
+        creature.Stats[statType].AddModifier(_statModifier);
     }
     
-    public override void RemoveEffect(GameObject gameObject)
+    public override void RemoveEffect(Creature creature)
     {
-        base.RemoveEffect(gameObject);
-        gameObject.GetComponent<Creature>().Stats[statType].RemoveModifier(_statModifier);
+        base.RemoveEffect(creature);
+        creature.Stats[statType].RemoveModifier(_statModifier);
     }
     
     private void SetModifier()

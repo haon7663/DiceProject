@@ -5,23 +5,36 @@ using UnityEngine;
 
 public class StatusEffectManager : MonoBehaviour
 {
+    private Creature _creature;
     public List<StatusEffectSO> enabledEffects = new();
-    
-    public void AddEffect(StatusEffectSO effectSO, int duration)
+
+    [SerializeField] private DisplayStatusEffectBundle displayStatusEffectBundle;
+
+    private void Start()
     {
+        _creature = GetComponent<Creature>();
+    }
+
+    public void AddEffect(StatusEffectSO effectSO, int stack)
+    {
+        UIManager.inst.PopStatusEffectText(transform.position, effectSO, stack);
         if (!enabledEffects.Exists(effect => effect.name == effectSO.name))
         {
             var effect = CreateEffectObject(effectSO);
-            effect.ApplyEffect(gameObject, duration);
+            effect.ApplyEffect(_creature, stack);
             //상태이상 UI 표기
+            displayStatusEffectBundle.AddEffect(effect);
         }
         else
         {
             var effect = enabledEffects.Find(effect => effect.name == effectSO.name);
-            if (effect.DuplicateEffect(duration))
+            if (effect.DuplicateEffect(stack))
+            {
+                displayStatusEffectBundle.UpdateEffects();
                 return;
-            
-            CreateEffectObject(effectSO).ApplyEffect(gameObject, duration);
+            }
+            displayStatusEffectBundle.UpdateEffects();
+            CreateEffectObject(effect).ApplyEffect(_creature, stack);
         }
     }
 
@@ -34,10 +47,13 @@ public class StatusEffectManager : MonoBehaviour
     
     public void UpdateEffects()
     {
-        foreach (var effect in enabledEffects)
+        for (var i = enabledEffects.Count - 1; i >= 0; i--)
         {
-            effect.UpdateEffect(gameObject);
+            var effect = enabledEffects[i];
+            effect.UpdateEffect(_creature);
+            effect.UpdateCall(_creature);
         }
+        displayStatusEffectBundle.UpdateEffects();
     }
 
     public void RemoveEffect(StatusEffectSO effectSO)

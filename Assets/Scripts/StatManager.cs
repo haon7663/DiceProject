@@ -18,7 +18,7 @@ public class StatManager : MonoBehaviour
         return finalValue;
     }
     public int CalculateOffence(Creature creature, Creature targetCreature, int value)
-    { // 
+    {
         var finalValue = CalculateOffence(creature, value);
         return targetCreature.Stats[StatType.TakeDamage].GetValue(finalValue);
     }

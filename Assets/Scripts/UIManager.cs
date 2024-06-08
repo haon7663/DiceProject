@@ -14,6 +14,12 @@ public class UIManager : MonoBehaviour
     {
         inst = this;
     }
+
+    [SerializeField] private Transform canvas;
+    
+    [Header("턴")]
+    [SerializeField] private Animator turnStatePanelAnimator;
+    [SerializeField] private TMP_Text turnStateTMP;
     
     [Header("카드")]
     [SerializeField] private GameObject attackCardPanel;
@@ -31,12 +37,41 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image enemyHealthBar;
     [SerializeField] private TMP_Text enemyHealthTMP;
     [SerializeField] private TMP_Text enemyDiceTMP;
+    
+    [Header("")] 
+    [SerializeField] private DamageTextHandler damageTextHandlerPrefab;
 
+    [Header("상태이상")] 
+    [SerializeField] private StatusEffectTextHandler statusEffectTextHandlerPrefab;
 
-    public void ChangeCardPanel(bool attack)
+    private Camera _camera;
+    private void Start()
     {
-        attackCardPanel.SetActive(attack);
-        defenceCardPanel.SetActive(!attack);
+        _camera = Camera.main;
+    }
+
+    public void PopDamageText(Vector3 pos, int value)
+    {
+        var damageText = Instantiate(damageTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
+        damageText.Setup(value);
+    }
+
+    public void PopStatusEffectText(Vector2 pos, StatusEffectSO statusEffectSO, int stack)
+    {
+        var text = Instantiate(statusEffectTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
+        text.SetUp(statusEffectSO, stack);
+    }
+
+    public void ShowTurnState(bool isPlayerTurn)
+    {
+        turnStatePanelAnimator.SetTrigger("show");
+        turnStateTMP.text = isPlayerTurn ? "플레이어 행동" : "적 행동";
+    }
+    
+    public void ChangeCardPanel(bool isPlayerTurn)
+    {
+        attackCardPanel.SetActive(isPlayerTurn);
+        defenceCardPanel.SetActive(!isPlayerTurn);
     }
     public void OpenDicePanel()
     {
@@ -67,5 +102,28 @@ public class UIManager : MonoBehaviour
             playerDiceTMP.text = value.ToString();
         else
             enemyDiceTMP.text = value.ToString();
+    }
+
+    private void OnEnable()
+    {
+        if (TurnManager.inst == null)
+        {
+            Debug.LogError("TurnManager 인스턴스가 초기화되지 않았습니다.");
+            return;
+        }
+        
+        TurnManager.inst.OnCreatureTurnStart += ShowTurnState;
+        TurnManager.inst.OnCreatureTurnStart += ChangeCardPanel;
+    }
+    private void OnDisable()
+    {
+        if (TurnManager.inst == null)
+        {
+            Debug.LogError("TurnManager 인스턴스가 초기화되지 않았습니다.");
+            return;
+        }
+        
+        TurnManager.inst.OnCreatureTurnStart -= ShowTurnState;
+        TurnManager.inst.OnCreatureTurnStart -= ChangeCardPanel;
     }
 }

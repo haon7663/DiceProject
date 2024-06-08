@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Vulnerable
   m_EditorClassIdentifier: 
   name: Vulnerable
+  description: 
+  sprite: {fileID: 21300000, guid: f912b2ca56108444e92feb441f723dab, type: 3}
+  label: "\uCDE8\uC57D"
   statusEffectStackType: 100
   statusEffectCalculateType: 100
   statType: 400
   statModifierType: 1
+  useStack: 0
   value: 1.5

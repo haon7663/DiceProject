@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum StatusEffectStackType { Duration = 100, Intensity = 200, IntensityAndDuration = 300, Counter = 400, No = 500 }
 public enum StatusEffectCalculateType { Accumulate = 100, Initialize = 200, Each = 300 }
@@ -7,12 +8,17 @@ public enum StatusEffectCalculateType { Accumulate = 100, Initialize = 200, Each
 public abstract class StatusEffectSO : ScriptableObject
 {
     public new string name;
+    [TextArea] public string description;
+    [FormerlySerializedAs("statusEffectSprite")] public Sprite sprite;
+    
+    public string label;
+    
     public StatusEffectStackType statusEffectStackType = StatusEffectStackType.Duration;
     public StatusEffectCalculateType statusEffectCalculateType = StatusEffectCalculateType.Accumulate;
     
     private int _stack;
     
-    public virtual void ApplyEffect(GameObject gameObject, int stack)
+    public virtual void ApplyEffect(Creature creature, int stack)
     {
         _stack = stack;
     }
@@ -35,7 +41,7 @@ public abstract class StatusEffectSO : ScriptableObject
         return true;
     }
 
-    public void UpdateCall(GameObject gameObject)
+    public void UpdateCall(Creature creature)
     {
         switch (statusEffectStackType)
         {
@@ -58,17 +64,18 @@ public abstract class StatusEffectSO : ScriptableObject
         if (_stack > 0)
             return;
         
-        RemoveEffect(gameObject);
+        RemoveEffect(creature);
     }
 
-    public virtual void UpdateEffect(GameObject gameObject)
+    public virtual void UpdateEffect(Creature creature)
     {
         
     }
     
-    public virtual void RemoveEffect(GameObject gameObject)
+    public virtual void RemoveEffect(Creature creature)
     {
         _stack = 0;
+        creature.GetComponent<StatusEffectManager>().RemoveEffect(this);
     }
 
     public int GetCurrentStack() => _stack;
