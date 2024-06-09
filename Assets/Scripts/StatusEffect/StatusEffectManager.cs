@@ -58,6 +58,7 @@ public class StatusEffectManager : MonoBehaviour
 
     public void RemoveEffect(StatusEffectSO effectSO)
     {
+        displayStatusEffectBundle.RemoveEffect(effectSO);
         enabledEffects.Remove(effectSO);
     }
 }

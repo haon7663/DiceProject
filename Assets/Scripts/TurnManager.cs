@@ -97,7 +97,7 @@ public class TurnManager : MonoBehaviour
         yield return new WaitUntil(() => _actionTrigger);
         _actionTrigger = false;
 
-        yield return StartCoroutine(Action(_player, _enemy));
+        yield return StartCoroutine(Action(_player, _enemy, true));
 
         yield return new WaitUntil(() => _actionTrigger);
         _actionTrigger = false;
@@ -112,7 +112,7 @@ public class TurnManager : MonoBehaviour
         yield return new WaitUntil(() => _actionTrigger);
         _actionTrigger = false;
 
-        yield return StartCoroutine(Action(_enemy, _player));
+        yield return StartCoroutine(Action(_enemy, _player, false));
 
         yield return new WaitUntil(() => _actionTrigger);
         _actionTrigger = false;
@@ -127,44 +127,114 @@ public class TurnManager : MonoBehaviour
         yield break;
     }
 
-    private IEnumerator Action(Creature attackCreature, Creature defenceCreature)
+    private IEnumerator Action(Creature attackCreature, Creature defenceCreature, bool isPlayerAttack)
     {
-        var value = 0;
-        List<Tuple<StatusEffectSO, int>> saveStatusEffectSOs = new();
         var attackCardSO = attackCreature.CardSO;
         var defenceCardSO = defenceCreature.CardSO;
 
-        foreach (var cardData in attackCardSO.cardData)
+        var enemyTotalValue = 0;
+        var enemySaveCardTuple = new List<Tuple<CardData, int>>();
+        foreach (var cardData in isPlayerAttack ? defenceCardSO.cardData : attackCardSO.cardData)
         {
-            yield return StartCoroutine(DiceManager.inst.RollTheDices(cardData.diceTypes, cardData.basicValue,
-                diceValue =>
-                {
-                    switch (cardData.behaviorType)
-                    {
-                        case BehaviorType.Damage:
-                            value += diceValue;
-                            break;
-                        case BehaviorType.StatusEffect:
-                            saveStatusEffectSOs.Add(new Tuple<StatusEffectSO, int>(cardData.statusEffectSO, diceValue));
-                            break;
-                        case BehaviorType.Defence:
-                            break;
-                        case BehaviorType.Avoid:
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }));
+            var diceValue = DiceManager.inst.GetDicesValue(cardData.diceTypes, cardData.basicValue);
+            enemySaveCardTuple.Add(new Tuple<CardData, int>(cardData, diceValue));
+            
+            if (cardData.behaviorType == BehaviorType.StatusEffect)
+                continue;
+            enemyTotalValue += diceValue;
+        }
+        UIManager.inst.SetValue(enemyTotalValue, false);
 
-            UIManager.inst.SetValue(value, attackCreature.creatureSO.creatureType == CreatureType.Player);
-            yield return YieldInstructionCache.WaitForSeconds(0.4f);
+        var playerTotalValue = 0;
+        var playerSaveCardTuple = new List<Tuple<CardData, int>>();
+        foreach (var cardData in isPlayerAttack ? attackCardSO.cardData : defenceCardSO.cardData)
+        {
+            var diceValue = 0;
+            yield return StartCoroutine(DiceManager.inst.RollTheDices(cardData.diceTypes, cardData.basicValue, value => diceValue = value));
+            playerSaveCardTuple.Add(new Tuple<CardData, int>(cardData, diceValue));
+
+            if (cardData.behaviorType != BehaviorType.StatusEffect)
+                playerTotalValue += diceValue;
+
+            UIManager.inst.SetValue(playerTotalValue, true);
+            yield return YieldInstructionCache.WaitForSeconds(0.5f);
         }
         
         CardManager.inst.playerPrepareCard.Use();
         CardManager.inst.enemyPrepareCard.Use();
 
         yield return YieldInstructionCache.WaitForSeconds(1f);
-        ApplyEffects(attackCreature, defenceCreature, value, saveStatusEffectSOs);
+
+        var isAvoid = false;
+        var isCounter = false;
+
+        var getStatusEffect = new List<Tuple<StatusEffectSO, int>>();
+        var takeStatusEffect = new List<Tuple<StatusEffectSO, int>>();
+
+        var totalValue = isPlayerAttack ? playerTotalValue : enemyTotalValue;
+        foreach (var cardTuple in isPlayerAttack ? enemySaveCardTuple : playerSaveCardTuple)
+        {
+            switch (cardTuple.Item1.behaviorType)
+            {
+                case BehaviorType.StatusEffect:
+                    print("StatusEffect: " + cardTuple.Item2);
+                    if (cardTuple.Item1.onSelf)
+                        takeStatusEffect.Add(new Tuple<StatusEffectSO, int>(cardTuple.Item1.statusEffectSO,
+                            cardTuple.Item2));
+                    else
+                        getStatusEffect.Add(new Tuple<StatusEffectSO, int>(cardTuple.Item1.statusEffectSO,
+                            cardTuple.Item2));
+                    break;
+                case BehaviorType.Defence:
+                    print("defence: " + cardTuple.Item2);
+                    totalValue -= cardTuple.Item2;
+                    if (totalValue <= 1)
+                        totalValue = 1;
+                    break;
+                case BehaviorType.Avoid:
+                    if (totalValue < cardTuple.Item2)
+                        isAvoid = true;
+                    break;
+                case BehaviorType.Counter:
+                    if (totalValue < cardTuple.Item2)
+                        isCounter = true;
+                    break;
+            }
+        }
+        foreach (var cardTuple in isPlayerAttack ? playerSaveCardTuple : enemySaveCardTuple)
+        {
+            switch (cardTuple.Item1.behaviorType)
+            {
+                case BehaviorType.StatusEffect:
+                    print("StatusEffect: " + cardTuple.Item2);
+                    if (cardTuple.Item1.onSelf)
+                        takeStatusEffect.Add(new Tuple<StatusEffectSO, int>(cardTuple.Item1.statusEffectSO,
+                            cardTuple.Item2));
+                    else
+                        getStatusEffect.Add(new Tuple<StatusEffectSO, int>(cardTuple.Item1.statusEffectSO,
+                            cardTuple.Item2));
+                    break;
+            }
+        }
+
+        if (isAvoid)
+        {
+            
+        }
+        else
+        {
+            defenceCreature.OnDamage(StatManager.inst.CalculateOffence(attackCreature, defenceCreature, totalValue));
+            foreach (var effect in getStatusEffect)
+            {
+                defenceCreature.GetComponent<StatusEffectManager>().AddEffect(effect.Item1, effect.Item2);
+            }
+
+            foreach (var effect in takeStatusEffect)
+            {
+                attackCreature.GetComponent<StatusEffectManager>().AddEffect(effect.Item1, effect.Item2);
+            }
+        }
+        
         AnimateAction(attackCreature, defenceCreature);
 
         yield return YieldInstructionCache.WaitForSeconds(1.5f);
@@ -172,7 +242,7 @@ public class TurnManager : MonoBehaviour
         EndAction();
     }
 
-    private void ApplyEffects(Creature attackCreature, Creature defenceCreature, int value, List<Tuple<StatusEffectSO, int>> statusEffects)
+    private void EffectAction(Creature attackCreature, Creature defenceCreature, int value, List<Tuple<StatusEffectSO, int>> statusEffects)
     {
         defenceCreature.OnDamage(StatManager.inst.CalculateOffence(attackCreature, defenceCreature, value));
         foreach (var effect in statusEffects)

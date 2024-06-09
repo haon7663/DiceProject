@@ -18,9 +18,7 @@ MonoBehaviour:
   cardType: 1
   cardData:
   - onSelf: 0
-    behaviorType: 1
+    behaviorType: 2
     statusEffectSO: {fileID: 0}
     basicValue: 0
     diceTypes: 00000000
-    useCondition: 1
-    compareType: 0

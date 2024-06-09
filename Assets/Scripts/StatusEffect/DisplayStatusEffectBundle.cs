@@ -18,16 +18,24 @@ public class DisplayStatusEffectBundle : MonoBehaviour
 
     public void UpdateEffects()
     {
-        for (var i = displayEffects.Count - 1; i >= 0; i--)
+        foreach (var displayEffect in displayEffects)
         {
-            var displayEffect = displayEffects[i];
-            if (displayEffect.StatusEffectSO.GetCurrentStack() > 0)
-            {
-                displayEffect.UpdateSetup();
-                return;
-            }
+            displayEffect.UpdateSetup();
+        }
+        SetOrder();
+    }
+
+    public void RemoveEffect(StatusEffectSO statusEffectSO)
+    {
+        var displayEffect = displayEffects.Find(displayEffect => displayEffect.StatusEffectSO == statusEffectSO);
+        if (displayEffect)
+        {
             displayEffects.Remove(displayEffect);
             Destroy(displayEffect.gameObject);
+        }
+        else
+        {
+            print("이펙트없어..");
         }
         SetOrder();
     }

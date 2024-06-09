@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -43,12 +44,11 @@ public class DiceManager : MonoBehaviour
 
         callback(totalValue + basicValue);
     }
-    
-    /*public IEnumerator RollTheDice(DiceType diceType, int value)
-    {   
-        totalValue = 0;
-        var dice = Instantiate(dicePrefab, new Vector3(1.3f * (i + (diceTypes.Count % 2 == 0 ? 0.5f : 0)) - 10, 0), Quaternion.identity);
-    }*/
+
+    public int GetDicesValue(List<DiceType> diceTypes, int basicValue)
+    {
+        return basicValue + diceTypes.Select(GetDiceValue).Sum();
+    }
     
     public int GetDiceValue(DiceType diceType)
     {

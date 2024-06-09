@@ -23,14 +23,8 @@ MonoBehaviour:
     statusEffectSO: {fileID: 0}
     basicValue: 0
     diceTypes: 010000000200000003000000
-    useCondition: 0
-    standardValue: 0
-    compareType: 0
   - onSelf: 0
     behaviorType: 1
     statusEffectSO: {fileID: 11400000, guid: b6fc715710423c749972a65f279dd8be, type: 2}
-    basicValue: 1
+    basicValue: 2
     diceTypes: 
-    useCondition: 0
-    standardValue: 0
-    compareType: 0
