@@ -73,9 +73,18 @@ public class UIManager : MonoBehaviour
         attackCardPanel.SetActive(isPlayerTurn);
         defenceCardPanel.SetActive(!isPlayerTurn);
     }
+    public void CloseCardPanels()
+    {
+        attackCardPanel.SetActive(false);
+        defenceCardPanel.SetActive(false);
+    }
     public void OpenDicePanel()
     {
         dicePanel.SetActive(true);
+    }
+    public void CloseDicePanel()
+    {
+        dicePanel.SetActive(false);
     }
     public void SetDiceTotalTMP(int total)
     {
@@ -104,6 +113,13 @@ public class UIManager : MonoBehaviour
             enemyDiceTMP.text = value.ToString();
     }
 
+    private void CloseValueText()
+    {
+        print("turnEnd");
+        playerDiceTMP.text = "";
+        enemyDiceTMP.text = "";
+    }
+
     private void OnEnable()
     {
         if (TurnManager.inst == null)
@@ -114,6 +130,8 @@ public class UIManager : MonoBehaviour
         
         TurnManager.inst.OnCreatureTurnStart += ShowTurnState;
         TurnManager.inst.OnCreatureTurnStart += ChangeCardPanel;
+        TurnManager.inst.OnActionComplete += CloseDicePanel;
+        TurnManager.inst.OnActionComplete += CloseValueText;
     }
     private void OnDisable()
     {
@@ -125,5 +143,7 @@ public class UIManager : MonoBehaviour
         
         TurnManager.inst.OnCreatureTurnStart -= ShowTurnState;
         TurnManager.inst.OnCreatureTurnStart -= ChangeCardPanel;
+        TurnManager.inst.OnActionComplete -= CloseDicePanel;
+        TurnManager.inst.OnActionComplete -= CloseValueText;
     }
 }

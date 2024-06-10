@@ -13,6 +13,7 @@ public class CreatureSO : ScriptableObject
     public Sprite idleSprite;
     public Sprite attackSprite;
     public Sprite defenceSprite;
+    public Sprite avoidSprite;
 
     [Header("카드")] 
     public List<CardSO> cards;

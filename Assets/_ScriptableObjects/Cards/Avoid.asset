@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6891f8709446bc54ea9da214ba6f8ca7, type: 3}
+  m_Name: Avoid
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 0f8f5785f9532cc4dbeddacc6b6437c6, type: 3}
+  cardName: "\uD68C\uD53C"
+  description: "\uC801\uC758 \uC8FC\uC0AC\uC704 \uAC12\uBCF4\uB2E4\n<sprite=4><sprite=4>
+    \uAC00 \uB192\uC73C\uBA74 \uD68C\uD53C\uD569\uB2C8\uB2E4."
+  cardType: 1
+  cardData:
+  - onSelf: 0
+    behaviorType: 3
+    statusEffectSO: {fileID: 0}
+    basicValue: 0
+    diceTypes: 0400000004000000

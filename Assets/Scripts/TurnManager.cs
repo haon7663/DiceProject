@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 public class TurnManager : MonoBehaviour
 {
@@ -53,6 +52,8 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator TurnCoroutine()
     {
+        _player.SetSprite(_player.creatureSO.idleSprite);
+        _enemy.SetSprite(_enemy.creatureSO.idleSprite);
         while (true)
         {
             OnTurnStart?.Invoke();
@@ -144,7 +145,9 @@ public class TurnManager : MonoBehaviour
             enemyTotalValue += diceValue;
         }
         UIManager.inst.SetValue(enemyTotalValue, false);
-
+        UIManager.inst.OpenDicePanel();
+        UIManager.inst.CloseCardPanels();
+        
         var playerTotalValue = 0;
         var playerSaveCardTuple = new List<Tuple<CardData, int>>();
         foreach (var cardData in isPlayerAttack ? attackCardSO.cardData : defenceCardSO.cardData)
@@ -177,7 +180,6 @@ public class TurnManager : MonoBehaviour
             switch (cardTuple.Item1.behaviorType)
             {
                 case BehaviorType.StatusEffect:
-                    print("StatusEffect: " + cardTuple.Item2);
                     if (cardTuple.Item1.onSelf)
                         takeStatusEffect.Add(new Tuple<StatusEffectSO, int>(cardTuple.Item1.statusEffectSO,
                             cardTuple.Item2));
@@ -186,7 +188,6 @@ public class TurnManager : MonoBehaviour
                             cardTuple.Item2));
                     break;
                 case BehaviorType.Defence:
-                    print("defence: " + cardTuple.Item2);
                     totalValue -= cardTuple.Item2;
                     if (totalValue <= 1)
                         totalValue = 1;
@@ -206,7 +207,6 @@ public class TurnManager : MonoBehaviour
             switch (cardTuple.Item1.behaviorType)
             {
                 case BehaviorType.StatusEffect:
-                    print("StatusEffect: " + cardTuple.Item2);
                     if (cardTuple.Item1.onSelf)
                         takeStatusEffect.Add(new Tuple<StatusEffectSO, int>(cardTuple.Item1.statusEffectSO,
                             cardTuple.Item2));
@@ -235,10 +235,10 @@ public class TurnManager : MonoBehaviour
             }
         }
         
-        AnimateAction(attackCreature, defenceCreature);
+        AnimateAction(attackCreature, defenceCreature, isAvoid);
 
         yield return YieldInstructionCache.WaitForSeconds(1.5f);
-
+        
         EndAction();
     }
 
@@ -251,7 +251,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    private void AnimateAction(Creature attackCreature, Creature defenceCreature)
+    private void AnimateAction(Creature attackCreature, Creature defenceCreature, bool isAvoid)
     {
         var sequence = DOTween.Sequence();
         
@@ -263,21 +263,29 @@ public class TurnManager : MonoBehaviour
         sequence.AppendCallback(() =>
         {
             attackCreature.SetSprite(attackCreatureSO.attackSprite);
-            defenceCreature.SetSprite(defenceCreatureSO.defenceSprite);
+            defenceCreature.SetSprite(isAvoid ? defenceCreatureSO.avoidSprite : defenceCreatureSO.defenceSprite);
             attackCreature.transform.position = new Vector3(typeInt * 0.8f, 2.25f);
-            attackCreature.transform.DOMove(new Vector3(typeInt * 0.7f, 2.25f), 1);
-
-            CameraMovement.inst.VibrationForTime(0.5f);
-            CameraMovement.inst.ProductionAtTime(new Vector3(typeInt * -0.6f, 0.65f, -10), typeInt * -5f, 4f);
+            attackCreature.transform.DOMove(new Vector3(typeInt * 0.7f, 2.25f), isAvoid ? 0.6f : 1f);
+            if (isAvoid)
+            {
+                defenceCreature.transform.DOMove(new Vector3(typeInt * -1.6f, 2.25f), 0.6f).SetEase(Ease.OutCubic);
+                CameraMovement.inst.ProductionAtTime(new Vector3(typeInt * -0.6f, 0.65f, -10), typeInt * -5f, 4);
+            }
+            else
+            {
+                CameraMovement.inst.VibrationForTime(0.5f);
+                CameraMovement.inst.ProductionAtTime(new Vector3(typeInt * -0.6f, 0.65f, -10), typeInt * -5f, 4f);
+            }
         });
 
-        sequence.AppendInterval(1.25f);
+        sequence.AppendInterval(isAvoid ? 0.75f : 1.25f);
 
         sequence.AppendCallback(() =>
         {
             attackCreature.SetSprite(attackCreatureSO.idleSprite);
             defenceCreature.SetSprite(defenceCreatureSO.idleSprite);
             attackCreature.transform.position = new Vector3(typeInt * 1.5f, 2.25f);
+            defenceCreature.transform.position = new Vector3(typeInt * -1.5f, 2.25f);
 
             CameraMovement.inst.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
         });
