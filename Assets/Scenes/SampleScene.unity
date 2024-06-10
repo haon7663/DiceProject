@@ -690,13 +690,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2805244916860248824, guid: edd18fc99145d9b46bd247b260df67d7, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3933560305390228905, guid: edd18fc99145d9b46bd247b260df67d7, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4495148555328313590, guid: edd18fc99145d9b46bd247b260df67d7, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 2483027967
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 4516873836904015904, guid: edd18fc99145d9b46bd247b260df67d7, type: 3}
       propertyPath: m_Name
