@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e1c6386292f0740a2627a1d6b730d4, type: 3}
   m_Name: PlayerData_B
   m_EditorClassIdentifier: 
-  creatureType: 0
   idleSprite: {fileID: 21300000, guid: fb527f35c4f2369438b89db3c7b3b050, type: 3}
-  attackSprite: {fileID: 21300000, guid: 6a11c1ffec0ba214bbd0236b47db5787, type: 3}
-  defenceSprite: {fileID: 21300000, guid: b181ae8509186084a842e0f8d593e154, type: 3}
-  avoidSprite: {fileID: 21300000, guid: 0c686c91166b25b4d91e59d2bc33e0fe, type: 3}
+  attackSprite: {fileID: 21300000, guid: 19ecc95323f94f74e9a7d01787e8ed01, type: 3}
+  defenceSprite: {fileID: 21300000, guid: 713550752157b4f4592db57639a0c869, type: 3}
+  avoidSprite: {fileID: 21300000, guid: 7c72e9d7fe282554c867804a5825410a, type: 3}
   cards:
   - {fileID: 11400000, guid: 8cf7ad694acc87f4fb6e4b07a47ddc41, type: 2}
   - {fileID: 11400000, guid: 3ac81be69b1745a43801780a3bbd1893, type: 2}
