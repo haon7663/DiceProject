@@ -18,6 +18,7 @@ public class Creature : MonoBehaviour
         SetUp();
     }
 
+    public CreatureType creatureType;
     public CreatureSO creatureSO;
     public Dictionary<StatType, CreatureStat> Stats = new();
     
@@ -50,6 +51,11 @@ public class Creature : MonoBehaviour
         _spriteRenderer.sprite = sprite;
     }
 
+    public void SetAlpha(float alpha)
+    {
+        _spriteRenderer.color = new Color(1, 1, 1, alpha);
+    }
+
     public void SetCard(CardSO cardSO)
     {
         CardSO = cardSO;
@@ -59,7 +65,7 @@ public class Creature : MonoBehaviour
     {
         curHp -= damage;
         UIManager.inst.PopDamageText(transform.position, damage);
-        UIManager.inst.SetHealth(curHp, maxHp, creatureSO.creatureType == CreatureType.Player);
+        UIManager.inst.SetHealth(curHp, maxHp, creatureType == CreatureType.Player);
     }
 
     private void OnEnable()

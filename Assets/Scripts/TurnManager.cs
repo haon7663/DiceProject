@@ -26,8 +26,8 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
-        _player = FindObjectsOfType<Creature>().ToList().Find(x => x.creatureSO.creatureType == CreatureType.Player);
-        _enemy = FindObjectsOfType<Creature>().ToList().Find(x => x.creatureSO.creatureType == CreatureType.Enemy);
+        _player = FindObjectsOfType<Creature>().ToList().Find(creature => creature.creatureType == CreatureType.Player);
+        _enemy = FindObjectsOfType<Creature>().ToList().Find(creature => creature.creatureType == CreatureType.Enemy);
         
         SetUpTurn();
     }
@@ -219,7 +219,8 @@ public class TurnManager : MonoBehaviour
 
         if (isAvoid)
         {
-            
+            UIManager.inst.PopAvoidText(defenceCreature.transform.position);
+            defenceCreature.SetAlpha(0.5f);
         }
         else
         {
@@ -258,7 +259,7 @@ public class TurnManager : MonoBehaviour
         var attackCreatureSO = attackCreature.creatureSO;
         var defenceCreatureSO = defenceCreature.creatureSO;
         
-        var typeInt = attackCreatureSO.creatureType == CreatureType.Enemy ? 1 : -1;
+        var typeInt = attackCreature.creatureType == CreatureType.Enemy ? 1 : -1;
 
         sequence.AppendCallback(() =>
         {
@@ -282,6 +283,7 @@ public class TurnManager : MonoBehaviour
 
         sequence.AppendCallback(() =>
         {
+            defenceCreature.SetAlpha(1f);
             attackCreature.SetSprite(attackCreatureSO.idleSprite);
             defenceCreature.SetSprite(defenceCreatureSO.idleSprite);
             attackCreature.transform.position = new Vector3(typeInt * 1.5f, 2.25f);

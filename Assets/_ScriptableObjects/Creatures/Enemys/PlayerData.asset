@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72e1c6386292f0740a2627a1d6b730d4, type: 3}
+  m_Name: PlayerData
+  m_EditorClassIdentifier: 
+  creatureType: 0
+  idleSprite: {fileID: 21300000, guid: b57a556947292db4ea78261b040b1981, type: 3}
+  attackSprite: {fileID: 21300000, guid: c588ef517c833c24c8311b5d93f3722c, type: 3}
+  defenceSprite: {fileID: 21300000, guid: 9678a07800f4b3a48a67267ea14edc41, type: 3}
+  avoidSprite: {fileID: 21300000, guid: 5e01ec33c29a13149adb5790c631131c, type: 3}
+  cards:
+  - {fileID: 11400000, guid: 8cf7ad694acc87f4fb6e4b07a47ddc41, type: 2}
+  - {fileID: 11400000, guid: 3ac81be69b1745a43801780a3bbd1893, type: 2}
+  - {fileID: 11400000, guid: 0c520f6e32adade43b4ad4af75b6f630, type: 2}
+  - {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
+  - {fileID: 11400000, guid: 7cb4d578abde75a49a752bb9975a86c4, type: 2}
+  hp: 50

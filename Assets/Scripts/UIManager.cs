@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
     
     [Header("")] 
     [SerializeField] private DamageTextHandler damageTextHandlerPrefab;
+    [SerializeField] private GameObject avoidTextHandlerPrefab;
 
     [Header("상태이상")] 
     [SerializeField] private StatusEffectTextHandler statusEffectTextHandlerPrefab;
@@ -54,6 +55,11 @@ public class UIManager : MonoBehaviour
     {
         var damageText = Instantiate(damageTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
         damageText.Setup(value);
+    }
+    
+    public void PopAvoidText(Vector3 pos)
+    {
+        Instantiate(avoidTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
     }
 
     public void PopStatusEffectText(Vector2 pos, StatusEffectSO statusEffectSO, int stack)

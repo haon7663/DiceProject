@@ -7,8 +7,6 @@ public enum CreatureType { Player, Enemy }
 
 public class CreatureSO : ScriptableObject
 {
-    public CreatureType creatureType = CreatureType.Enemy;
-    
     [Header("스프라이트")]
     public Sprite idleSprite;
     public Sprite attackSprite;
