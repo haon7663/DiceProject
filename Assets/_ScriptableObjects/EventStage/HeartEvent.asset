@@ -21,27 +21,53 @@ MonoBehaviour:
     eventEffects:
     - useCondition: 0
       compareValue: 3
+      compareDiceTypes: 
       compareType: 1
       eventEffectType: 0
-      value: 0
+      value: -10
       diceType: 0
       isAdd: 0
       cardSO: {fileID: 0}
       cardEventType: 0
+      eventLog: "<color=red>\uCCB4\uB825 10 \uC18C\uBAA8"
     - useCondition: 0
       compareValue: 0
+      compareDiceTypes: 
       compareType: 0
-      eventEffectType: 1
+      eventEffectType: 2
       value: 0
       diceType: 0
       isAdd: 0
-      cardSO: {fileID: 0}
+      cardSO: {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
       cardEventType: 0
-  - description: "[\uC2EC\uC7A5\uC744 \uD30C\uAD34\uD55C\uB2E4] <color=#B5B5B5><sprite=2>
+      eventLog: "\uCE74\uB4DC \uD68D\uB4DD"
+  - description: "[\uC2EC\uC7A5\uC744 \uD30C\uAD34\uD55C\uB2E4.] <color=#B5B5B5><sprite=2>
       x 1 \uC18C\uBAA8\n<color=green>4 \uC774\uC0C1\uC77C \uB54C \uD2B9\uC218 \uD6A8\uACFC
       \uBC1C\uB3D9"
-    eventEffects: []
+    eventEffects:
+    - useCondition: 1
+      compareValue: 4
+      compareDiceTypes: 02000000
+      compareType: 0
+      eventEffectType: 2
+      value: 0
+      diceType: 0
+      isAdd: 0
+      cardSO: {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
+      cardEventType: 0
+      eventLog: "\uCE74\uB4DC \uD68D\uB4DD"
   - description: "[\uC2EC\uC7A5\uC744 \uAC00\uC838\uAC04\uB2E4] <color=#B5B5B5><sprite=0>
       x 1 \uC18C\uBAA8\n<color=green> 4 \uC774\uC0C1\uC77C \uB54C [\uC2EC\uC7A5]
       \uD68D\uB4DD <color=red>3 \uC774\uD558\uC77C \uB54C ???"
-    eventEffects: []
+    eventEffects:
+    - useCondition: 1
+      compareValue: 4
+      compareDiceTypes: 00000000
+      compareType: 0
+      eventEffectType: 2
+      value: 0
+      diceType: 0
+      isAdd: 0
+      cardSO: {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
+      cardEventType: 0
+      eventLog: "<color=yellow>[\uC2EC\uC7A5]</color> \uD68D\uB4DD"

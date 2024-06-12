@@ -17,13 +17,13 @@ public class StatusEffectManager : MonoBehaviour
 
     public void AddEffect(StatusEffectSO effectSO, int stack)
     {
-        UIManager.inst.PopStatusEffectText(transform.position, effectSO, stack);
+        UIManager.Inst.PopStatusEffectText(transform.position, effectSO, stack);
         if (!enabledEffects.Exists(effect => effect.name == effectSO.name))
         {
-            var effect = CreateEffectObject(effectSO);
-            effect.ApplyEffect(_creature, stack);
+            var newEffect = CreateEffectObject(effectSO);
+            newEffect.ApplyEffect(_creature, stack);
             //상태이상 UI 표기
-            displayStatusEffectBundle.AddEffect(effect);
+            displayStatusEffectBundle.AddEffect(newEffect);
         }
         else
         {
@@ -33,8 +33,10 @@ public class StatusEffectManager : MonoBehaviour
                 displayStatusEffectBundle.UpdateEffects();
                 return;
             }
-            displayStatusEffectBundle.UpdateEffects();
-            CreateEffectObject(effect).ApplyEffect(_creature, stack);
+
+            var newEffect = CreateEffectObject(effect);
+            newEffect.ApplyEffect(_creature, stack);
+            displayStatusEffectBundle.AddEffect(newEffect);
         }
     }
 

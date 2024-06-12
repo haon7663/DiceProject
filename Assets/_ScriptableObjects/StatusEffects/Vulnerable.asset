@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Vulnerable
   description: 
-  sprite: {fileID: 21300000, guid: f912b2ca56108444e92feb441f723dab, type: 3}
+  sprite: {fileID: -447301318, guid: 6fbe59a48bd3dac49bc7eee86b4eae03, type: 3}
   label: "\uCDE8\uC57D"
   statusEffectStackType: 100
   statusEffectCalculateType: 100

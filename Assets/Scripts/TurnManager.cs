@@ -137,29 +137,29 @@ public class TurnManager : MonoBehaviour
         var enemySaveCardTuple = new List<Tuple<CardData, int>>();
         foreach (var cardData in isPlayerAttack ? defenceCardSO.cardData : attackCardSO.cardData)
         {
-            var diceValue = DiceManager.inst.GetDicesValue(cardData.diceTypes, cardData.basicValue);
+            var diceValue = DiceManager.Inst.GetDicesValue(cardData.diceTypes, cardData.basicValue);
             enemySaveCardTuple.Add(new Tuple<CardData, int>(cardData, diceValue));
             
             if (cardData.behaviorType == BehaviorType.StatusEffect)
                 continue;
             enemyTotalValue += diceValue;
         }
-        UIManager.inst.SetValue(enemyTotalValue, false);
-        UIManager.inst.OpenDicePanel();
-        UIManager.inst.CloseCardPanels();
+        UIManager.Inst.SetValue(enemyTotalValue, false);
+        UIManager.Inst.OpenDicePanel();
+        UIManager.Inst.CloseCardPanels();
         
         var playerTotalValue = 0;
         var playerSaveCardTuple = new List<Tuple<CardData, int>>();
         foreach (var cardData in isPlayerAttack ? attackCardSO.cardData : defenceCardSO.cardData)
         {
             var diceValue = 0;
-            yield return StartCoroutine(DiceManager.inst.RollTheDices(cardData.diceTypes, cardData.basicValue, value => diceValue = value));
+            yield return StartCoroutine(DiceManager.Inst.RollTheDices(cardData.diceTypes, cardData.basicValue, value => diceValue = value));
             playerSaveCardTuple.Add(new Tuple<CardData, int>(cardData, diceValue));
 
             if (cardData.behaviorType != BehaviorType.StatusEffect)
                 playerTotalValue += diceValue;
 
-            UIManager.inst.SetValue(playerTotalValue, true);
+            UIManager.Inst.SetValue(playerTotalValue, true);
             yield return YieldInstructionCache.WaitForSeconds(0.5f);
         }
         
@@ -219,7 +219,7 @@ public class TurnManager : MonoBehaviour
 
         if (isAvoid)
         {
-            UIManager.inst.PopAvoidText(defenceCreature.transform.position);
+            UIManager.Inst.PopAvoidText(defenceCreature.transform.position);
             defenceCreature.SetAlpha(0.5f);
         }
         else
@@ -297,7 +297,7 @@ public class TurnManager : MonoBehaviour
     {
         _actionTrigger = true;
         OnActionComplete?.Invoke();
-        DiceManager.inst.DestroyDices();
+        DiceManager.Inst.DestroyDices();
     }
 
     public void TurnEnd()

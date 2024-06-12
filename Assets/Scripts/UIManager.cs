@@ -6,15 +6,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Serialization;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
-    public static UIManager inst;
-
-    private void Awake()
-    {
-        inst = this;
-    }
-
     [SerializeField] private Transform canvas;
     
     [Header("턴")]
@@ -28,8 +21,11 @@ public class UIManager : MonoBehaviour
     [Header("주사위")]
     [SerializeField] private GameObject dicePanel;
     [SerializeField] private TMP_Text diceTotalTMP;
+    [SerializeField] private TMP_Text[] diceCountText;
 
     [Header("상태")]
+    [SerializeField] private Image playerTopHealthBar;
+    [SerializeField] private TMP_Text playerTopHealthTMP;
     [SerializeField] private Image playerHealthBar;
     [SerializeField] private TMP_Text playerHealthTMP;
     [SerializeField] private TMP_Text playerDiceTMP;
@@ -101,6 +97,8 @@ public class UIManager : MonoBehaviour
     {
         if (isPlayer)
         {
+            playerTopHealthBar.fillAmount = curHp / maxHp;
+            playerTopHealthTMP.text = curHp + " / " + maxHp;
             playerHealthBar.fillAmount = curHp / maxHp;
             playerHealthTMP.text = curHp + " / " + maxHp;
         }

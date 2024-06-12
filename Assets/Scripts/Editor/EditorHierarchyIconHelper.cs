@@ -24,9 +24,13 @@ public static class EditorHierarchyIconHelper
         iconData = new (Type, Texture, Color)[]
         {
             (typeof(GameManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
+            (typeof(DataManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
             (typeof(TurnManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
             (typeof(DiceManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
             (typeof(CardManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
+            (typeof(EventStageManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
+            (typeof(UIManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
+            (typeof(StatManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
             (typeof(Creature),   EditorGUIUtility.FindTexture("d_Favorite On Icon"), Color.yellow),
             (typeof(Camera), EditorGUIUtility.FindTexture("Camera Gizmo"),       Color.cyan),
         };
