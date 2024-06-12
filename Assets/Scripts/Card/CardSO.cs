@@ -19,7 +19,6 @@ public class CardSO : ScriptableObject
 
 public enum CardType { Attack, Defence }
 public enum BehaviorType { Damage, StatusEffect, Defence, Avoid, Counter }
-public enum CompareType { More, Less, Same }
 
 [Serializable]
 public class CardData
@@ -31,8 +30,4 @@ public class CardData
     [Header("스탯")]
     public int basicValue;
     public List<DiceType> diceTypes;
-    
-    /*[Header("조건")] 
-    public bool useCondition;
-    [DrawIf("useCondition", true)] public CompareType compareType;*/
 }
