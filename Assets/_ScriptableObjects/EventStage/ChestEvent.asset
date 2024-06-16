@@ -12,20 +12,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7432f9223f5dafe41bc796e3e50f55cb, type: 3}
   m_Name: ChestEvent
   m_EditorClassIdentifier: 
+  eventSprite: {fileID: 21300000, guid: f7ebd6b3de0849a4e8230449dcb2954e, type: 3}
   story: "\uC55E\uC5D0 \uC57D\uAC04 \uB0A1\uC740 \uC0C1\uC790\uAC00 \uC788\uB2E4.\r\n\uC5B4\uB5BB\uAC8C
     \uD560\uAE4C?"
   eventOptions:
   - description: "[\uC5F4\uC1E0\uB97C \uC0AC\uC6A9\uD55C\uB2E4] <color=#B5B5B5>\uC5F4\uC1E0 
       \uC18C\uBAA8</color>\r\n<color=green>\uB79C\uB364 \uC720\uBB3C \uD68D\uB4DD"
+    useCondition: 0
+    compareDiceTypes: 
     eventEffects:
-    - useCondition: 0
+    - compareType: 0
       compareValue: 0
-      compareDiceTypes: 
-      compareType: 0
-      eventEffectType: 0
+      eventEffectType: 3
       value: 0
       diceType: 0
       isAdd: 0
       cardSO: {fileID: 0}
       cardEventType: 0
-      eventLog: 
+      relicSO: {fileID: 11400000, guid: a66dc1fe3b13a4843a0ddcb17f68e626, type: 2}
+      eventLog: "*\uCCA0\uCEE5\r\n\uC0C1\uC790\uAC00 \uC5F4\uB838\uB2E4\n\uC720\uBB3C 
+        <color=yellow>OOOO</color> \uD68D\uB4DD"
+  - description: "[\uB77D\uD53D\uC744 \uC0AC\uC6A9\uD55C\uB2E4] <color=#B5B5B5><sprite=0>
+      x 1 \uC18C\uBAA8\r\n<color=green>3 \uC774\uC0C1\uC77C \uB54C \uB79C\uB364 \uC720\uBB3C
+      \uD68D\uB4DD"
+    useCondition: 1
+    compareDiceTypes: 00000000
+    eventEffects:
+    - compareType: 0
+      compareValue: 3
+      eventEffectType: 3
+      value: 0
+      diceType: 0
+      isAdd: 0
+      cardSO: {fileID: 0}
+      cardEventType: 0
+      relicSO: {fileID: 11400000, guid: a66dc1fe3b13a4843a0ddcb17f68e626, type: 2}
+      eventLog: "*\uCCA0\uCEE5\r\n\uC0C1\uC790\uAC00 \uC5F4\uB838\uB2E4.\n\uC720\uBB3C 
+        <color=yellow>\uAC80\uC220\uAD50\uBCF8</color> \uD68D\uB4DD"
+    - compareType: 1
+      compareValue: 2
+      eventEffectType: 4
+      value: 0
+      diceType: 0
+      isAdd: 0
+      cardSO: {fileID: 0}
+      cardEventType: 0
+      relicSO: {fileID: 0}
+      eventLog: "\"\uCE89!\r\n\uB77D\uD53D\uC774 \uBD80\uB7EC\uC84C\uB2E4.\r"
+  - description: "[\uBD80\uC21C\uB2E4] <color=#B5B5B5><sprite=2> x 1 \uC18C\uBAA8\r\n<color=green>6
+      \uC774\uC0C1\uC77C \uB54C \uB79C\uB364 \uC720\uBB3C \uD68D\uB4DD"
+    useCondition: 1
+    compareDiceTypes: 02000000
+    eventEffects:
+    - compareType: 0
+      compareValue: 6
+      eventEffectType: 3
+      value: 0
+      diceType: 0
+      isAdd: 0
+      cardSO: {fileID: 0}
+      cardEventType: 0
+      relicSO: {fileID: 11400000, guid: a66dc1fe3b13a4843a0ddcb17f68e626, type: 2}
+      eventLog: "*\uCF70\uC9C1!\r\n\uC548\uC5D0 \uC720\uBB3C\uC774 \uBCF4\uC778\uB2E4.\r\n\uC720\uBB3C
+        <color=yellow>OOOO</color> \uD68D\uB4DD"
+    - compareType: 1
+      compareValue: 5
+      eventEffectType: 4
+      value: 0
+      diceType: 0
+      isAdd: 0
+      cardSO: {fileID: 0}
+      cardEventType: 0
+      relicSO: {fileID: 11400000, guid: a66dc1fe3b13a4843a0ddcb17f68e626, type: 2}
+      eventLog: "*\uCF85!!\r\n\uD798\uC870\uC808\uC5D0 \uC2E4\uD328\uD588\uB2E4."

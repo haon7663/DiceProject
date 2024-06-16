@@ -44,6 +44,7 @@ public class Creature : MonoBehaviour
         
         maxHp = Stats[StatType.MaxHealth].GetValue(creatureSO.hp);
         curHp = maxHp;
+        UIManager.Inst.SetHealth(curHp, maxHp, creatureType == CreatureType.Player);
     }
 
     public void SetSprite(Sprite sprite)
@@ -64,12 +65,17 @@ public class Creature : MonoBehaviour
     public void OnDamage(int damage)
     {
         curHp -= damage;
+        if (curHp <= 0)
+            curHp = 0;
         UIManager.Inst.PopDamageText(transform.position, damage);
         UIManager.Inst.SetHealth(curHp, maxHp, creatureType == CreatureType.Player);
     }
     public void OnRecovery(int recovery)
     {
         curHp += recovery;
+        if (curHp > maxHp)
+            curHp = maxHp;
+        UIManager.Inst.PopRecoveryText(transform.position, recovery);
         UIManager.Inst.SetHealth(curHp, maxHp, creatureType == CreatureType.Player);
     }
 

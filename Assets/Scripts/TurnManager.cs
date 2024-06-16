@@ -26,6 +26,9 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
+        if (GameManager.Inst.currentGameMode != GameMode.Battle)
+            return;
+        
         _player = FindObjectsOfType<Creature>().ToList().Find(creature => creature.creatureType == CreatureType.Player);
         _enemy = FindObjectsOfType<Creature>().ToList().Find(creature => creature.creatureType == CreatureType.Enemy);
         
@@ -56,11 +59,17 @@ public class TurnManager : MonoBehaviour
         _enemy.SetSprite(_enemy.creatureSO.idleSprite);
         while (true)
         {
+            if(_enemy.curHp <= 0)
+                continue;
+            
             OnTurnStart?.Invoke();
 
             // Player Turn
             OnCreatureTurnStart?.Invoke(true);
             yield return PlayerTurn();
+            
+            if(_enemy.curHp <= 0)
+                continue;
 
             // Enemy Turn
             OnCreatureTurnStart?.Invoke(false);
@@ -157,9 +166,10 @@ public class TurnManager : MonoBehaviour
             playerSaveCardTuple.Add(new Tuple<CardData, int>(cardData, diceValue));
 
             if (cardData.behaviorType != BehaviorType.StatusEffect)
+            {
                 playerTotalValue += diceValue;
-
-            UIManager.Inst.SetValue(playerTotalValue, true);
+                UIManager.Inst.SetValue(playerTotalValue, true);
+            }
             yield return YieldInstructionCache.WaitForSeconds(0.5f);
         }
         
@@ -232,7 +242,7 @@ public class TurnManager : MonoBehaviour
 
             foreach (var effect in takeStatusEffect)
             {
-                attackCreature.GetComponent<StatusEffectManager>().AddEffect(effect.Item1, effect.Item2);
+                defenceCreature.GetComponent<StatusEffectManager>().AddEffect(effect.Item1, effect.Item2);
             }
         }
         

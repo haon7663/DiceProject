@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Serialization;
+using DG.Tweening;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -20,7 +21,6 @@ public class UIManager : Singleton<UIManager>
     
     [Header("주사위")]
     [SerializeField] private GameObject dicePanel;
-    [SerializeField] private TMP_Text diceTotalTMP;
     [SerializeField] private TMP_Text[] diceCountText;
 
     [Header("상태")]
@@ -36,6 +36,7 @@ public class UIManager : Singleton<UIManager>
     
     [Header("")] 
     [SerializeField] private DamageTextHandler damageTextHandlerPrefab;
+    [SerializeField] private RecoveryTextHandler recoveryTextHandlerPrefab;
     [SerializeField] private GameObject avoidTextHandlerPrefab;
 
     [Header("상태이상")] 
@@ -52,6 +53,11 @@ public class UIManager : Singleton<UIManager>
         var damageText = Instantiate(damageTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
         damageText.Setup(value);
     }
+    public void PopRecoveryText(Vector3 pos, int value)
+    {
+        var recoveryText = Instantiate(recoveryTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
+        recoveryText.Setup(value);
+    }
     
     public void PopAvoidText(Vector3 pos)
     {
@@ -66,6 +72,7 @@ public class UIManager : Singleton<UIManager>
 
     public void ShowTurnState(bool isPlayerTurn)
     {
+        turnStatePanelAnimator.gameObject.SetActive(true);
         turnStatePanelAnimator.SetTrigger("show");
         turnStateTMP.text = isPlayerTurn ? "플레이어 행동" : "적 행동";
     }
@@ -88,9 +95,13 @@ public class UIManager : Singleton<UIManager>
     {
         dicePanel.SetActive(false);
     }
-    public void SetDiceTotalTMP(int total)
+
+    public void SetDiceCountText()
     {
-        diceTotalTMP.text = total.ToString();
+        for (var i = 1; i < 5; i++)
+        {
+            diceCountText[i].text = DataManager.Inst.diceCount[(DiceType)i].ToString();
+        }
     }
 
     public void SetHealth(float curHp, float maxHp, bool isPlayer)
@@ -112,9 +123,9 @@ public class UIManager : Singleton<UIManager>
     public void SetValue(int value, bool isPlayer)
     {
         if (isPlayer)
-            playerDiceTMP.text = value.ToString();
+            DOVirtual.Float(0, value, 0.2f, x => playerDiceTMP.text = ((int)x).ToString());
         else
-            enemyDiceTMP.text = value.ToString();
+            DOVirtual.Float(0, value, 0.2f, x => enemyDiceTMP.text = ((int)x).ToString());
     }
 
     private void CloseValueText()

@@ -15,15 +15,18 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
     [Header("카드")]
     public List<CardSO> cardSOs;
 
+    [Header("유물")]
+    public List<RelicSO> relicSOs;
+
     private void Awake()
     {
         diceCount = new SerializableDictionary<DiceType, int>()
         {
             { DiceType.Four, 9999999 },
             { DiceType.Six, 12 },
-            { DiceType.Eight, 9 },
-            { DiceType.Twelve, 4 },
-            { DiceType.Twenty, 2 },
+            { DiceType.Eight, 6 },
+            { DiceType.Twelve, 2 },
+            { DiceType.Twenty, 1 },
         };
     }
 }

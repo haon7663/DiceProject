@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7432f9223f5dafe41bc796e3e50f55cb, type: 3}
   m_Name: HeartEvent
   m_EditorClassIdentifier: 
+  eventSprite: {fileID: 21300000, guid: 802866763d0c694459185599fefe87e2, type: 3}
   story: "\uBC14\uB2E5\uC5D0\uC11C \uBD89\uC740 \uAE00\uC790\uB85C \uC801\uD78C \uAE30\uB85D\uC744
     \uBC1C\uACAC\uD588\uB2E4.\n\uB0B4\uC6A9\uC740 \"<color=red>\uC2EC\uC7A5\uC774
     \uAE30\uB2E4\uB9AC\uACE0 \uC788\uB2E4</color>\" \uB77C\uACE0 \uC801\uD600\uC788\uB2E4."
   eventOptions:
   - description: "[\uD53C\uB97C \uD758\uB9B0\uB2E4]\n<color=green>\uD2B9\uC218 \uD6A8\uACFC
       \uBC1C\uB3D9 <color=red>\uCCB4\uB825 10 \uC18C\uBAA8"
+    useCondition: 0
+    compareDiceTypes: 
     eventEffects:
-    - useCondition: 0
+    - compareType: 1
       compareValue: 3
-      compareDiceTypes: 
-      compareType: 1
       eventEffectType: 0
       value: -10
       diceType: 0
@@ -30,10 +31,8 @@ MonoBehaviour:
       cardSO: {fileID: 0}
       cardEventType: 0
       eventLog: "<color=red>\uCCB4\uB825 10 \uC18C\uBAA8"
-    - useCondition: 0
+    - compareType: 0
       compareValue: 0
-      compareDiceTypes: 
-      compareType: 0
       eventEffectType: 2
       value: 0
       diceType: 0
@@ -44,11 +43,11 @@ MonoBehaviour:
   - description: "[\uC2EC\uC7A5\uC744 \uD30C\uAD34\uD55C\uB2E4.] <color=#B5B5B5><sprite=2>
       x 1 \uC18C\uBAA8\n<color=green>4 \uC774\uC0C1\uC77C \uB54C \uD2B9\uC218 \uD6A8\uACFC
       \uBC1C\uB3D9"
+    useCondition: 0
+    compareDiceTypes: 
     eventEffects:
-    - useCondition: 1
+    - compareType: 0
       compareValue: 4
-      compareDiceTypes: 02000000
-      compareType: 0
       eventEffectType: 2
       value: 0
       diceType: 0
@@ -59,11 +58,11 @@ MonoBehaviour:
   - description: "[\uC2EC\uC7A5\uC744 \uAC00\uC838\uAC04\uB2E4] <color=#B5B5B5><sprite=0>
       x 1 \uC18C\uBAA8\n<color=green> 4 \uC774\uC0C1\uC77C \uB54C [\uC2EC\uC7A5]
       \uD68D\uB4DD <color=red>3 \uC774\uD558\uC77C \uB54C ???"
+    useCondition: 1
+    compareDiceTypes: 00000000
     eventEffects:
-    - useCondition: 1
+    - compareType: 0
       compareValue: 4
-      compareDiceTypes: 00000000
-      compareType: 0
       eventEffectType: 2
       value: 0
       diceType: 0

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class EventStageManager : Singleton<EventStageManager>
 {
@@ -13,21 +12,35 @@ public class EventStageManager : Singleton<EventStageManager>
     [Header("버튼")]
     [SerializeField] private EventOptionButton eventOptionButtonPrefab;
     [SerializeField] private Transform eventLayout;
+    private List<EventOptionButton> _eventOptionButtons;
     
     [Header("로그")]
     [SerializeField] private TMP_Text eventLogTextPrefab;
     [SerializeField] private Transform eventLogBundle;
     private List<TMP_Text> _eventLogTexts;
+
+    [Header("오브젝트")]
+    [SerializeField] private SpriteRenderer eventSpriteRenderer;
+
+    [SerializeField] private Sprite evenqr;
     
+    private Sequence _sequence;
     private void Start()
     {
+        if (GameManager.Inst.currentGameMode != GameMode.Event)
+            return;
+        
         _eventLogTexts = new List<TMP_Text>();
+        _eventOptionButtons = new List<EventOptionButton>();
         
         foreach (var eventOption in eventStageSO.eventOptions)
         {
             var eventOptionButton = Instantiate(eventOptionButtonPrefab, eventLayout);
             eventOptionButton.SetUp(eventOption);
+            _eventOptionButtons.Add(eventOptionButton);
         }
+
+        eventSpriteRenderer.sprite = eventStageSO.eventSprite;
         
         AddEventLog(eventStageSO.story);
     }
@@ -35,11 +48,11 @@ public class EventStageManager : Singleton<EventStageManager>
     public void AddEventLog(string eventLog)
     {
         var logs = eventLog.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-        var sequence = DOTween.Sequence();
         
+        _sequence = DOTween.Sequence().SetAutoKill(false);
         foreach (var log in logs)
         {
-            sequence.AppendCallback(() =>
+            _sequence.AppendCallback(() =>
             {
                 var eventLogText = Instantiate(eventLogTextPrefab, eventLogBundle);
                 eventLogText.text = log;
@@ -47,8 +60,9 @@ public class EventStageManager : Singleton<EventStageManager>
                 _eventLogTexts.Add(eventLogText);
                 SetOrderLogs();
             });
-            sequence.AppendInterval(1f);
+            _sequence.AppendInterval(1f);
         }
+        //_sequence.Rewind();
     }
 
     private void SetOrderLogs()
@@ -68,33 +82,55 @@ public class EventStageManager : Singleton<EventStageManager>
         }
     }
 
+    private void CloseEventOptionButtons()
+    {
+        for (var i = _eventOptionButtons.Count - 1; i >= 0; i--)
+        {
+            _eventOptionButtons[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void InvokeEvent(EventOption eventOption)
+    {
+        StartCoroutine(InvokeEventOptions(eventOption));
+    }
+
     public IEnumerator InvokeEventOptions(EventOption eventOption)
     {
+        CloseEventOptionButtons();
+        
+        var diceValue = 0;
+        if (eventOption.useCondition)
+        {
+            yield return StartCoroutine(DiceManager.Inst.RollTheDices(eventOption.compareDiceTypes, 0,
+                value => diceValue = value));
+        }
+        print("Log24");
         foreach (var eventEffect in eventOption.eventEffects)
         {
-            if (eventEffect.useCondition)
+            if (eventOption.useCondition)
             {
-                var value = 0;
-                yield return StartCoroutine(DiceManager.Inst.RollTheDices(eventEffect.compareDiceTypes, 0, diceValue => value = diceValue));
                 switch (eventEffect.compareType)
                 {
                     case CompareType.Less:
-                        if (value > eventEffect.compareValue)
-                            yield break;
+                        if (diceValue > eventEffect.compareValue)
+                            continue;
                         break;
                     case CompareType.More:
-                        if (value < eventEffect.compareValue)
-                            yield break;
+                        if (diceValue < eventEffect.compareValue)
+                            continue;
                         break;
                     case CompareType.Same:
-                        if (value != eventEffect.compareValue)
-                            yield break;
+                        if (diceValue != eventEffect.compareValue)
+                            continue;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
             }
 
+            eventSpriteRenderer.sprite = evenqr;
+            AddEventLog(eventEffect.eventLog);
             switch (eventEffect.eventEffectType)
             {
                 case EventEffectType.Hp:
@@ -122,11 +158,14 @@ public class EventStageManager : Singleton<EventStageManager>
                             throw new ArgumentOutOfRangeException();
                     }
                     break;
+                case EventEffectType.Relic:
+                    RelicManager.Inst.AddRelic(eventEffect.relicSO);
+                    break;
+                case EventEffectType.None:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
-            AddEventLog(eventEffect.eventLog);
         }
     }
 }

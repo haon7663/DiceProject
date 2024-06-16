@@ -16,6 +16,6 @@ public class EventOptionButton : MonoBehaviour
 
     public void InvokeEvent()
     {
-        StartCoroutine(EventStageManager.Inst.InvokeEventOptions(_eventOption));
+        EventStageManager.Inst.InvokeEvent(_eventOption);
     }
 }

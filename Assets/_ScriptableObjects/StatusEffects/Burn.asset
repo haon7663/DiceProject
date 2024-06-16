@@ -19,4 +19,4 @@ MonoBehaviour:
   statusEffectStackType: 100
   statusEffectCalculateType: 100
   useStack: 0
-  damage: 5
+  damage: 2

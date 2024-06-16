@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 0f8f5785f9532cc4dbeddacc6b6437c6, type: 3}
   cardName: "\uD68C\uD53C"
-  description: "\uC801\uC758 \uC8FC\uC0AC\uC704 \uAC12\uBCF4\uB2E4\n<sprite=4><sprite=4>
+  description: "\uC801\uC758 \uC8FC\uC0AC\uC704 \uAC12\uBCF4\uB2E4\n<sprite=0><sprite=1>
     \uAC00 \uB192\uC73C\uBA74 \uD68C\uD53C\uD569\uB2C8\uB2E4."
   cardType: 1
   cardData:
@@ -22,4 +22,4 @@ MonoBehaviour:
     behaviorType: 3
     statusEffectSO: {fileID: 0}
     basicValue: 0
-    diceTypes: 0400000004000000
+    diceTypes: 0000000001000000

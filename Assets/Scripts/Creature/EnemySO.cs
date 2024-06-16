@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "EnemyData", menuName = "Scriptable Object/EnemyData")]
+[CreateAssetMenu(fileName = "EnemySO", menuName = "Scriptable Object/EnemySO")]
 public class EnemySO : CreatureSO
 {
 }
