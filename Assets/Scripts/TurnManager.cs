@@ -134,6 +134,17 @@ public class TurnManager : MonoBehaviour
         var cardSO = cards[UnityEngine.Random.Range(0, cards.Count)];
         CardManager.inst.CopyToPrepareCard(cardSO, false);
         creature.SetCard(cardSO);
+
+        var expectMinValue = 0;
+        var expectMaxValue = 0;
+        foreach (var cardData in cardSO.cardData.FindAll(data => data.behaviorType != BehaviorType.StatusEffect))
+        {
+            expectMinValue += cardData.basicValue;
+            expectMinValue += cardData.diceTypes.Count;
+            expectMaxValue += cardData.basicValue;
+            expectMaxValue += cardData.diceTypes.Sum(diceType => DiceManager.Inst.GetDiceMaxValue(diceType));
+        }
+        UIManager.Inst.SetExpectValue(expectMinValue, expectMaxValue, false);
         yield break;
     }
 
@@ -153,6 +164,8 @@ public class TurnManager : MonoBehaviour
                 continue;
             enemyTotalValue += diceValue;
         }
+
+        UIManager.Inst.CloseExpectValueText();
         UIManager.Inst.SetValue(enemyTotalValue, false);
         UIManager.Inst.OpenDicePanel();
         UIManager.Inst.CloseCardPanels();
@@ -234,7 +247,7 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            defenceCreature.OnDamage(StatManager.inst.CalculateOffence(attackCreature, defenceCreature, totalValue));
+            defenceCreature.OnDamage(StatCalculator.CalculateOffence(attackCreature, defenceCreature, totalValue));
             foreach (var effect in getStatusEffect)
             {
                 defenceCreature.GetComponent<StatusEffectManager>().AddEffect(effect.Item1, effect.Item2);
@@ -255,7 +268,7 @@ public class TurnManager : MonoBehaviour
 
     private void EffectAction(Creature attackCreature, Creature defenceCreature, int value, List<Tuple<StatusEffectSO, int>> statusEffects)
     {
-        defenceCreature.OnDamage(StatManager.inst.CalculateOffence(attackCreature, defenceCreature, value));
+        defenceCreature.OnDamage(StatCalculator.CalculateOffence(attackCreature, defenceCreature, value));
         foreach (var effect in statusEffects)
         {
             defenceCreature.GetComponent<StatusEffectManager>().AddEffect(effect.Item1, effect.Item2);

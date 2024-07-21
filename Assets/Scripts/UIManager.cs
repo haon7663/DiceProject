@@ -33,6 +33,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Image enemyHealthBar;
     [SerializeField] private TMP_Text enemyHealthTMP;
     [SerializeField] private TMP_Text enemyDiceTMP;
+    [SerializeField] private TMP_Text enemyExpectDiceTMP;
     
     [Header("")] 
     [SerializeField] private DamageTextHandler damageTextHandlerPrefab;
@@ -119,6 +120,19 @@ public class UIManager : Singleton<UIManager>
             enemyHealthTMP.text = curHp + " / " + maxHp;
         }
     }
+    
+    public void SetExpectValue(int minValue, int maxValue, bool isPlayer)
+    {
+        if (isPlayer)
+            enemyExpectDiceTMP.text = minValue + "~" + maxValue;
+        else
+            enemyExpectDiceTMP.text = minValue + "~" + maxValue;
+    }
+
+    public void CloseExpectValueText()
+    {
+        enemyExpectDiceTMP.text = "";
+    }
 
     public void SetValue(int value, bool isPlayer)
     {
@@ -130,7 +144,6 @@ public class UIManager : Singleton<UIManager>
 
     private void CloseValueText()
     {
-        print("turnEnd");
         playerDiceTMP.text = "";
         enemyDiceTMP.text = "";
     }
