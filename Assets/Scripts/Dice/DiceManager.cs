@@ -22,7 +22,6 @@ public class DiceManager : Singleton<DiceManager>
 
     public IEnumerator RollTheDices(List<DiceType> diceTypes, int basicValue, Action<int> callback)
     {   
-        print("Start");
         totalValue = 0;
         for (var i = 0; i < diceTypes.Count; i++)
         {
@@ -39,15 +38,12 @@ public class DiceManager : Singleton<DiceManager>
             DataManager.Inst.diceCount[diceType]--;
             UIManager.Inst.SetDiceCountText();
             
-            print("Wh");
-            
             yield return YieldInstructionCache.WaitForSeconds(0.25f);
         }
 
         yield return YieldInstructionCache.WaitForSeconds(1);
         
         callback(totalValue + basicValue);
-        print("End" + totalValue + basicValue);
         yield break;
     }
 
@@ -58,28 +54,20 @@ public class DiceManager : Singleton<DiceManager>
     
     public int GetDiceValue(DiceType diceType)
     {
-        int maxSize;
-        switch (diceType)
+        return Random.Range(1, GetDiceMaxValue(diceType) + 1);;
+    }
+
+    public int GetDiceMaxValue(DiceType diceType)
+    {
+        return diceType switch
         {
-            case DiceType.Four:
-                maxSize = 4;
-                break;
-            case DiceType.Six:
-                maxSize = 6;
-                break;
-            case DiceType.Eight:
-                maxSize = 8;
-                break;
-            case DiceType.Twelve:
-                maxSize = 12;
-                break;
-            case DiceType.Twenty:
-                maxSize = 20;
-                break;
-            default:
-                return 0;
-        }
-        return Random.Range(1, maxSize + 1);;
+            DiceType.Four => 4,
+            DiceType.Six => 6,
+            DiceType.Eight => 8,
+            DiceType.Twelve => 12,
+            DiceType.Twenty => 20,
+            _ => 0
+        };
     }
     
     public Sprite GetDiceSprite(DiceType diceType)

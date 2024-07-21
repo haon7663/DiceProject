@@ -30,7 +30,6 @@ public static class EditorHierarchyIconHelper
             (typeof(CardManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
             (typeof(EventStageManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
             (typeof(UIManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
-            (typeof(StatManager), EditorGUIUtility.FindTexture("GameManager Icon"), Color.white),
             (typeof(Creature),   EditorGUIUtility.FindTexture("d_Favorite On Icon"), Color.yellow),
             (typeof(Camera), EditorGUIUtility.FindTexture("Camera Gizmo"),       Color.cyan),
         };
@@ -39,7 +38,7 @@ public static class EditorHierarchyIconHelper
     private static void DrawHierarchyIcon(int instanceID, Rect selectionRect)
     {
         Rect iconRect = new Rect(selectionRect);
-        iconRect.x = 32f; // ���̶�Ű ���� ��
+        iconRect.x = 32f;
         iconRect.width = 16f;
 
         GameObject go = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
