@@ -60,7 +60,7 @@ public class CardManager : MonoBehaviour
 
     public void CopyToShowCard(CardSO cardData)
     {
-        _copyCardObject = Instantiate(cardPrefab, _mainCamera.WorldToScreenPoint(new Vector3(0, 2.25f)), Quaternion.identity, canvas);
+        _copyCardObject = Instantiate(cardPrefab, new Vector3(0, 2.25f), Quaternion.identity, canvas);
         _copyCardObject.SetUp(cardData, false);
         _copyCardObject.Show();
         onCard = true;
@@ -68,7 +68,7 @@ public class CardManager : MonoBehaviour
     
     public void CopyToPrepareCard(CardSO cardData, bool isPlayer)
     {
-        var copyCard = Instantiate(cardPrefab, _mainCamera.WorldToScreenPoint(new Vector3(0, 2.25f)), Quaternion.identity, canvas);
+        var copyCard = Instantiate(cardPrefab, new Vector3(0, 2.25f), Quaternion.identity, canvas);
         copyCard.SetUp(cardData, false, isPlayer);
         copyCard.Show();
         copyCard.Prepare();

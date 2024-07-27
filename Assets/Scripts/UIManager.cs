@@ -51,23 +51,23 @@ public class UIManager : Singleton<UIManager>
 
     public void PopDamageText(Vector3 pos, int value)
     {
-        var damageText = Instantiate(damageTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
+        var damageText = Instantiate(damageTextHandlerPrefab, pos, Quaternion.identity, canvas);
         damageText.Setup(value);
     }
     public void PopRecoveryText(Vector3 pos, int value)
     {
-        var recoveryText = Instantiate(recoveryTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
+        var recoveryText = Instantiate(recoveryTextHandlerPrefab, pos, Quaternion.identity, canvas);
         recoveryText.Setup(value);
     }
     
     public void PopAvoidText(Vector3 pos)
     {
-        Instantiate(avoidTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
+        Instantiate(avoidTextHandlerPrefab, pos, Quaternion.identity, canvas);
     }
 
     public void PopStatusEffectText(Vector2 pos, StatusEffectSO statusEffectSO, int stack)
     {
-        var text = Instantiate(statusEffectTextHandlerPrefab, _camera.WorldToScreenPoint(pos), Quaternion.identity, canvas);
+        var text = Instantiate(statusEffectTextHandlerPrefab, pos, Quaternion.identity, canvas);
         text.SetUp(statusEffectSO, stack);
     }
 
