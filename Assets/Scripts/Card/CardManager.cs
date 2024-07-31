@@ -63,6 +63,7 @@ public class CardManager : MonoBehaviour
         _copyCardObject = Instantiate(cardPrefab, new Vector3(0, 2.25f), Quaternion.identity, canvas);
         _copyCardObject.SetUp(cardData, false);
         _copyCardObject.Show();
+        _copyCardObject.transform.SetAsFirstSibling();
         onCard = true;
     }
     
@@ -72,6 +73,7 @@ public class CardManager : MonoBehaviour
         copyCard.SetUp(cardData, false, isPlayer);
         copyCard.Show();
         copyCard.Prepare();
+        copyCard.transform.SetAsFirstSibling();
     }
 
 

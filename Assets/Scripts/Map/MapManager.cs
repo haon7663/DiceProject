@@ -1,32 +1,42 @@
-using System;
-using Map;
+using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Map
 {
     public class MapManager : MonoBehaviour
     {
-        [SerializeField] private MapView mapView;
-        [SerializeField] private MapConfig mapConfig;
+        public MapConfig config;
+        public MapView view;
 
-        private Map _map;
+        public Map CurrentMap { get; private set; }
 
         private void Start()
         {
-            _map = MapGenerator.GetMap(mapConfig);
-            mapView.ShowMap(_map);
+            GenerateNewMap();
         }
-        
-        /*private void OnDrawGizmos()
+
+        public void GenerateNewMap()
         {
-            foreach (var node in _map.nodes)
-            {
-                foreach (var connection in node.outgoing)
-                {
-                    Gizmos.DrawLine((Vector2)node.point, (Vector2)connection.point);
-                    Gizmos.DrawWireSphere((Vector2)node.point, 0.25f);
-                }
-            }
+            Map map = MapGenerator.GetMap(config);
+            CurrentMap = map;
+            //Debug.Log(map.ToJson());
+            view.ShowMap(map);
+        }
+
+        public void SaveMap()
+        {
+            if (CurrentMap == null) return;
+
+            string json = JsonConvert.SerializeObject(CurrentMap, Formatting.Indented,
+                new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
+            PlayerPrefs.SetString("Map", json);
+            PlayerPrefs.Save();
+        }
+
+        /*private void OnApplicationQuit()
+        {
+            SaveMap();
         }*/
     }
 }

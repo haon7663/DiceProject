@@ -29,57 +29,24 @@ MonoBehaviour:
   extraPaths: 0
   layers:
   - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 0
-      max: 0
     randomizeNodes: 0
   - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
-    randomizeNodes: 0
+    randomizeNodes: 0.482
   - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
-    randomizeNodes: 0
+    randomizeNodes: 0.515
+  - nodeType: 1
+    randomizeNodes: 0.164
+  - nodeType: 2
+    randomizeNodes: 0.252
   - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
     randomizeNodes: 0
-  - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
-    randomizeNodes: 0
-  - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
-    randomizeNodes: 0
-  - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
-    randomizeNodes: 0
-  - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
-    randomizeNodes: 0
-  - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
-    randomizeNodes: 0
-  - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
-    randomizeNodes: 0
-  - nodeType: 0
-    distanceFromPreviousLayer:
-      min: 2
-      max: 3
+  - nodeType: 3
+    randomizeNodes: 0.403
+  - nodeType: 4
+    randomizeNodes: 0.361
+  - nodeType: 1
+    randomizeNodes: 0.824
+  - nodeType: 2
+    randomizeNodes: 0.397
+  - nodeType: 5
     randomizeNodes: 0

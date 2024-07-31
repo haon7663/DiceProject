@@ -12,7 +12,7 @@ namespace Map
         {NodeType.Mystery, NodeType.Store, NodeType.Treasure, NodeType.MinorEnemy, NodeType.RestSite};
 
         private static List<float> _layerDistances;
-        // ALL nodes by layer:
+        
         private static readonly List<List<Node>> nodes = new List<List<Node>>();
 
         public static Map GetMap(MapConfig config)
@@ -26,8 +26,6 @@ namespace Map
             _config = config;
             nodes.Clear();
 
-            GenerateLayerDistances();
-
             for (int i = 0; i < config.layers.Count; i++)
                 PlaceLayer(i);
 
@@ -38,45 +36,23 @@ namespace Map
             SetUpConnections(paths);
 
             RemoveCrossConnections();
-
-            // select all the nodes with connections:
+            
             List<Node> nodesList = nodes.SelectMany(n => n).Where(n => n.incoming.Count > 0 || n.outgoing.Count > 0).ToList();
-
-            // pick a random name of the boss level for this map:
+            
             string bossNodeName = _config.nodeBlueprints.Where(b => b.nodeType == NodeType.Boss).ToList().Random().name;
             return new Map(config.name, bossNodeName, nodesList, new List<Vector2Int>());
         }
-
-        private static void GenerateLayerDistances()
-        {
-            _layerDistances = new List<float>();
-            foreach (MapLayer layer in _config.layers)
-                _layerDistances.Add(layer.distanceFromPreviousLayer.GetValue());
-        }
-
-        private static float GetDistanceToLayer(int layerIndex)
-        {
-            if (layerIndex < 0 || layerIndex > _layerDistances.Count) return 0f;
-
-            return _layerDistances.Take(layerIndex + 1).Sum();
-        }
-
+        
         private static void PlaceLayer(int layerIndex)
         {
             MapLayer layer = _config.layers[layerIndex];
             List<Node> nodesOnThisLayer = new List<Node>();
 
-            // offset of this layer to make all the nodes centered:
-            float offset = 2 * _config.GridWidth / 2f;
-
             for (int i = 0; i < _config.GridWidth; i++)
             {
                 NodeType nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? RandomNodes.Random() : layer.nodeType;
                 var blueprint = _config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random();
-                Node node = new Node(nodeType, blueprint, new Vector2Int(i, layerIndex))
-                {
-                    position = new Vector2(-offset + i * 2, GetDistanceToLayer(layerIndex))
-                };
+                Node node = new Node(nodeType, blueprint, new Vector2Int(i, layerIndex));
                 nodesOnThisLayer.Add(node);
             }
 
@@ -134,15 +110,10 @@ namespace Map
                     if (top == null || top.HasNoConnections()) continue;
                     Node topRight = GetNode(new Vector2Int(i + 1, j + 1));
                     if (topRight == null || topRight.HasNoConnections()) continue;
-
-                    // Debug.Log("Inspecting node for connections: " + node.point);
+                    
                     if (!node.outgoing.Any(element => element.Equals(topRight))) continue;
                     if (!right.outgoing.Any(element => element.Equals(top))) continue;
-
-                    // Debug.Log("Found a cross node: " + node.point);
-
-                    // we managed to find a cross node:
-                    // 1) add direct connections:
+                    
                     node.AddOutgoing(top);
                     top.AddIncoming(node);
 
@@ -152,23 +123,18 @@ namespace Map
                     float rnd = Random.Range(0f, 1f);
                     if (rnd < 0.2f)
                     {
-                        // remove both cross connections:
-                        // a) 
                         node.RemoveOutgoing(topRight);
                         topRight.RemoveIncoming(node);
-                        // b) 
                         right.RemoveOutgoing(top);
                         top.RemoveIncoming(right);
                     }
                     else if (rnd < 0.6f)
                     {
-                        // a) 
                         node.RemoveOutgoing(topRight);
                         topRight.RemoveIncoming(node);
                     }
                     else
                     {
-                        // b) 
                         right.RemoveOutgoing(top);
                         top.RemoveIncoming(right);
                     }
@@ -225,8 +191,7 @@ namespace Map
 
             return paths;
         }
-
-        // Generates a random path bottom up.
+        
         private static List<Vector2Int> Path(Vector2Int fromPoint, Vector2Int toPoint)
         {
             int toRow = toPoint.y;
