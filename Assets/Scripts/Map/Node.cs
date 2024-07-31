@@ -8,22 +8,22 @@ namespace Map
 {
     public class Node
     {
-        public readonly Vector2Int point;
-        public readonly List<Vector2Int> incoming = new();
-        public readonly List<Vector2Int> outgoing = new();
+        public readonly MapVector point;
+        public readonly List<MapVector> incoming = new();
+        public readonly List<MapVector> outgoing = new();
         
         [JsonConverter(typeof(StringEnumConverter))]
         public readonly NodeType nodeType;
-        public readonly NodeBlueprint blueprint;
+        public readonly string blueprintName;
 
-        public Node(NodeType nodeType, NodeBlueprint blueprint, Vector2Int point)
+        public Node(NodeType nodeType, string blueprintName, MapVector point)
         {
             this.nodeType = nodeType;
-            this.blueprint = blueprint;
+            this.blueprintName = blueprintName;
             this.point = point;
         }
 
-        public void AddIncoming(Vector2Int p)
+        public void AddIncoming(MapVector p)
         {
             if (incoming.Any(element => element.Equals(p)))
                 return;
@@ -31,7 +31,7 @@ namespace Map
             incoming.Add(p);
         }
 
-        public void AddOutgoing(Vector2Int p)
+        public void AddOutgoing(MapVector p)
         {
             if (outgoing.Any(element => element.Equals(p)))
                 return;
@@ -39,12 +39,12 @@ namespace Map
             outgoing.Add(p);
         }
 
-        public void RemoveIncoming(Vector2Int p)
+        public void RemoveIncoming(MapVector p)
         {
             incoming.RemoveAll(element => element.Equals(p));
         }
 
-        public void RemoveOutgoing(Vector2Int p)
+        public void RemoveOutgoing(MapVector p)
         {
             outgoing.RemoveAll(element => element.Equals(p));
         }

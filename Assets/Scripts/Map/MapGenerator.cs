@@ -29,7 +29,7 @@ namespace Map
             for (int i = 0; i < config.layers.Count; i++)
                 PlaceLayer(i);
 
-            List<List<Vector2Int>> paths = GeneratePaths();
+            List<List<MapVector>> paths = GeneratePaths();
 
             //RandomizeNodePositions();
 
@@ -40,7 +40,7 @@ namespace Map
             List<Node> nodesList = nodes.SelectMany(n => n).Where(n => n.incoming.Count > 0 || n.outgoing.Count > 0).ToList();
             
             string bossNodeName = _config.nodeBlueprints.Where(b => b.nodeType == NodeType.Boss).ToList().Random().name;
-            return new Map(config.name, bossNodeName, nodesList, new List<Vector2Int>());
+            return new Map(config.name, bossNodeName, nodesList, new List<MapVector>());
         }
         
         private static void PlaceLayer(int layerIndex)
@@ -52,7 +52,7 @@ namespace Map
             {
                 NodeType nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? RandomNodes.Random() : layer.nodeType;
                 var blueprint = _config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random();
-                Node node = new Node(nodeType, blueprint, new Vector2Int(i, layerIndex));
+                Node node = new Node(nodeType, blueprint.name, new MapVector(i, layerIndex));
                 nodesOnThisLayer.Add(node);
             }
 
@@ -83,9 +83,9 @@ namespace Map
             }
         }*/
 
-        private static void SetUpConnections(List<List<Vector2Int>> paths)
+        private static void SetUpConnections(List<List<MapVector>> paths)
         {
-            foreach (List<Vector2Int> path in paths)
+            foreach (List<MapVector> path in paths)
             {
                 for (int i = 0; i < path.Count - 1; ++i)
                 {
@@ -102,13 +102,13 @@ namespace Map
             for (int i = 0; i < _config.GridWidth - 1; ++i)
                 for (int j = 0; j < _config.layers.Count - 1; ++j)
                 {
-                    Node node = GetNode(new Vector2Int(i, j));
+                    Node node = GetNode(new MapVector(i, j));
                     if (node == null || node.HasNoConnections()) continue;
-                    Node right = GetNode(new Vector2Int(i + 1, j));
+                    Node right = GetNode(new MapVector(i + 1, j));
                     if (right == null || right.HasNoConnections()) continue;
-                    Node top = GetNode(new Vector2Int(i, j + 1));
+                    Node top = GetNode(new MapVector(i, j + 1));
                     if (top == null || top.HasNoConnections()) continue;
-                    Node topRight = GetNode(new Vector2Int(i + 1, j + 1));
+                    Node topRight = GetNode(new MapVector(i + 1, j + 1));
                     if (topRight == null || topRight.HasNoConnections()) continue;
                     
                     if (!node.outgoing.Any(element => element.Equals(topRight.point))) continue;
@@ -141,29 +141,29 @@ namespace Map
                 }
         }
 
-        private static Node GetNode(Vector2Int p)
+        private static Node GetNode(MapVector p)
         {
-            if (p.y >= nodes.Count) return null;
-            if (p.x >= nodes[p.y].Count) return null;
+            if (p.Y >= nodes.Count) return null;
+            if (p.X >= nodes[p.Y].Count) return null;
 
-            return nodes[p.y][p.x];
+            return nodes[p.Y][p.X];
         }
 
-        private static Vector2Int GetFinalNode()
+        private static MapVector GetFinalNode()
         {
             int y = _config.layers.Count - 1;
             if (_config.GridWidth % 2 == 1)
-                return new Vector2Int(_config.GridWidth / 2, y);
+                return new MapVector(_config.GridWidth / 2, y);
 
             return Random.Range(0, 2) == 0
-                ? new Vector2Int(_config.GridWidth / 2, y)
-                : new Vector2Int(_config.GridWidth / 2 - 1, y);
+                ? new MapVector(_config.GridWidth / 2, y)
+                : new MapVector(_config.GridWidth / 2 - 1, y);
         }
 
-        private static List<List<Vector2Int>> GeneratePaths()
+        private static List<List<MapVector>> GeneratePaths()
         {
-            Vector2Int finalNode = GetFinalNode();
-            var paths = new List<List<Vector2Int>>();
+            MapVector finalNode = GetFinalNode();
+            var paths = new List<List<MapVector>>();
             int numOfStartingNodes = _config.numOfStartingNodes.GetValue();
             int numOfPreBossNodes = _config.numOfPreBossNodes.GetValue();
 
@@ -173,18 +173,18 @@ namespace Map
 
             candidateXs.Shuffle();
             IEnumerable<int> startingXs = candidateXs.Take(numOfStartingNodes);
-            List<Vector2Int> startingPoints = (from x in startingXs select new Vector2Int(x, 0)).ToList();
+            List<MapVector> startingPoints = (from x in startingXs select new MapVector(x, 0)).ToList();
 
             candidateXs.Shuffle();
             IEnumerable<int> preBossXs = candidateXs.Take(numOfPreBossNodes);
-            List<Vector2Int> preBossPoints = (from x in preBossXs select new Vector2Int(x, finalNode.y - 1)).ToList();
+            List<MapVector> preBossPoints = (from x in preBossXs select new MapVector(x, finalNode.Y - 1)).ToList();
 
             int numOfPaths = Mathf.Max(numOfStartingNodes, numOfPreBossNodes) + Mathf.Max(0, _config.extraPaths);
             for (int i = 0; i < numOfPaths; ++i)
             {
-                Vector2Int startNode = startingPoints[i % numOfStartingNodes];
-                Vector2Int endNode = preBossPoints[i % numOfPreBossNodes];
-                List<Vector2Int> path = Path(startNode, endNode);
+                MapVector startNode = startingPoints[i % numOfStartingNodes];
+                MapVector endNode = preBossPoints[i % numOfPreBossNodes];
+                List<MapVector> path = Path(startNode, endNode);
                 path.Add(finalNode);
                 paths.Add(path);
             }
@@ -192,14 +192,14 @@ namespace Map
             return paths;
         }
         
-        private static List<Vector2Int> Path(Vector2Int fromPoint, Vector2Int toPoint)
+        private static List<MapVector> Path(MapVector fromPoint, MapVector toPoint)
         {
-            int toRow = toPoint.y;
-            int toCol = toPoint.x;
+            int toRow = toPoint.Y;
+            int toCol = toPoint.X;
 
-            int lastNodeCol = fromPoint.x;
+            int lastNodeCol = fromPoint.X;
 
-            List<Vector2Int> path = new List<Vector2Int> { fromPoint };
+            List<MapVector> path = new List<MapVector> { fromPoint };
             List<int> candidateCols = new List<int>();
             for (int row = 1; row < toRow; ++row)
             {
@@ -224,7 +224,7 @@ namespace Map
                     candidateCols.Add(rightCol);
                 
                 int candidateCol = candidateCols[Random.Range(0, candidateCols.Count)];
-                Vector2Int nextPoint = new Vector2Int(candidateCol, row);
+                var nextPoint = new MapVector(candidateCol, row);
 
                 path.Add(nextPoint);
 

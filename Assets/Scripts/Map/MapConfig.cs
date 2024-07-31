@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Map
 {
-    [CreateAssetMenu(menuName = "Scriptable Object/MapConfig", fileName = "MapConfig")]
+    [CreateAssetMenu(menuName = "Scriptable Object/Map/MapConfig", fileName = "MapConfig")]
     public class MapConfig : ScriptableObject
     {
         public List<NodeBlueprint> nodeBlueprints;

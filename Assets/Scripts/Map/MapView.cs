@@ -11,7 +11,8 @@ namespace Map
     public class MapView : MonoBehaviour
     {
         public Map Map { get; private set; }
-        
+
+        [SerializeField] private MapManager mapManager;
         [SerializeField] private GameObject nodePrefab;
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private Transform mapParent;
@@ -48,7 +49,7 @@ namespace Map
         private MapNode CreateMapNode(Node node)
         {
             var mapNode = Instantiate(nodePrefab, mapParent).GetComponent<MapNode>();
-            mapNode.Init(node, GetNodePosition(node));
+            mapNode.Init(node, GetBlueprint(node.nodeType), GetNodePosition(node));
             return mapNode;
         }
         
@@ -89,14 +90,26 @@ namespace Map
             lineRenderer.Points = list.ToArray();
         }
         
-        private MapNode GetNode(Vector2Int p)
+        private MapNode GetNode(MapVector p)
         {
             return _mapNodes.FirstOrDefault(n => n.Node.point.Equals(p));
         }
         private Vector2 GetNodePosition(Node node)
         {
-            return new Vector2(node.point.y, node.point.x);
+            return new Vector2(node.point.Y, node.point.X);
+        }
+        private MapConfig GetConfig(string configName)
+        {
+            return Resources.LoadAll<MapConfig>("MapConfigs").FirstOrDefault(c => c.name == configName);
         }
 
+        private NodeBlueprint GetBlueprint(NodeType type)
+        {
+            return Resources.LoadAll<NodeBlueprint>("NodeBlueprints").FirstOrDefault(n => n.nodeType == type);
+        }
+        private NodeBlueprint GetBlueprint(string blueprintName)
+        {
+            return Resources.LoadAll<NodeBlueprint>("NodeBlueprints").FirstOrDefault(n => n.name == blueprintName);
+        }
     }
 }

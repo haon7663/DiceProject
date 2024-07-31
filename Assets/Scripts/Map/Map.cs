@@ -8,11 +8,11 @@ namespace Map
     public class Map
     {
         public List<Node> nodes;
-        public List<Vector2Int> path;
+        public List<MapVector> path;
         public string bossNodeName;
         public string configName;
 
-        public Map(string configName, string bossNodeName, List<Node> nodes, List<Vector2Int> path)
+        public Map(string configName, string bossNodeName, List<Node> nodes, List<MapVector> path)
         {
             this.configName = configName;
             this.bossNodeName = bossNodeName;
@@ -25,9 +25,9 @@ namespace Map
             return nodes.FirstOrDefault(n => n.nodeType == NodeType.Boss);
         }
 
-        public Node GetNode(Vector2Int point)
+        public Node GetNode(MapVector p)
         {
-            return nodes.FirstOrDefault(n => n.point.Equals(point));
+            return nodes.FirstOrDefault(n => n.point.Equals(p));
         }
 
         public string ToJson()

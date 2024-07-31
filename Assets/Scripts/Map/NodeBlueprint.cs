@@ -18,12 +18,10 @@ namespace Map
 
 namespace Map
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Scriptable Object/Map/NodeBluePrint", fileName = "NodeBluePrint")]
     public class NodeBlueprint : ScriptableObject
     {
-        [JsonIgnore]
         public Sprite sprite;
-        [JsonConverter(typeof(StringEnumConverter))]
         public NodeType nodeType;
     }
 }
