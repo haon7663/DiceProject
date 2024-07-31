@@ -101,7 +101,7 @@ public class UIManager : Singleton<UIManager>
     {
         for (var i = 1; i < 5; i++)
         {
-            diceCountText[i].text = DataManager.Inst.diceCount[(DiceType)i].ToString();
+            diceCountText[i].text = DataManager.Inst.PlayerData.dices[(DiceType)i].ToString();
         }
     }
 

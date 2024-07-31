@@ -5,8 +5,6 @@ using System.Linq;
 using DG.Tweening;
 using Map;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600 }
 

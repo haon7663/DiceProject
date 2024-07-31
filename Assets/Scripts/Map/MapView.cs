@@ -89,9 +89,9 @@ namespace Map
             lineRenderer.Points = list.ToArray();
         }
         
-        private MapNode GetNode(Node node)
+        private MapNode GetNode(Vector2Int p)
         {
-            return _mapNodes.FirstOrDefault(n => n.Node.Equals(node));
+            return _mapNodes.FirstOrDefault(n => n.Node.point.Equals(p));
         }
         private Vector2 GetNodePosition(Node node)
         {

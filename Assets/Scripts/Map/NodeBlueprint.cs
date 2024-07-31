@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using UnityEngine;
 
 namespace Map
 {
@@ -19,7 +21,9 @@ namespace Map
     [CreateAssetMenu]
     public class NodeBlueprint : ScriptableObject
     {
+        [JsonIgnore]
         public Sprite sprite;
+        [JsonConverter(typeof(StringEnumConverter))]
         public NodeType nodeType;
     }
 }

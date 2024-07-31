@@ -27,7 +27,7 @@ public class DiceManager : Singleton<DiceManager>
         {
             var diceType = diceTypes[i];
             
-            if (DataManager.Inst.diceCount[diceType] <= 0) continue;
+            if (DataManager.Inst.PlayerData.dices[diceType] <= 0) continue;
             
             var dicePos = new Vector3(1.3f * (i - (float)(diceTypes.Count - 1) / 2) - 10, 0);
             var dice = Instantiate(dicePrefab, dicePos, Quaternion.identity);
@@ -35,7 +35,7 @@ public class DiceManager : Singleton<DiceManager>
             dice.SetUp(diceType, value);
             _dices.Add(dice);
             totalValue += value;
-            DataManager.Inst.diceCount[diceType]--;
+            DataManager.Inst.PlayerData.dices[diceType]--;
             UIManager.Inst.SetDiceCountText();
             
             yield return YieldInstructionCache.WaitForSeconds(0.25f);

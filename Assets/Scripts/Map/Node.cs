@@ -9,8 +9,8 @@ namespace Map
     public class Node
     {
         public readonly Vector2Int point;
-        public readonly List<Node> incoming = new();
-        public readonly List<Node> outgoing = new();
+        public readonly List<Vector2Int> incoming = new();
+        public readonly List<Vector2Int> outgoing = new();
         
         [JsonConverter(typeof(StringEnumConverter))]
         public readonly NodeType nodeType;
@@ -23,30 +23,30 @@ namespace Map
             this.point = point;
         }
 
-        public void AddIncoming(Node node)
+        public void AddIncoming(Vector2Int p)
         {
-            if (incoming.Any(element => element.Equals(node)))
+            if (incoming.Any(element => element.Equals(p)))
                 return;
 
-            incoming.Add(node);
+            incoming.Add(p);
         }
 
-        public void AddOutgoing(Node node)
+        public void AddOutgoing(Vector2Int p)
         {
-            if (outgoing.Any(element => element.Equals(node)))
+            if (outgoing.Any(element => element.Equals(p)))
                 return;
 
-            outgoing.Add(node);
+            outgoing.Add(p);
         }
 
-        public void RemoveIncoming(Node node)
+        public void RemoveIncoming(Vector2Int p)
         {
-            incoming.RemoveAll(element => element.Equals(node));
+            incoming.RemoveAll(element => element.Equals(p));
         }
 
-        public void RemoveOutgoing(Node node)
+        public void RemoveOutgoing(Vector2Int p)
         {
-            outgoing.RemoveAll(element => element.Equals(node));
+            outgoing.RemoveAll(element => element.Equals(p));
         }
 
         public bool HasNoConnections()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -8,12 +9,14 @@ using Random = UnityEngine.Random;
 public class CardSO : ScriptableObject
 {
     [Header("정보")]
+    [JsonIgnore]
     public Sprite sprite;
     public string cardName;
     [TextArea] public string description;
     public CardType cardType;
 
     [Header("능력치")]
+    [JsonIgnore]
     public List<CardData> cardData;
 }
 

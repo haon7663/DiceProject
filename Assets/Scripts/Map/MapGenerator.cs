@@ -91,8 +91,8 @@ namespace Map
                 {
                     Node node = GetNode(path[i]);
                     Node nextNode = GetNode(path[i + 1]);
-                    node.AddOutgoing(nextNode);
-                    nextNode.AddIncoming(node);
+                    node.AddOutgoing(nextNode.point);
+                    nextNode.AddIncoming(node.point);
                 }
             }
         }
@@ -111,32 +111,32 @@ namespace Map
                     Node topRight = GetNode(new Vector2Int(i + 1, j + 1));
                     if (topRight == null || topRight.HasNoConnections()) continue;
                     
-                    if (!node.outgoing.Any(element => element.Equals(topRight))) continue;
-                    if (!right.outgoing.Any(element => element.Equals(top))) continue;
+                    if (!node.outgoing.Any(element => element.Equals(topRight.point))) continue;
+                    if (!right.outgoing.Any(element => element.Equals(top.point))) continue;
                     
-                    node.AddOutgoing(top);
-                    top.AddIncoming(node);
+                    node.AddOutgoing(top.point);
+                    top.AddIncoming(node.point);
 
-                    right.AddOutgoing(topRight);
-                    topRight.AddIncoming(right);
+                    right.AddOutgoing(topRight.point);
+                    topRight.AddIncoming(right.point);
 
                     float rnd = Random.Range(0f, 1f);
                     if (rnd < 0.2f)
                     {
-                        node.RemoveOutgoing(topRight);
-                        topRight.RemoveIncoming(node);
-                        right.RemoveOutgoing(top);
-                        top.RemoveIncoming(right);
+                        node.RemoveOutgoing(topRight.point);
+                        topRight.RemoveIncoming(node.point);
+                        right.RemoveOutgoing(top.point);
+                        top.RemoveIncoming(right.point);
                     }
                     else if (rnd < 0.6f)
                     {
-                        node.RemoveOutgoing(topRight);
-                        topRight.RemoveIncoming(node);
+                        node.RemoveOutgoing(topRight.point);
+                        topRight.RemoveIncoming(node.point);
                     }
                     else
                     {
-                        right.RemoveOutgoing(top);
-                        top.RemoveIncoming(right);
+                        right.RemoveOutgoing(top.point);
+                        top.RemoveIncoming(right.point);
                     }
                 }
         }
