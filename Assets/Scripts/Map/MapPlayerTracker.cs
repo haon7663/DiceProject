@@ -1,18 +1,81 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
-public class MapPlayerTracker : MonoBehaviour
+namespace Map
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MapPlayerTracker : Singleton<MapPlayerTracker>
     {
+        public float enterNodeDelay = 1f;
+        public MapManager mapManager;
+        public MapView view;
         
-    }
+        public void SelectNode(MapNode mapNode)
+        {
+            if (mapManager.CurrentMap.path.Count == 0)
+            {
+                if (mapNode.Node.point.Y == 0)
+                    SendPlayerToNode(mapNode);
+                else
+                    PlayWarningThatNodeCannotBeAccessed();
+            }
+            else
+            {
+                var currentPoint = mapManager.CurrentMap.path[^1];
+                var currentNode = mapManager.CurrentMap.GetNode(currentPoint);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+                if (currentNode != null && currentNode.outgoing.Any(point => point.Equals(mapNode.Node.point)))
+                    SendPlayerToNode(mapNode);
+                else
+                    PlayWarningThatNodeCannotBeAccessed();
+            }
+        }
+
+        private void SendPlayerToNode(MapNode mapNode)
+        {
+            mapManager.CurrentMap.path.Add(mapNode.Node.point);
+            mapManager.Save();
+            view.SetNodeColor();
+            view.SetLineColor();
+            //mapNode.ShowSwirlAnimation();*/
+
+            DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(() => EnterNode(mapNode));
+        }
+
+        private static void EnterNode(MapNode mapNode)
+        {
+            // we have access to blueprint name here as well
+            Debug.Log("Entering node: " + mapNode.Node.blueprintName + " of type: " + mapNode.Node.nodeType);
+            // load appropriate scene with context based on nodeType:
+            // or show appropriate GUI over the map: 
+            // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
+            switch (mapNode.Node.nodeType)
+            {
+                case NodeType.MinorEnemy:
+                    break;
+                case NodeType.EliteEnemy:
+                    break;
+                case NodeType.RestSite:
+                    break;
+                case NodeType.Treasure:
+                    break;
+                case NodeType.Store:
+                    break;
+                case NodeType.Boss:
+                    break;
+                case NodeType.Mystery:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void PlayWarningThatNodeCannotBeAccessed()
+        {
+            Debug.Log("Selected node cannot be accessed");
+        }
     }
 }

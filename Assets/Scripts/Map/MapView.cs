@@ -11,8 +11,7 @@ namespace Map
     public class MapView : MonoBehaviour
     {
         public Map Map { get; private set; }
-
-        [SerializeField] private MapManager mapManager;
+        
         [SerializeField] private GameObject nodePrefab;
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private Transform mapParent;
@@ -20,21 +19,33 @@ namespace Map
         [SerializeField] private int linePointCount;
         [SerializeField] private float offsetFromNodes;
 
-        private List<MapNode> _mapNodes;
-        private Camera _camera;
+        [SerializeField] private Color visitedColor;
+        [SerializeField] private Color lockedColor;
 
-        private void Awake()
-        {
-            _camera = Camera.main;
-        }
+        private List<MapNode> _mapNodes;
+        private List<LineConnection> _lineConnections;
 
         public void ShowMap(Map map)
         {
             Map = map;
+
+            ClearMap();
             
             CreateNodes(map.nodes);
 
             DrawLines();
+
+            SetNodeColor();
+            SetLineColor();
+        }
+
+        private void ClearMap()
+        {
+            for (var i = 0; i < mapParent.childCount; i++)
+                Destroy(mapParent.GetChild(i).gameObject);
+            
+            _mapNodes = new List<MapNode>();
+            _lineConnections = new List<LineConnection>();
         }
         
         private void CreateNodes(List<Node> nodes)
@@ -55,6 +66,7 @@ namespace Map
         
         private void DrawLines()
         {
+            _lineConnections = new List<LineConnection>();
             foreach (var mapNode in _mapNodes)
             {
                 foreach (var connection in mapNode.Node.outgoing)
@@ -64,7 +76,7 @@ namespace Map
 
         private void AddLineConnection(MapNode from, MapNode to)
         {
-            UILineRenderer lineRenderer = Instantiate(linePrefab, mapParent.transform).GetComponent<UILineRenderer>();
+            UILineRenderer lineRenderer = Instantiate(linePrefab, mapParent).GetComponent<UILineRenderer>();
             lineRenderer.transform.SetAsFirstSibling();
             
             RectTransform fromRT = from.transform as RectTransform;
@@ -88,6 +100,39 @@ namespace Map
             }
 
             lineRenderer.Points = list.ToArray();
+            
+            _lineConnections.Add(new LineConnection(lineRenderer, from, to));
+        }
+
+        private void SetStartingPosition()
+        {
+            
+        }
+
+        public void SetNodeColor()
+        {
+            foreach (var mapNode in _mapNodes)
+            {                
+                mapNode.SetColor(Map.path.Any(v => v.Equals(mapNode.Node.point)) ? visitedColor : lockedColor);
+            }
+        }
+        
+        public void SetLineColor()
+        {
+            foreach (var lineConnection in _lineConnections)
+            {                
+                lineConnection.SetColor(Map.path.Any(v => v.Equals(lineConnection.from.Node.point))
+                    && Map.path.Any(v => v.Equals(lineConnection.to.Node.point)) ? visitedColor : lockedColor);
+            }
+            
+            /*var currentPoint = Map.path[^1];
+            var currentNode = Map.GetNode(currentPoint);
+            foreach (var point in currentNode.outgoing)
+            {
+                LineConnection lineConnection = _lineConnections.FirstOrDefault(conn => conn.from.Node == currentNode &&
+                    conn.to.Node.point.Equals(point));
+                lineConnection?.SetColor(lockedColor);
+            }*/
         }
         
         private MapNode GetNode(MapVector p)

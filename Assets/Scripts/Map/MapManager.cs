@@ -38,7 +38,6 @@ namespace Map
         private void Load()
         {
             var mapJson = File.ReadAllText(_mapFileString);
-            print(mapJson);
             CurrentMap = JsonConvert.DeserializeObject<Map>(mapJson);
             view.ShowMap(CurrentMap);
         }

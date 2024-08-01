@@ -31,12 +31,9 @@ public class CardManager : MonoBehaviour
     private List<CardObject> _cards;
     private CardObject _copyCardObject;
 
-    private void Start()
+    private void SetUpCards()
     {
         _cards = new List<CardObject>();
-        
-        if (GameManager.Inst.currentGameMode != GameMode.Battle)
-            return;
         
         var attackCards = GameManager.Inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Attack);
         for (var i = 0; i < attackCards.Count; i++)

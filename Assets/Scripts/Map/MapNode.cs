@@ -20,6 +20,12 @@ public class MapNode : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        print("ClickNode");
+        MapPlayerTracker.Inst.SelectNode(this);
+    }
+
+    public void SetColor(Color color)
+    {
+        image.color = color;
     }
 }
