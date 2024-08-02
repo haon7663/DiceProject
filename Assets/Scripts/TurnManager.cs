@@ -59,8 +59,8 @@ public class TurnManager : MonoBehaviour
         _enemy.SetSprite(_enemy.creatureSO.idleSprite);
         while (true)
         {
-            if(_enemy.curHp <= 0)
-                continue;
+            /*if(_enemy.curHp <= 0)
+                continue;*/
             
             OnTurnStart?.Invoke();
 
@@ -68,8 +68,8 @@ public class TurnManager : MonoBehaviour
             OnCreatureTurnStart?.Invoke(true);
             yield return PlayerTurn();
             
-            if(_enemy.curHp <= 0)
-                continue;
+            /*if(_enemy.curHp <= 0)
+                continue;*/
 
             // Enemy Turn
             OnCreatureTurnStart?.Invoke(false);
@@ -81,8 +81,8 @@ public class TurnManager : MonoBehaviour
 
     private void ResetDefences()
     {
-        _player.defence = 0;
-        _enemy.defence = 0;
+        //_player.defence = 0;
+        //_enemy.defence = 0;
     }
 
     private void SetPlayerTurn(bool isPlayerTurn)
@@ -93,9 +93,9 @@ public class TurnManager : MonoBehaviour
     private void UpdateEffect(bool isPlayerTurn)
     {
         if(isPlayerTurn)
-            _player.GetComponent<StatusEffectManager>().UpdateEffects();
+            _player.GetComponent<StatusEffect>().UpdateEffects();
         else
-            _enemy.GetComponent<StatusEffectManager>().UpdateEffects();
+            _enemy.GetComponent<StatusEffect>().UpdateEffects();
     }
 
     private IEnumerator PlayerTurn()
@@ -247,15 +247,15 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            defenceCreature.OnDamage(StatCalculator.CalculateOffence(attackCreature, defenceCreature, totalValue));
+            defenceCreature.GetComponent<Health>().OnDamage(StatCalculator.CalculateOffence(attackCreature, defenceCreature, totalValue));
             foreach (var effect in getStatusEffect)
             {
-                defenceCreature.GetComponent<StatusEffectManager>().AddEffect(effect.Item1, effect.Item2);
+                defenceCreature.GetComponent<StatusEffect>().AddEffect(effect.Item1, effect.Item2);
             }
 
             foreach (var effect in takeStatusEffect)
             {
-                defenceCreature.GetComponent<StatusEffectManager>().AddEffect(effect.Item1, effect.Item2);
+                defenceCreature.GetComponent<StatusEffect>().AddEffect(effect.Item1, effect.Item2);
             }
         }
         
@@ -268,10 +268,10 @@ public class TurnManager : MonoBehaviour
 
     private void EffectAction(Creature attackCreature, Creature defenceCreature, int value, List<Tuple<StatusEffectSO, int>> statusEffects)
     {
-        defenceCreature.OnDamage(StatCalculator.CalculateOffence(attackCreature, defenceCreature, value));
+        //defenceCreature.OnDamage(StatCalculator.CalculateOffence(attackCreature, defenceCreature, value));
         foreach (var effect in statusEffects)
         {
-            defenceCreature.GetComponent<StatusEffectManager>().AddEffect(effect.Item1, effect.Item2);
+            defenceCreature.GetComponent<StatusEffect>().AddEffect(effect.Item1, effect.Item2);
         }
     }
 

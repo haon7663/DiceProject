@@ -22,8 +22,8 @@ public class StatStatusEffectSO : StatusEffectSO
     
     public override void RemoveEffect(Creature creature)
     {
-        base.RemoveEffect(creature);
         creature.Stats[statType].RemoveModifier(_statModifier);
+        base.RemoveEffect(creature);
     }
     
     private void SetModifier()

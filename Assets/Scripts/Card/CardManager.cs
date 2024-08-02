@@ -31,6 +31,11 @@ public class CardManager : MonoBehaviour
     private List<CardObject> _cards;
     private CardObject _copyCardObject;
 
+    private void Start()
+    {
+        SetUpCards();
+    }
+
     private void SetUpCards()
     {
         _cards = new List<CardObject>();

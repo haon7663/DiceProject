@@ -12,6 +12,6 @@ public class TickDamageStatusEffectSO : StatusEffectSO
     
     public override void UpdateEffect(Creature creature)
     {
-        creature.OnDamage(useStack ? GetCurrentStack() : damage);
+        //creature.OnDamage(useStack ? GetCurrentStack() : damage);
     }
 }

@@ -134,10 +134,10 @@ public class EventStageManager : Singleton<EventStageManager>
             switch (eventEffect.eventEffectType)
             {
                 case EventEffectType.Hp:
-                    if(eventEffect.value > 0)
+                    /*if(eventEffect.value > 0)
                         GameManager.Inst.player.OnRecovery(eventEffect.value);
                     else
-                        GameManager.Inst.player.OnDamage(-eventEffect.value);
+                        GameManager.Inst.player.OnDamage(-eventEffect.value);*/
                     break;
                 case EventEffectType.Dice:
                     DataManager.Inst.PlayerData.dices[eventEffect.diceType] += eventEffect.isAdd ? 1 : -1;

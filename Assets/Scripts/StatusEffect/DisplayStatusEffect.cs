@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DisplayStatusEffect : MonoBehaviour
 {
     [SerializeField] private Image effectImage;
-    [SerializeField] private TMP_Text stackTMP;
+    [SerializeField] private TMP_Text stackText;
 
     public StatusEffectSO StatusEffectSO { get; private set; }
 
@@ -16,11 +17,11 @@ public class DisplayStatusEffect : MonoBehaviour
         StatusEffectSO = statusEffectSO;
         
         effectImage.sprite = statusEffectSO.sprite;
-        stackTMP.text = statusEffectSO.GetCurrentStack().ToString();
+        stackText.text = statusEffectSO.GetCurrentStack().ToString();
     }
 
     public void UpdateSetup()
     {
-        stackTMP.text = StatusEffectSO.GetCurrentStack().ToString();
+        stackText.text = StatusEffectSO.GetCurrentStack().ToString();
     }
 }

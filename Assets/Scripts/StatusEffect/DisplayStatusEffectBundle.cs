@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DisplayStatusEffectBundle : MonoBehaviour
 {
-    [SerializeField] private Transform[] layoutGroup;
-    [SerializeField] private DisplayStatusEffect displayStatusEffectPrefab;
+    [SerializeField] private Transform effectParent;
+    [SerializeField] private DisplayStatusEffect effectPrefab;
     [SerializeField] private List<DisplayStatusEffect> displayEffects = new List<DisplayStatusEffect>();
-
+    
     public void AddEffect(StatusEffectSO statusEffectSO)
     {
-        var displayEffect = Instantiate(displayStatusEffectPrefab);
+        var displayEffect = Instantiate(effectPrefab, effectParent);
         displayEffect.Setup(statusEffectSO);
         displayEffects.Add(displayEffect);
-        SetOrder();
     }
 
     public void UpdateEffects()
@@ -22,7 +22,6 @@ public class DisplayStatusEffectBundle : MonoBehaviour
         {
             displayEffect.UpdateSetup();
         }
-        SetOrder();
     }
 
     public void RemoveEffect(StatusEffectSO statusEffectSO)
@@ -36,16 +35,6 @@ public class DisplayStatusEffectBundle : MonoBehaviour
         else
         {
             print("이펙트없어..");
-        }
-        SetOrder();
-    }
-
-    private void SetOrder()
-    {
-        for(var i = 0; i < displayEffects.Count; i++)
-        {
-            displayEffects[i].transform.SetParent(layoutGroup[i / 4]);
-            displayEffects[i].transform.localScale = Vector3.one;
         }
     }
 }

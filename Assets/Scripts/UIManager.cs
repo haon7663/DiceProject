@@ -24,14 +24,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private TMP_Text[] diceCountText;
 
     [Header("상태")]
-    [SerializeField] private Image playerTopHealthBar;
-    [SerializeField] private TMP_Text playerTopHealthTMP;
-    [SerializeField] private Image playerHealthBar;
-    [SerializeField] private TMP_Text playerHealthTMP;
     [SerializeField] private TMP_Text playerDiceTMP;
     [Space]
-    [SerializeField] private Image enemyHealthBar;
-    [SerializeField] private TMP_Text enemyHealthTMP;
     [SerializeField] private TMP_Text enemyDiceTMP;
     [SerializeField] private TMP_Text enemyExpectDiceTMP;
     
@@ -102,22 +96,6 @@ public class UIManager : Singleton<UIManager>
         for (var i = 1; i < 5; i++)
         {
             diceCountText[i].text = DataManager.Inst.PlayerData.dices[(DiceType)i].ToString();
-        }
-    }
-
-    public void SetHealth(float curHp, float maxHp, bool isPlayer)
-    {
-        if (isPlayer)
-        {
-            playerTopHealthBar.fillAmount = curHp / maxHp;
-            playerTopHealthTMP.text = curHp + " / " + maxHp;
-            playerHealthBar.fillAmount = curHp / maxHp;
-            playerHealthTMP.text = curHp + " / " + maxHp;
-        }
-        else
-        {
-            enemyHealthBar.fillAmount = curHp / maxHp;
-            enemyHealthTMP.text = curHp + " / " + maxHp;
         }
     }
     

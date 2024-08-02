@@ -12,6 +12,6 @@ public class TickRecoveryStatusEffectSO : StatusEffectSO
     
     public override void UpdateEffect(Creature creature)
     {
-        creature.OnRecovery(useStack ? GetCurrentStack() : recovery);
+        //creature.OnRecovery(useStack ? GetCurrentStack() : recovery);
     }
 }
