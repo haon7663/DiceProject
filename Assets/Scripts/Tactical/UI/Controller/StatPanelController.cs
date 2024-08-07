@@ -12,6 +12,6 @@ public class StatPanelController : MonoBehaviour
         var isPlayer = creature.creatureType == CreatureType.Player;
         var panel = isPlayer ? primaryPanel : secondaryPanel;
         panel.gameObject.SetActive(true);
-        panel.Display(creature);
+        panel.Connect(creature);
     }
 }

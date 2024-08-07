@@ -1,18 +1,20 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class CardObject : MonoBehaviour
 {
-    [SerializeField] private RectTransform rectTransform;
-    [SerializeField] private Image cardImage;
-    [SerializeField] private TMP_Text nameTMP;
-    [SerializeField] private TMP_Text descriptionTMP;
+    [SerializeField] private Image cardIcon;
+    [SerializeField] private TMP_Text nameLabel;
+    [SerializeField] private TMP_Text descriptionLabel;
     [SerializeField] private GameObject usePanel;
-    [SerializeField] private Image[] diceImages;
-    [SerializeField] private Animator animator;
+
+    private RectTransform _rect;
+    private Animator _animator;
 
     private CardSO _cardSO;
     private bool _useAble;
@@ -23,15 +25,21 @@ public class CardObject : MonoBehaviour
     private static readonly int CloseString = Animator.StringToHash("close");
     private static readonly int UseString = Animator.StringToHash("use");
 
+    private void Awake()
+    {
+        _rect = GetComponent<RectTransform>();
+        _animator = GetComponent<Animator>();
+    }
+
     public void SetUp(CardSO data, bool useAble, bool isPlayer = true)
     {
         _cardSO = data;
         _useAble = useAble;
         _isPlayer = isPlayer;
 
-        nameTMP.text = data.cardName;
-        descriptionTMP.text = data.description;
-        cardImage.sprite = data.sprite;
+        nameLabel.text = data.cardName;
+        descriptionLabel.text = data.description;
+        cardIcon.sprite = data.sprite;
     }
     
     public void OnPointClick()
@@ -75,7 +83,7 @@ public class CardObject : MonoBehaviour
 
     public void MoveToPrepare()
     {
-        rectTransform.DOAnchorPos(new Vector3(_isPlayer ? -304 : 304, 225), 0.25f).SetEase(Ease.OutSine);
+        _rect.DOAnchorPos(new Vector3(_isPlayer ? -304 : 304, 225), 0.25f).SetEase(Ease.OutSine);
         if (_isPlayer)
             CardManager.inst.playerPrepareCard = this;
         else
@@ -83,19 +91,19 @@ public class CardObject : MonoBehaviour
     }
     public void Use()
     {
-        animator.SetTrigger(UseString);
+        _animator.SetTrigger(UseString);
     }
     public void Prepare()
     {
-        animator.SetTrigger(PrepareString);
+        _animator.SetTrigger(PrepareString);
     }
     public void Show()
     {
-        animator.SetTrigger(ShowString);
+        _animator.SetTrigger(ShowString);
     }
     public void Close()
     {
-        animator.SetTrigger(CloseString);
+        _animator.SetTrigger(CloseString);
     }
     
     public void DestroyCard()

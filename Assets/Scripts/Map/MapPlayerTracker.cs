@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Map
 {
     public class MapPlayerTracker : Singleton<MapPlayerTracker>
     {
         public float enterNodeDelay = 1f;
-        public MapManager mapManager;
+        [FormerlySerializedAs("mapManager")] public MapController mapController;
         public MapView view;
         
         public void SelectNode(MapNode mapNode)
         {
-            if (mapManager.CurrentMap.path.Count == 0)
+            if (mapController.CurrentMap.path.Count == 0)
             {
                 if (mapNode.Node.point.Y == 0)
                     SendPlayerToNode(mapNode);
@@ -24,8 +25,8 @@ namespace Map
             }
             else
             {
-                var currentPoint = mapManager.CurrentMap.path[^1];
-                var currentNode = mapManager.CurrentMap.GetNode(currentPoint);
+                var currentPoint = mapController.CurrentMap.path[^1];
+                var currentNode = mapController.CurrentMap.GetNode(currentPoint);
 
                 if (currentNode != null && currentNode.outgoing.Any(point => point.Equals(mapNode.Node.point)))
                     SendPlayerToNode(mapNode);
@@ -36,8 +37,8 @@ namespace Map
 
         private void SendPlayerToNode(MapNode mapNode)
         {
-            mapManager.CurrentMap.path.Add(mapNode.Node.point);
-            mapManager.Save();
+            mapController.CurrentMap.path.Add(mapNode.Node.point);
+            mapController.Save();
             view.SetNodeColor();
             view.SetLineColor();
             //mapNode.ShowSwirlAnimation();*/
