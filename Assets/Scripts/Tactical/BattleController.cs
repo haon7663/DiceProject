@@ -2,14 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Map;
 using UnityEngine;
 
-public class BattleController : MonoBehaviour
+public class BattleController : Singleton<BattleController>
 {
     public Creature[] creatures;
 
-    [Header("- UI -")]
+    public EventOptionController eventOptionController;
+    public MapController mapController;
     public StatPanelController statPanelController;
+    public DiceResultPanelController diceResultPanelController;
+    public TurnOrderController turnOrderController;
 
     private void Start()
     {

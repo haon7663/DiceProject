@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class CardManager : MonoBehaviour
+public class CardController : MonoBehaviour
 {
-    public static CardManager inst;
+    public static CardController inst;
     private Camera _mainCamera;
     private void Awake()
     {
@@ -21,8 +22,8 @@ public class CardManager : MonoBehaviour
     
     [Header("트랜스폼")]
     [SerializeField] private Transform canvas;
-    [SerializeField] private Transform[] atkCardBundles;
-    [SerializeField] private Transform[] defCardBundles;
+    [SerializeField] private Transform atkCardLayoutGroup;
+    [SerializeField] private Transform defCardLayoutGroup;
 
     [HideInInspector] public bool onCard;
     [HideInInspector] public CardObject playerPrepareCard;
@@ -41,21 +42,17 @@ public class CardManager : MonoBehaviour
         _cards = new List<CardObject>();
         
         var attackCards = GameManager.Inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Attack);
-        for (var i = 0; i < attackCards.Count; i++)
+        foreach (var cardSO in attackCards)
         {
-            if (i > 8)
-                break;
-            var card = Instantiate(cardPrefab, atkCardBundles[i / 4]);
-            card.SetUp(attackCards[i], true);
+            var card = Instantiate(cardPrefab, atkCardLayoutGroup);
+            card.SetUp(cardSO, true);
             _cards.Add(card);
         }
         var defenceCards = GameManager.Inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Defence);
-        for (var i = 0; i < defenceCards.Count; i++)
+        foreach (var cardSO in defenceCards)
         {
-            if (i > 8)
-                break;
-            var card = Instantiate(cardPrefab, defCardBundles[i / 4]);
-            card.SetUp(defenceCards[i], true);
+            var card = Instantiate(cardPrefab, defCardLayoutGroup);
+            card.SetUp(cardSO, true);
             _cards.Add(card);
         }
     }

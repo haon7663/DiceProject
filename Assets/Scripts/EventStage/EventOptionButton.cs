@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EventOptionButton : MonoBehaviour
 {
-    [SerializeField] private TMP_Text descriptionTMP;
-
+    [SerializeField] private TMP_Text descriptionLabel;
     private EventOption _eventOption;
-    public void SetUp(EventOption eventOption)
+    
+    public void Init(EventOption eventOption)
     {
         _eventOption = eventOption;
-        descriptionTMP.text = eventOption.description;
+        descriptionLabel.text = eventOption.description;
     }
 
     public void InvokeEvent()

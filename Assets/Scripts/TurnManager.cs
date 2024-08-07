@@ -132,7 +132,7 @@ public class TurnManager : MonoBehaviour
     {
         var cards = creature.creatureSO.cards.Where(x => x.cardType == cardType).ToList();
         var cardSO = cards[UnityEngine.Random.Range(0, cards.Count)];
-        CardManager.inst.CopyToPrepareCard(cardSO, false);
+        CardController.inst.CopyToPrepareCard(cardSO, false);
         creature.SetCard(cardSO);
 
         var expectMinValue = 0;
@@ -186,8 +186,8 @@ public class TurnManager : MonoBehaviour
             yield return YieldInstructionCache.WaitForSeconds(0.5f);
         }
         
-        CardManager.inst.playerPrepareCard.Use();
-        CardManager.inst.enemyPrepareCard.Use();
+        CardController.inst.playerPrepareCard.Use();
+        CardController.inst.enemyPrepareCard.Use();
 
         yield return YieldInstructionCache.WaitForSeconds(1f);
 

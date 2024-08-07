@@ -47,18 +47,18 @@ public class CardObject : MonoBehaviour
         if (!_useAble)
             return;
 
-        if (CardManager.inst.onCard)
+        if (CardController.inst.onCard)
         {
             if (usePanel.activeSelf)
             {
                 UseCard();
                 return;
             }
-            CardManager.inst.CancelCard();
+            CardController.inst.CancelCard();
         }
         
         usePanel.SetActive(true);
-        CardManager.inst.CopyToShowCard(_cardSO);
+        CardController.inst.CopyToShowCard(_cardSO);
     }
 
     public void UseCard()
@@ -66,7 +66,7 @@ public class CardObject : MonoBehaviour
         if (!_useAble)
             return;
         
-        CardManager.inst.UseCard();
+        CardController.inst.UseCard();
         CardCoroutine();
         usePanel.SetActive(false);
     }
@@ -85,9 +85,9 @@ public class CardObject : MonoBehaviour
     {
         _rect.DOAnchorPos(new Vector3(_isPlayer ? -304 : 304, 225), 0.25f).SetEase(Ease.OutSine);
         if (_isPlayer)
-            CardManager.inst.playerPrepareCard = this;
+            CardController.inst.playerPrepareCard = this;
         else
-            CardManager.inst.enemyPrepareCard = this;
+            CardController.inst.enemyPrepareCard = this;
     }
     public void Use()
     {

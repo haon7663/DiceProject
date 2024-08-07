@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EventStageManager : Singleton<EventStageManager>
 {
-    [SerializeField] private EventStageSO eventStageSO;
+    [FormerlySerializedAs("eventStageSO")] [SerializeField] private EventSO eventSO;
     
     [Header("버튼")]
     [SerializeField] private EventOptionButton eventOptionButtonPrefab;
@@ -33,16 +34,16 @@ public class EventStageManager : Singleton<EventStageManager>
         _eventLogTexts = new List<TMP_Text>();
         _eventOptionButtons = new List<EventOptionButton>();
         
-        foreach (var eventOption in eventStageSO.eventOptions)
+        foreach (var eventOption in eventSO.eventOptions)
         {
             var eventOptionButton = Instantiate(eventOptionButtonPrefab, eventLayout);
-            eventOptionButton.SetUp(eventOption);
+            eventOptionButton.Init(eventOption);
             _eventOptionButtons.Add(eventOptionButton);
         }
 
-        eventSpriteRenderer.sprite = eventStageSO.eventSprite;
+        eventSpriteRenderer.sprite = eventSO.eventSprite;
         
-        AddEventLog(eventStageSO.story);
+        AddEventLog(eventSO.story);
     }
 
     public void AddEventLog(string eventLog)
@@ -62,7 +63,6 @@ public class EventStageManager : Singleton<EventStageManager>
             });
             _sequence.AppendInterval(1f);
         }
-        //_sequence.Rewind();
     }
 
     private void SetOrderLogs()
