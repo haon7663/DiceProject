@@ -22,8 +22,7 @@ public class CardController : MonoBehaviour
     
     [Header("트랜스폼")]
     [SerializeField] private Transform canvas;
-    [SerializeField] private Transform atkCardLayoutGroup;
-    [SerializeField] private Transform defCardLayoutGroup;
+    [SerializeField] private Transform cardParent;
 
     [HideInInspector] public bool onCard;
     [HideInInspector] public CardObject playerPrepareCard;
@@ -44,14 +43,14 @@ public class CardController : MonoBehaviour
         var attackCards = GameManager.Inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Attack);
         foreach (var cardSO in attackCards)
         {
-            var card = Instantiate(cardPrefab, atkCardLayoutGroup);
+            var card = Instantiate(cardPrefab, cardParent);
             card.SetUp(cardSO, true);
             _cards.Add(card);
         }
         var defenceCards = GameManager.Inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Defence);
         foreach (var cardSO in defenceCards)
         {
-            var card = Instantiate(cardPrefab, defCardLayoutGroup);
+            var card = Instantiate(cardPrefab, cardParent);
             card.SetUp(cardSO, true);
             _cards.Add(card);
         }
