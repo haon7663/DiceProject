@@ -10,6 +10,10 @@ public class BattleController : Singleton<BattleController>
 
     private PlayerData _playerData;
 
+    [Header("- Camera -")]
+    public CameraMovement mainCameraMovement;
+    public CameraMovement highlightCameraMovement;
+
     [Header("- UI -")]
     public EventOptionController eventOptionController;
     public CardController cardController;
@@ -57,11 +61,26 @@ public class BattleController : Singleton<BattleController>
         yield return new WaitUntil(() => CardController.Inst.playerPrepareCard);
 
         //주사위 굴려
-        var cardSO = CardController.Inst.playerPrepareCard.cardSO;
-        int diceValue = 0;
-        StartCoroutine(DiceManager.Inst.RollTheDices(cardSO.effects[0].diceTypes, 0, value => diceValue = value));
+        //var cardSO = CardController.Inst.playerPrepareCard.cardSO;
+        //int diceValue = 0;
+        //StartCoroutine(DiceManager.Inst.RollTheDices(cardSO.effects[0].diceTypes, 0, value => diceValue = value));
         //주사위 굴려
+        
+        yield return YieldInstructionCache.WaitForSeconds(1.5f);
 
-
+        mainCameraMovement.VibrationForTime(0.5f);
+        mainCameraMovement.ProductionAtTime(new Vector3(-0.5f, 0.25f, -10), 3, 4.4f);
+        highlightCameraMovement.VibrationForTime(0.35f);
+        highlightCameraMovement.ProductionAtTime(new Vector3(-0.5f, 0.25f, -10), 1, 4f);
+        
+        if (from.TryGetComponent<Act>(out var fromAct) && to.TryGetComponent<Act>(out var toAct))
+        {
+            fromAct.AttackAction();
+            toAct.HitAction();
+        }
+        yield return YieldInstructionCache.WaitForSeconds(1.2f);
+        
+        mainCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
+        highlightCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
     }
 }

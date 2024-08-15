@@ -23,6 +23,13 @@ public class CardController : Singleton<CardController>
     private List<CardObject> _cards;
     private CardObject _copyCardObject;
 
+    private Camera _camera;
+
+    private void Start()
+    {
+        _camera = Camera.main;
+    }
+
     public void InitDeck(List<CardSO> cards)
     {
         _cards = new List<CardObject>();
@@ -46,7 +53,7 @@ public class CardController : Singleton<CardController>
 
     public void CopyToShowCard(CardSO cardData)
     {
-        _copyCardObject = Instantiate(cardPrefab, new Vector3(0, 2.25f), Quaternion.identity, canvas);
+        _copyCardObject = Instantiate(cardPrefab, _camera.WorldToScreenPoint(new Vector3(0, 2.25f)), Quaternion.identity, canvas);
         _copyCardObject.Init(cardData, false);
         _copyCardObject.Show();
         _copyCardObject.transform.SetAsLastSibling();
@@ -55,7 +62,7 @@ public class CardController : Singleton<CardController>
     
     public void CopyToPrepareCard(CardSO cardData)
     {
-        var copyCard = Instantiate(cardPrefab, new Vector3(0, 2.25f), Quaternion.identity, canvas);
+        var copyCard = Instantiate(cardPrefab, _camera.WorldToScreenPoint(new Vector3(0, 2.25f)), Quaternion.identity, canvas);
         copyCard.Init(cardData, false, false);
         copyCard.Show();
         copyCard.Prepare();

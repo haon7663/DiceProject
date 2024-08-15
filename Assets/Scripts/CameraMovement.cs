@@ -7,10 +7,8 @@ using DG.Tweening;
 
 public class CameraMovement : MonoBehaviour
 {
-    public static CameraMovement inst;
     private void Awake()
     {
-        inst = this;
         _camera = GetComponent<Camera>();
     }
 
