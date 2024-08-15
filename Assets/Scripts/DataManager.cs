@@ -11,6 +11,9 @@ using File = System.IO.File;
 [Serializable]
 public class PlayerData
 {
+    [Header("기본 정보")]
+    public string name;
+    
     [Header("주사위")]
     public SerializableDictionary<DiceType, int> dices;
     
@@ -19,13 +22,15 @@ public class PlayerData
     public int curHp;
 
     [Header("카드")]
-    public List<CardSO> cards;
+    public List<CardJson> cards;
 
     [Header("유물")]
     public List<RelicSO> relics;
 
-    public PlayerData(int maxHp, List<CardSO> cards)
+    public PlayerData(string creatureName, int maxHp, List<CardJson> cards)
     {
+        name = creatureName;
+        
         dices = new SerializableDictionary<DiceType, int>()
         {
             { DiceType.Four, 9999999 },
@@ -69,7 +74,7 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
 
     public void Generate(CreatureSO creatureSO)
     {
-        var playerData = new PlayerData(creatureSO.hp, creatureSO.cards);
+        var playerData = new PlayerData(creatureSO.name, creatureSO.hp, creatureSO.cards.ToJson());
         PlayerData = playerData;
     }
     

@@ -9,22 +9,21 @@ using Random = UnityEngine.Random;
 public class CardSO : ScriptableObject
 {
     [Header("정보")]
-    [JsonIgnore]
     public Sprite sprite;
     public string cardName;
     [TextArea] public string description;
-    public CardType cardType;
+    [FormerlySerializedAs("cardType")] public CardType type;
 
+    [FormerlySerializedAs("cardData")]
     [Header("능력치")]
-    [JsonIgnore]
-    public List<CardData> cardData;
+    public List<CardEffect> effects;
 }
 
 public enum CardType { Attack, Defence }
 public enum BehaviorType { Damage, StatusEffect, Defence, Avoid, Counter }
 
 [Serializable]
-public class CardData
+public class CardEffect
 {
     public bool onSelf;
     public BehaviorType behaviorType;

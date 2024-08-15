@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e1c6386292f0740a2627a1d6b730d4, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
+  name: w
   idleSprite: {fileID: 21300000, guid: b57a556947292db4ea78261b040b1981, type: 3}
   attackSprite: {fileID: 21300000, guid: c588ef517c833c24c8311b5d93f3722c, type: 3}
   defenceSprite: {fileID: 21300000, guid: 9678a07800f4b3a48a67267ea14edc41, type: 3}

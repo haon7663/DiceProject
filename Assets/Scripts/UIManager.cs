@@ -125,31 +125,4 @@ public class UIManager : Singleton<UIManager>
         playerDiceTMP.text = "";
         enemyDiceTMP.text = "";
     }
-
-    private void OnEnable()
-    {
-        if (TurnManager.inst == null)
-        {
-            Debug.LogError("TurnManager 인스턴스가 초기화되지 않았습니다.");
-            return;
-        }
-        
-        TurnManager.inst.OnCreatureTurnStart += ShowTurnState;
-        TurnManager.inst.OnCreatureTurnStart += ChangeCardPanel;
-        TurnManager.inst.OnActionComplete += CloseDicePanel;
-        TurnManager.inst.OnActionComplete += CloseValueText;
-    }
-    private void OnDisable()
-    {
-        if (TurnManager.inst == null)
-        {
-            Debug.LogError("TurnManager 인스턴스가 초기화되지 않았습니다.");
-            return;
-        }
-        
-        TurnManager.inst.OnCreatureTurnStart -= ShowTurnState;
-        TurnManager.inst.OnCreatureTurnStart -= ChangeCardPanel;
-        TurnManager.inst.OnActionComplete -= CloseDicePanel;
-        TurnManager.inst.OnActionComplete -= CloseValueText;
-    }
 }

@@ -14,11 +14,7 @@ public class DiceManager : Singleton<DiceManager>
     public int totalValue;
 
     private List<DiceObject> _dices = new List<DiceObject>();
-
-    private void Start()
-    {
-        UIManager.Inst.SetDiceCountText();
-    }
+    
 
     public IEnumerator RollTheDices(List<DiceType> diceTypes, int basicValue, Action<int> callback)
     {   
@@ -36,7 +32,6 @@ public class DiceManager : Singleton<DiceManager>
             _dices.Add(dice);
             totalValue += value;
             DataManager.Inst.PlayerData.dices[diceType]--;
-            UIManager.Inst.SetDiceCountText();
             
             yield return YieldInstructionCache.WaitForSeconds(0.25f);
         }
@@ -44,7 +39,6 @@ public class DiceManager : Singleton<DiceManager>
         yield return YieldInstructionCache.WaitForSeconds(1);
         
         callback(totalValue + basicValue);
-        yield break;
     }
 
     public int GetDicesValue(List<DiceType> diceTypes, int basicValue)

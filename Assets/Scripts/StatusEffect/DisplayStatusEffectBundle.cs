@@ -6,13 +6,13 @@ using UnityEngine.Serialization;
 public class DisplayStatusEffectBundle : MonoBehaviour
 {
     [SerializeField] private Transform effectParent;
-    [SerializeField] private DisplayStatusEffect effectPrefab;
-    [SerializeField] private List<DisplayStatusEffect> displayEffects = new List<DisplayStatusEffect>();
+    [SerializeField] private StatusIcon effectPrefab;
+    [SerializeField] private List<StatusIcon> displayEffects = new List<StatusIcon>();
     
     public void AddEffect(StatusEffectSO statusEffectSO)
     {
         var displayEffect = Instantiate(effectPrefab, effectParent);
-        displayEffect.Setup(statusEffectSO);
+        displayEffect.Init(statusEffectSO);
         displayEffects.Add(displayEffect);
     }
 

@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class StatusEffect : MonoBehaviour
 {
+    public event Action OnStatusChanged;
+    
     private Creature _creature;
     public List<StatusEffectSO> enabledEffects = new();
-
-    [SerializeField] private DisplayStatusEffectBundle displayStatusEffectBundle;
 
     private void Start()
     {
@@ -22,22 +22,17 @@ public class StatusEffect : MonoBehaviour
         {
             var newEffect = CreateEffectObject(effectSO);
             newEffect.ApplyEffect(_creature, stack);
-            //상태이상 UI 표기
-            displayStatusEffectBundle.AddEffect(newEffect);
         }
         else
         {
             var effect = enabledEffects.Find(effect => effect.name == effectSO.name);
-            if (effect.DuplicateEffect(stack))
+            if (!effect.DuplicateEffect(stack))
             {
-                displayStatusEffectBundle.UpdateEffects();
-                return;
+                var newEffect = CreateEffectObject(effect);
+                newEffect.ApplyEffect(_creature, stack);
             }
-
-            var newEffect = CreateEffectObject(effect);
-            newEffect.ApplyEffect(_creature, stack);
-            displayStatusEffectBundle.AddEffect(newEffect);
         }
+        OnStatusChanged?.Invoke();
     }
 
     private StatusEffectSO CreateEffectObject(StatusEffectSO effectSO)
@@ -55,12 +50,12 @@ public class StatusEffect : MonoBehaviour
             effect.UpdateEffect(_creature);
             effect.UpdateStack(_creature);
         }
-        displayStatusEffectBundle.UpdateEffects();
+        OnStatusChanged?.Invoke();
     }
 
     public void RemoveEffect(StatusEffectSO effectSO)
     {
-        displayStatusEffectBundle.RemoveEffect(effectSO);
         enabledEffects.Remove(effectSO);
+        OnStatusChanged?.Invoke();
     }
 }

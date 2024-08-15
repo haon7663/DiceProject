@@ -7,16 +7,8 @@ using DG.Tweening;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class CardController : MonoBehaviour
+public class CardController : Singleton<CardController>
 {
-    public static CardController inst;
-    private Camera _mainCamera;
-    private void Awake()
-    {
-        inst = this;
-        _mainCamera = Camera.main;
-    }
-    
     [Header("프리팹")]
     [SerializeField] private CardObject cardPrefab;
     
@@ -31,27 +23,23 @@ public class CardController : MonoBehaviour
     private List<CardObject> _cards;
     private CardObject _copyCardObject;
 
-    private void Start()
-    {
-        SetUpCards();
-    }
-
-    private void SetUpCards()
+    public void InitDeck(List<CardSO> cards)
     {
         _cards = new List<CardObject>();
         
-        var attackCards = GameManager.Inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Attack);
-        foreach (var cardSO in attackCards)
+        var atkCards = cards.FindAll(x => x.type == CardType.Attack);
+        foreach (var cardSO in atkCards)
         {
             var card = Instantiate(cardPrefab, cardParent);
-            card.SetUp(cardSO, true);
+            card.Init(cardSO, true);
             _cards.Add(card);
         }
-        var defenceCards = GameManager.Inst.player.creatureSO.cards.FindAll(x => x.cardType == CardType.Defence);
-        foreach (var cardSO in defenceCards)
+        
+        var defCards = cards.FindAll(x => x.type == CardType.Defence);
+        foreach (var cardSO in defCards)
         {
             var card = Instantiate(cardPrefab, cardParent);
-            card.SetUp(cardSO, true);
+            card.Init(cardSO, true);
             _cards.Add(card);
         }
     }
@@ -59,19 +47,19 @@ public class CardController : MonoBehaviour
     public void CopyToShowCard(CardSO cardData)
     {
         _copyCardObject = Instantiate(cardPrefab, new Vector3(0, 2.25f), Quaternion.identity, canvas);
-        _copyCardObject.SetUp(cardData, false);
+        _copyCardObject.Init(cardData, false);
         _copyCardObject.Show();
-        _copyCardObject.transform.SetAsFirstSibling();
+        _copyCardObject.transform.SetAsLastSibling();
         onCard = true;
     }
     
-    public void CopyToPrepareCard(CardSO cardData, bool isPlayer)
+    public void CopyToPrepareCard(CardSO cardData)
     {
         var copyCard = Instantiate(cardPrefab, new Vector3(0, 2.25f), Quaternion.identity, canvas);
-        copyCard.SetUp(cardData, false, isPlayer);
+        copyCard.Init(cardData, false, false);
         copyCard.Show();
         copyCard.Prepare();
-        copyCard.transform.SetAsFirstSibling();
+        copyCard.transform.SetAsLastSibling();
     }
 
 
@@ -83,7 +71,6 @@ public class CardController : MonoBehaviour
         }
         
         onCard = false;
-        TurnManager.inst.TurnEnd();
 
         if (!_copyCardObject)
             return;

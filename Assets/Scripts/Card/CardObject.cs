@@ -16,7 +16,7 @@ public class CardObject : MonoBehaviour
     private RectTransform _rect;
     private Animator _animator;
 
-    private CardSO _cardSO;
+    public CardSO cardSO;
     private bool _useAble;
     private bool _isPlayer;
     
@@ -31,9 +31,9 @@ public class CardObject : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void SetUp(CardSO data, bool useAble, bool isPlayer = true)
+    public void Init(CardSO data, bool useAble, bool isPlayer = true)
     {
-        _cardSO = data;
+        cardSO = data;
         _useAble = useAble;
         _isPlayer = isPlayer;
 
@@ -47,18 +47,18 @@ public class CardObject : MonoBehaviour
         if (!_useAble)
             return;
 
-        if (CardController.inst.onCard)
+        if (CardController.Inst.onCard)
         {
             if (usePanel.activeSelf)
             {
                 UseCard();
                 return;
             }
-            CardController.inst.CancelCard();
+            CardController.Inst.CancelCard();
         }
         
         usePanel.SetActive(true);
-        CardController.inst.CopyToShowCard(_cardSO);
+        CardController.Inst.CopyToShowCard(cardSO);
     }
 
     public void UseCard()
@@ -66,8 +66,7 @@ public class CardObject : MonoBehaviour
         if (!_useAble)
             return;
         
-        CardController.inst.UseCard();
-        CardCoroutine();
+        CardController.Inst.UseCard();
         usePanel.SetActive(false);
     }
 
@@ -75,19 +74,14 @@ public class CardObject : MonoBehaviour
     {
         usePanel.SetActive(false);
     }
-    
-    private void CardCoroutine()
-    {
-        GameManager.Inst.player.SetCard(_cardSO);
-    }
 
     public void MoveToPrepare()
     {
         _rect.DOAnchorPos(new Vector3(_isPlayer ? -304 : 304, 225), 0.25f).SetEase(Ease.OutSine);
         if (_isPlayer)
-            CardController.inst.playerPrepareCard = this;
+            CardController.Inst.playerPrepareCard = this;
         else
-            CardController.inst.enemyPrepareCard = this;
+            CardController.Inst.enemyPrepareCard = this;
     }
     public void Use()
     {

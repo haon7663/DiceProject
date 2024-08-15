@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class TurnManager : MonoBehaviour
 {
-    public static TurnManager inst;
+    /*public static TurnManager inst;
     public bool playerTurn;
 
     public event Action OnTurnStart;
@@ -29,8 +29,8 @@ public class TurnManager : MonoBehaviour
         if (GameManager.Inst.currentGameMode != GameMode.Battle)
             return;
         
-        _player = FindObjectsOfType<Creature>().ToList().Find(creature => creature.creatureType == CreatureType.Player);
-        _enemy = FindObjectsOfType<Creature>().ToList().Find(creature => creature.creatureType == CreatureType.Enemy);
+        _player = FindObjectsOfType<Creature>().ToList().Find(creature => creature.type == CreatureType.Player);
+        _enemy = FindObjectsOfType<Creature>().ToList().Find(creature => creature.type == CreatureType.Enemy);
         
         SetUpTurn();
     }
@@ -59,17 +59,12 @@ public class TurnManager : MonoBehaviour
         _enemy.SetSprite(_enemy.creatureSO.idleSprite);
         while (true)
         {
-            /*if(_enemy.curHp <= 0)
-                continue;*/
-            
             OnTurnStart?.Invoke();
 
             // Player Turn
             OnCreatureTurnStart?.Invoke(true);
             yield return PlayerTurn();
-            
-            /*if(_enemy.curHp <= 0)
-                continue;*/
+        
 
             // Enemy Turn
             OnCreatureTurnStart?.Invoke(false);
@@ -130,14 +125,14 @@ public class TurnManager : MonoBehaviour
 
     private IEnumerator PlayCard(Creature creature, CardType cardType)
     {
-        var cards = creature.creatureSO.cards.Where(x => x.cardType == cardType).ToList();
+        var cards = creature.creatureSO.cards.Where(x => x.type == cardType).ToList();
         var cardSO = cards[UnityEngine.Random.Range(0, cards.Count)];
-        CardController.inst.CopyToPrepareCard(cardSO, false);
+        CardController.Inst.CopyToPrepareCard(cardSO);
         creature.SetCard(cardSO);
 
         var expectMinValue = 0;
         var expectMaxValue = 0;
-        foreach (var cardData in cardSO.cardData.FindAll(data => data.behaviorType != BehaviorType.StatusEffect))
+        foreach (var cardData in cardSO.effects.FindAll(data => data.behaviorType != BehaviorType.StatusEffect))
         {
             expectMinValue += cardData.basicValue;
             expectMinValue += cardData.diceTypes.Count;
@@ -154,11 +149,11 @@ public class TurnManager : MonoBehaviour
         var defenceCardSO = defenceCreature.CardSO;
 
         var enemyTotalValue = 0;
-        var enemySaveCardTuple = new List<Tuple<CardData, int>>();
-        foreach (var cardData in isPlayerAttack ? defenceCardSO.cardData : attackCardSO.cardData)
+        var enemySaveCardTuple = new List<Tuple<CardEffect, int>>();
+        foreach (var cardData in isPlayerAttack ? defenceCardSO.effects : attackCardSO.effects)
         {
             var diceValue = DiceManager.Inst.GetDicesValue(cardData.diceTypes, cardData.basicValue);
-            enemySaveCardTuple.Add(new Tuple<CardData, int>(cardData, diceValue));
+            enemySaveCardTuple.Add(new Tuple<CardEffect, int>(cardData, diceValue));
             
             if (cardData.behaviorType == BehaviorType.StatusEffect)
                 continue;
@@ -171,12 +166,12 @@ public class TurnManager : MonoBehaviour
         UIManager.Inst.CloseCardPanels();
         
         var playerTotalValue = 0;
-        var playerSaveCardTuple = new List<Tuple<CardData, int>>();
-        foreach (var cardData in isPlayerAttack ? attackCardSO.cardData : defenceCardSO.cardData)
+        var playerSaveCardTuple = new List<Tuple<CardEffect, int>>();
+        foreach (var cardData in isPlayerAttack ? attackCardSO.effects : defenceCardSO.effects)
         {
             var diceValue = 0;
             yield return StartCoroutine(DiceManager.Inst.RollTheDices(cardData.diceTypes, cardData.basicValue, value => diceValue = value));
-            playerSaveCardTuple.Add(new Tuple<CardData, int>(cardData, diceValue));
+            playerSaveCardTuple.Add(new Tuple<CardEffect, int>(cardData, diceValue));
 
             if (cardData.behaviorType != BehaviorType.StatusEffect)
             {
@@ -186,8 +181,8 @@ public class TurnManager : MonoBehaviour
             yield return YieldInstructionCache.WaitForSeconds(0.5f);
         }
         
-        CardController.inst.playerPrepareCard.Use();
-        CardController.inst.enemyPrepareCard.Use();
+        CardController.Inst.playerPrepareCard.Use();
+        CardController.Inst.enemyPrepareCard.Use();
 
         yield return YieldInstructionCache.WaitForSeconds(1f);
 
@@ -282,7 +277,7 @@ public class TurnManager : MonoBehaviour
         var attackCreatureSO = attackCreature.creatureSO;
         var defenceCreatureSO = defenceCreature.creatureSO;
         
-        var typeInt = attackCreature.creatureType == CreatureType.Enemy ? 1 : -1;
+        var typeInt = attackCreature.type == CreatureType.Enemy ? 1 : -1;
 
         sequence.AppendCallback(() =>
         {
@@ -326,5 +321,5 @@ public class TurnManager : MonoBehaviour
     public void TurnEnd()
     {
         _actionTrigger = true;
-    }
+    }*/
 }

@@ -11,7 +11,7 @@ public class DiceResultPanelController : MonoBehaviour
     
     public void ConnectPanel(Creature creature)
     {
-        var isPlayer = creature.creatureType == CreatureType.Player;
+        var isPlayer = creature.type == CreatureType.Player;
         var panel = isPlayer ? primaryPanel : secondaryPanel;
         panel.gameObject.SetActive(true);
     }
