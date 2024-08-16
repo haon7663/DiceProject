@@ -13,7 +13,9 @@ public class CreatureSO : ScriptableObject
     [Header("스프라이트")]
     public Sprite idleSprite;
     public Sprite attackSprite;
+    public Sprite attackEffectSprite;
     public Sprite defenceSprite;
+    public Sprite defenceEffectSprite;
     public Sprite avoidSprite;
 
     [Header("카드")] 

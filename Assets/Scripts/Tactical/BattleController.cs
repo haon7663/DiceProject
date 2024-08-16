@@ -1,18 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Map;
 using UnityEngine;
 
 public class BattleController : Singleton<BattleController>
 {
-    public Creature[] creatures;
+    public Creature playerCreature;
+    public Creature enemyCreature;
 
     private PlayerData _playerData;
 
     [Header("- Camera -")]
     public CameraMovement mainCameraMovement;
     public CameraMovement highlightCameraMovement;
+    public VolumeSettings mainCameraVolumeSettings;
 
     [Header("- UI -")]
     public EventOptionController eventOptionController;
@@ -27,17 +28,16 @@ public class BattleController : Singleton<BattleController>
         _playerData = DataManager.Inst.PlayerData;
         
         SetGame();
-        StartCoroutine(StartTurn(creatures[0], creatures[1]));
+        StartCoroutine(StartTurn(playerCreature, enemyCreature));
     }
 
     private void SetGame()
     {
-        creatures = FindObjectsByType<Creature>(FindObjectsSortMode.None);
-        foreach (var creature in creatures)
-        {
-            creature.GetComponent<Health>().maxHp = creature.GetComponent<Health>().curHp = creature.creatureSO.hp;
-            statPanelController.ConnectPanel(creature);
-        }
+        playerCreature.GetComponent<Health>().maxHp = playerCreature.GetComponent<Health>().curHp = _playerData.curHp;
+        statPanelController.ConnectPanel(playerCreature);
+        
+        enemyCreature.GetComponent<Health>().maxHp = enemyCreature.GetComponent<Health>().curHp = enemyCreature.creatureSO.hp;
+        statPanelController.ConnectPanel(enemyCreature);
         
         cardController.InitDeck(_playerData.cards.ToCard());
     }
@@ -48,15 +48,14 @@ public class BattleController : Singleton<BattleController>
         
         turnOrderController.ShowPanel(isPlayerAtk);
         
-        foreach (var creature in creatures.Where(creature => creature.type == CreatureType.Enemy))
-        {
-            var cards = creature.creatureSO.cards
-                .Where(card => isPlayerAtk ? card.type == CardType.Defence : card.type == CardType.Attack).ToList();
-            var card = cards[Random.Range(0, cards.Count)];
-            cardController.CopyToPrepareCard(card);
+        yield return YieldInstructionCache.WaitForSeconds(1f);
+        
+        var cards = enemyCreature.creatureSO.cards
+            .Where(card => isPlayerAtk ? card.type == CardType.Defence : card.type == CardType.Attack).ToList();
+        var card = cards[Random.Range(0, cards.Count)];
+        cardController.CopyToPrepareCard(card);
 
-            yield return YieldInstructionCache.WaitForSeconds(1.5f);
-        }
+        yield return YieldInstructionCache.WaitForSeconds(1.5f);
 
         yield return new WaitUntil(() => CardController.Inst.playerPrepareCard);
 
@@ -68,10 +67,13 @@ public class BattleController : Singleton<BattleController>
         
         yield return YieldInstructionCache.WaitForSeconds(1.5f);
 
+        #region 카메라 연출 시작
         mainCameraMovement.VibrationForTime(0.5f);
-        mainCameraMovement.ProductionAtTime(new Vector3(-0.5f, 0.25f, -10), 3, 4.4f);
-        highlightCameraMovement.VibrationForTime(0.35f);
-        highlightCameraMovement.ProductionAtTime(new Vector3(-0.5f, 0.25f, -10), 1, 4f);
+        mainCameraMovement.ProductionAtTime(new Vector3(-0.4f, 0.35f, -10), 3, 4.4f);
+        highlightCameraMovement.VibrationForTime(0.3f);
+        highlightCameraMovement.ProductionAtTime(new Vector3(-0.4f, 0.35f, -10), 1, 4f);
+        mainCameraVolumeSettings.SetVolume();
+        #endregion
         
         if (from.TryGetComponent<Act>(out var fromAct) && to.TryGetComponent<Act>(out var toAct))
         {
@@ -80,7 +82,14 @@ public class BattleController : Singleton<BattleController>
         }
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
         
+        #region 카메라 연출 종료
         mainCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
         highlightCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
+        mainCameraVolumeSettings.ResetVolume();
+        #endregion
+        
+        yield return YieldInstructionCache.WaitForSeconds(1.2f);
+        
+        StartCoroutine(StartTurn(to, from));
     }
 }

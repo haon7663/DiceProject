@@ -7,13 +7,6 @@ using DG.Tweening;
 
 public class CameraMovement : MonoBehaviour
 {
-    private void Awake()
-    {
-        _camera = GetComponent<Camera>();
-    }
-
-    private Camera _camera;
-
     public float shakeAmount;
     private float _shakeTime;
     private float _originShakeTime;
@@ -21,6 +14,12 @@ public class CameraMovement : MonoBehaviour
     private Vector3 _initialPosition = new Vector3(0, 0, -10);
     private float _initialRotationZ = 0;
     private float _initialOrthographicSize = 5;
+    
+    private Camera _camera;
+    private void Awake()
+    {
+        _camera = GetComponent<Camera>();
+    }
     
     private void LateUpdate()
     {
