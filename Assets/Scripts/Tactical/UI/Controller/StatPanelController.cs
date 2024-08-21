@@ -7,11 +7,11 @@ public class StatPanelController : MonoBehaviour
     [SerializeField] private StatPanel primaryPanel;
     [SerializeField] private StatPanel secondaryPanel;
 
-    public void ConnectPanel(Creature creature)
+    public void ConnectPanel(Unit unit)
     {
-        var isPlayer = creature.type == CreatureType.Player;
+        var isPlayer = unit.type == UnitType.Player;
         var panel = isPlayer ? primaryPanel : secondaryPanel;
         panel.gameObject.SetActive(true);
-        panel.Connect(creature);
+        panel.Connect(unit);
     }
 }

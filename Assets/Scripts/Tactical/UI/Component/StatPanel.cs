@@ -17,19 +17,19 @@ public class StatPanel : MonoBehaviour
     [SerializeField] private StatusIcon effectPrefab;
     private List<StatusIcon> _statusIcons;
 
-    private Creature _creature;
+    private Unit _unit;
 
-    public void Connect(Creature creature)
+    public void Connect(Unit unit)
     {
-        _creature = creature;
-        nameLabel.text = ((Object)creature.creatureSO).name;
+        _unit = unit;
+        nameLabel.text = unit.unitSO.name;
 
-        if (_creature.TryGetComponent<Health>(out var health))
+        if (_unit.TryGetComponent<Health>(out var health))
         {
             health.OnHpChanged += HpChange;
             HpChange();
         }
-        if (_creature.TryGetComponent<StatusEffect>(out var status))
+        if (_unit.TryGetComponent<StatusEffect>(out var status))
         {
             status.OnStatusChanged += StatusChange;
             StatusChange();
@@ -38,7 +38,7 @@ public class StatPanel : MonoBehaviour
 
     private void HpChange()
     {
-        if (!_creature.TryGetComponent<Health>(out var health))
+        if (!_unit.TryGetComponent<Health>(out var health))
             return;
         
         hpSlider.value = (float)health.curHp / health.maxHp;
@@ -54,7 +54,7 @@ public class StatPanel : MonoBehaviour
 
     private void StatusChange()
     {
-        if (!_creature.TryGetComponent<StatusEffect>(out var status))
+        if (!_unit.TryGetComponent<StatusEffect>(out var status))
             return;
 
         if(_statusIcons is { Count: > 0 })

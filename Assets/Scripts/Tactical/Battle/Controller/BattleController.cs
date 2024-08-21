@@ -2,13 +2,14 @@ using System.Collections;
 using System.Linq;
 using Map;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BattleController : Singleton<BattleController>
 {
-    public Creature playerCreature;
-    public Creature enemyCreature;
+    public Unit playerUnit;
+    public Unit enemyUnit;
 
-    private PlayerData _playerData;
+    public PlayerData PlayerData { get; private set; }
 
     [Header("- Management -")]
     public DataManager dataManager;
@@ -28,32 +29,32 @@ public class BattleController : Singleton<BattleController>
 
     private void Start()
     {
-        _playerData = DataManager.Inst.PlayerData;
+        PlayerData = dataManager.PlayerData;
         
         SetGame();
-        StartCoroutine(StartTurn(playerCreature, enemyCreature));
+        StartCoroutine(StartTurn(playerUnit, enemyUnit));
     }
 
     private void SetGame()
     {
-        playerCreature.GetComponent<Health>().maxHp = playerCreature.GetComponent<Health>().curHp = _playerData.curHp;
-        statPanelController.ConnectPanel(playerCreature);
+        playerUnit.GetComponent<Health>().maxHp = playerUnit.GetComponent<Health>().curHp = PlayerData.curHp;
+        statPanelController.ConnectPanel(playerUnit);
         
-        enemyCreature.GetComponent<Health>().maxHp = enemyCreature.GetComponent<Health>().curHp = enemyCreature.creatureSO.hp;
-        statPanelController.ConnectPanel(enemyCreature);
+        enemyUnit.GetComponent<Health>().maxHp = enemyUnit.GetComponent<Health>().curHp = enemyUnit.unitSO.maxHp;
+        statPanelController.ConnectPanel(enemyUnit);
         
-        cardController.InitDeck(_playerData.cards.ToCard());
+        cardController.InitDeck(PlayerData.cards.ToCard());
     }
 
-    private IEnumerator StartTurn(Creature from, Creature to)
+    private IEnumerator StartTurn(Unit from, Unit to)
     {
-        var isPlayerAtk = from.type == CreatureType.Player;
+        var isPlayerAtk = from.type == UnitType.Player;
         
         turnOrderController.ShowPanel(isPlayerAtk);
         
         yield return YieldInstructionCache.WaitForSeconds(1f);
         
-        var cards = enemyCreature.creatureSO.cards
+        var cards = enemyUnit.unitSO.cards
             .Where(card => isPlayerAtk ? card.type == CardType.Defence : card.type == CardType.Attack).ToList();
         var card = cards[Random.Range(0, cards.Count)];
         cardController.CopyToPrepareCard(card);

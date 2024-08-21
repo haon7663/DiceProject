@@ -9,10 +9,10 @@ using UnityEngine.Serialization;
 
 public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600 }
 
-public class Creature : MonoBehaviour
+public class Unit : MonoBehaviour
 {
-    public CreatureType type;
-    public CreatureSO creatureSO;
+    public UnitType type;
+    public UnitSO unitSO;
     public Dictionary<StatType, CreatureStat> Stats = new();
     
     private void Start()

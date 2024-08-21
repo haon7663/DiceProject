@@ -12,20 +12,20 @@ public class Act : MonoBehaviour
     [SerializeField] private Vector2 hitStartPosition;
     [SerializeField] private Vector2 hitLastPosition;
     
-    private Creature _creature;
+    private Unit _unit;
     private SpriteRenderer _spriteRenderer;
 
     public AnimationCurve curve;
 
     private void Awake()
     {
-        _creature = GetComponent<Creature>();
+        _unit = GetComponent<Unit>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void AttackAction()
     {
-        var creatureSO = _creature.creatureSO;
+        var creatureSO = _unit.unitSO;
         
         gameObject.layer = 7;
         transform.position = attackStartPosition;
@@ -58,13 +58,13 @@ public class Act : MonoBehaviour
         gameObject.layer = 7;
         
         transform.position = hitStartPosition;
-        _spriteRenderer.sprite = _creature.creatureSO.defenceSprite;
+        _spriteRenderer.sprite = _unit.unitSO.defenceSprite;
 
         var sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(hitLastPosition, 1.2f));
         sequence.AppendCallback(() =>
         {
-            _spriteRenderer.sprite = _creature.creatureSO.idleSprite;
+            _spriteRenderer.sprite = _unit.unitSO.idleSprite;
             gameObject.layer = 1;
         });
         sequence.Append(transform.DOMove(defaultPosition, 0.1f).SetEase(Ease.OutSine));

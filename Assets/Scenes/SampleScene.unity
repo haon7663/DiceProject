@@ -1701,7 +1701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  creatureSO: {fileID: 11400000, guid: 601a962621b401e419bc574d3c04ad09, type: 2}
+  unitSO: {fileID: 11400000, guid: 6b9c13116553c9b4ab87952f68aca4ab, type: 2}
 --- !u!114 &375646697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5438,7 +5438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  creatureSO: {fileID: 11400000, guid: 571697318f8dd664c850a055b9188c44, type: 2}
+  unitSO: {fileID: 11400000, guid: 6b9c13116553c9b4ab87952f68aca4ab, type: 2}
 --- !u!114 &1029982721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9725,8 +9725,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b38fb3b751af1aa4a823aa1a3681d6c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCreature: {fileID: 1029982720}
-  enemyCreature: {fileID: 375646696}
+  playerUnit: {fileID: 1029982720}
+  enemyUnit: {fileID: 375646696}
+  dataManager: {fileID: 1287110229}
   mainCameraMovement: {fileID: 519420035}
   highlightCameraMovement: {fileID: 1369481101}
   mainCameraVolumeSettings: {fileID: 519420038}
@@ -10409,7 +10410,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 571697318f8dd664c850a055b9188c44, type: 2}
-          m_ObjectArgumentAssemblyTypeName: CreatureSO, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: UnitSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

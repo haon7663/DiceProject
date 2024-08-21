@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum CreatureType { Player, Enemy }
+public enum UnitType { Player, Enemy }
 
-public class CreatureSO : ScriptableObject
+[CreateAssetMenu(menuName = "Scriptable Object/UnitSO", fileName = "UnitSO")]
+public class UnitSO : ScriptableObject
 {
     public new string name;
     
@@ -22,5 +22,5 @@ public class CreatureSO : ScriptableObject
     public List<CardSO> cards;
 
     [Header("스탯")] 
-    public int hp;
+    public int maxHp;
 }

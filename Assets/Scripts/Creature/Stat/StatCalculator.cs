@@ -6,38 +6,38 @@ using UnityEngine;
 public static class StatCalculator
 {
     //공격
-    public static int CalculateOffence(Creature creature, int value)
+    public static int CalculateOffence(Unit unit, int value)
     {
-        var finalValue = creature.Stats[StatType.GetDamage].GetValue(value);
+        var finalValue = unit.Stats[StatType.GetDamage].GetValue(value);
         return finalValue;
     }
-    public static int CalculateOffence(Creature creature, Creature targetCreature, int value)
+    public static int CalculateOffence(Unit unit, Unit targetUnit, int value)
     {
-        var finalValue = CalculateOffence(creature, value);
-        return targetCreature.Stats[StatType.TakeDamage].GetValue(finalValue);
+        var finalValue = CalculateOffence(unit, value);
+        return targetUnit.Stats[StatType.TakeDamage].GetValue(finalValue);
     }
     
     //방어
-    public static int CalculateDefence(Creature creature, int value)
+    public static int CalculateDefence(Unit unit, int value)
     {
         var finalValue = value;
         return finalValue;
     }
-    public static int CalculateDefence(Creature creature, Creature targetCreature, int value)
+    public static int CalculateDefence(Unit unit, Unit targetUnit, int value)
     {
-        var finalValue = CalculateDefence(creature, value);
-        return targetCreature.Stats[StatType.TakeDefence].GetValue(finalValue);
+        var finalValue = CalculateDefence(unit, value);
+        return targetUnit.Stats[StatType.TakeDefence].GetValue(finalValue);
     }
     
     //회복
-    public static int CalculateRecovery(Creature creature, int value)
+    public static int CalculateRecovery(Unit unit, int value)
     {
         var finalValue = value;
         return finalValue;
     }
-    public static int CalculateRecovery(Creature creature, Creature targetCreature, int value)
+    public static int CalculateRecovery(Unit unit, Unit targetUnit, int value)
     {
-        var finalValue = CalculateRecovery(creature, value);
-        return targetCreature.Stats[StatType.TakeRecovery].GetValue(finalValue);
+        var finalValue = CalculateRecovery(unit, value);
+        return targetUnit.Stats[StatType.TakeRecovery].GetValue(finalValue);
     }
 }

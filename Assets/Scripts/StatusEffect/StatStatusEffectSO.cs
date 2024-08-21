@@ -13,17 +13,17 @@ public class StatStatusEffectSO : StatusEffectSO
 
     private StatModifier _statModifier;
     
-    public override void ApplyEffect(Creature creature, int stack)
+    public override void ApplyEffect(Unit unit, int stack)
     {
-        base.ApplyEffect(creature, stack);
+        base.ApplyEffect(unit, stack);
         SetModifier();
-        creature.Stats[statType].AddModifier(_statModifier);
+        unit.Stats[statType].AddModifier(_statModifier);
     }
     
-    public override void RemoveEffect(Creature creature)
+    public override void RemoveEffect(Unit unit)
     {
-        creature.Stats[statType].RemoveModifier(_statModifier);
-        base.RemoveEffect(creature);
+        unit.Stats[statType].RemoveModifier(_statModifier);
+        base.RemoveEffect(unit);
     }
     
     private void SetModifier()

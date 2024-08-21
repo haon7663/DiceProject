@@ -10,9 +10,9 @@ public class TickRecoveryStatusEffectSO : StatusEffectSO
     [DrawIf("useStack", false)]
     [SerializeField] private int recovery;
     
-    public override void UpdateEffect(Creature creature)
+    public override void UpdateEffect(Unit unit)
     {
-        if (!creature.TryGetComponent<Health>(out var health))
+        if (!unit.TryGetComponent<Health>(out var health))
             return;
         
         health.OnRecovery(useStack ? GetCurrentStack() : recovery);

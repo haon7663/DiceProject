@@ -68,13 +68,13 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
         }
         else
         {
-            Generate(GameManager.Inst.player.creatureSO);
+            Generate(GameManager.Inst.player.unitSO);
         }
     }
 
-    public void Generate(CreatureSO creatureSO)
+    public void Generate(UnitSO unitSO)
     {
-        var playerData = new PlayerData(creatureSO.name, creatureSO.hp, creatureSO.cards.ToJson());
+        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, unitSO.cards.ToJson());
         PlayerData = playerData;
     }
     

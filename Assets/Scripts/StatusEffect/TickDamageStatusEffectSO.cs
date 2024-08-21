@@ -10,9 +10,9 @@ public class TickDamageStatusEffectSO : StatusEffectSO
     [DrawIf("useStack", false)]
     [SerializeField] private int damage;
     
-    public override void UpdateEffect(Creature creature)
+    public override void UpdateEffect(Unit unit)
     {
-        if (!creature.TryGetComponent<Health>(out var health))
+        if (!unit.TryGetComponent<Health>(out var health))
             return;
         
         health.OnDamage(useStack ? GetCurrentStack() : damage);

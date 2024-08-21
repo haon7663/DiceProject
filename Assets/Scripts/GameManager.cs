@@ -5,8 +5,8 @@ using UnityEngine.Serialization;
 public enum GameMode { Battle, Event, Shop, Boss }
 public class GameManager : SingletonDontDestroyOnLoad<GameManager>
 {
-    public Creature player;
-    public Creature enemy;
+    public Unit player;
+    public Unit enemy;
     
     public GameMode currentGameMode;
 

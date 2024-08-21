@@ -18,7 +18,7 @@ public abstract class StatusEffectSO : ScriptableObject
     
     private int _stack;
     
-    public virtual void ApplyEffect(Creature creature, int stack)
+    public virtual void ApplyEffect(Unit unit, int stack)
     {
         _stack = stack;
     }
@@ -41,12 +41,12 @@ public abstract class StatusEffectSO : ScriptableObject
         return true;
     }
     
-    public virtual void UpdateEffect(Creature creature)
+    public virtual void UpdateEffect(Unit unit)
     {
         
     }
 
-    public void UpdateStack(Creature creature)
+    public void UpdateStack(Unit unit)
     {
         switch (statusEffectStackType)
         {
@@ -69,13 +69,13 @@ public abstract class StatusEffectSO : ScriptableObject
         if (_stack > 0)
             return;
         
-        RemoveEffect(creature);
+        RemoveEffect(unit);
     }
     
-    public virtual void RemoveEffect(Creature creature)
+    public virtual void RemoveEffect(Unit unit)
     {
         _stack = 0;
-        creature.GetComponent<StatusEffect>().RemoveEffect(this);
+        unit.GetComponent<StatusEffect>().RemoveEffect(this);
     }
 
     public int GetCurrentStack() => _stack;

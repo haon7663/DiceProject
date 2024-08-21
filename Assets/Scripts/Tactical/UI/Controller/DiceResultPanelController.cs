@@ -9,9 +9,9 @@ public class DiceResultPanelController : MonoBehaviour
     [SerializeField] private DiceResultPanel secondaryPanel;
     [SerializeField] private DiceResultPanel topPanel;
     
-    public void ConnectPanel(Creature creature)
+    public void ConnectPanel(Unit unit)
     {
-        var isPlayer = creature.type == CreatureType.Player;
+        var isPlayer = unit.type == UnitType.Player;
         var panel = isPlayer ? primaryPanel : secondaryPanel;
         panel.gameObject.SetActive(true);
     }

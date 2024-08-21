@@ -12,7 +12,12 @@ public class InitBattleState : BattleState
 
     private IEnumerator Init()
     {
+        owner.playerUnit.GetComponent<Health>().maxHp = owner.playerUnit.GetComponent<Health>().curHp = owner.PlayerData.curHp;
+        owner.statPanelController.ConnectPanel(owner.playerUnit);
         
+        owner.enemyUnit.GetComponent<Health>().maxHp =  owner.enemyUnit.GetComponent<Health>().curHp =  owner.enemyUnit.unitSO.maxHp;
+        owner.statPanelController.ConnectPanel(owner.enemyUnit);
+        yield return null;
     }
 
     private void SpawnUnit()
