@@ -7,9 +7,9 @@ public class TurnOrderController : MonoBehaviour
 {
     [SerializeField] private TurnOrderPanel turnOrderPanel;
 
-    public void ShowPanel(bool isAttack)
+    public IEnumerator Show(bool isAttack)
     {
         turnOrderPanel.gameObject.SetActive(true);
-        turnOrderPanel.Show(isAttack ? "공격 턴" : "방어 턴");
+        yield return StartCoroutine(turnOrderPanel.Show(isAttack ? "공격 턴" : "방어 턴"));
     }
 }

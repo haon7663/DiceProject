@@ -12,7 +12,7 @@ public class DiceObject : MonoBehaviour
     [SerializeField] private GameObject twentyDice;
     [SerializeField] private TMP_Text valueTMP;
 
-    public void SetUp(DiceType diceType, int value)
+    public void SetUp(DiceType diceType, int value) 
     {
         switch (diceType)
         {

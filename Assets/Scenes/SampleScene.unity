@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1614,6 +1613,7 @@ GameObject:
   - component: {fileID: 375646698}
   - component: {fileID: 375646697}
   - component: {fileID: 375646699}
+  - component: {fileID: 375646700}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1752,6 +1752,20 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &375646700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375646692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94eec1c21edb324ebd082c9a9c46462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normal: 2
+  special: 0
 --- !u!1 &387119056
 GameObject:
   m_ObjectHideFlags: 0
@@ -2782,12 +2796,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!114 &519420038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5351,6 +5365,7 @@ GameObject:
   - component: {fileID: 1029982722}
   - component: {fileID: 1029982721}
   - component: {fileID: 1029982723}
+  - component: {fileID: 1029982724}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5525,6 +5540,20 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1029982724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1029982716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94eec1c21edb324ebd082c9a9c46462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normal: 1
+  special: 0
 --- !u!1 &1037753443
 GameObject:
   m_ObjectHideFlags: 0
@@ -6725,7 +6754,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1243408176}
-  - component: {fileID: 1243408179}
   - component: {fileID: 1243408180}
   - component: {fileID: 1243408181}
   m_Layer: 5
@@ -6756,27 +6784,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 540}
   m_SizeDelta: {x: 1440, y: 115}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &1243408179
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1243408175}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: da8c35fef08188e4b8a37d86bde120b9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!225 &1243408180
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7471,12 +7478,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!224 &1378322555 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1001355481784043816, guid: 28404f00878cff2448069cd56a9a8541, type: 3}
@@ -9725,8 +9732,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b38fb3b751af1aa4a823aa1a3681d6c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUnit: {fileID: 1029982720}
-  enemyUnit: {fileID: 375646696}
+  currentState: {fileID: 0}
+  player: {fileID: 1029982720}
+  enemy: {fileID: 375646696}
   dataManager: {fileID: 1287110229}
   mainCameraMovement: {fileID: 519420035}
   highlightCameraMovement: {fileID: 1369481101}
@@ -11338,12 +11346,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &1998456304
 GameObject:
   m_ObjectHideFlags: 0

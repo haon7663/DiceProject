@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -8,16 +8,22 @@ public class TurnOrderPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text orderLabel;
 
-    private Animator _animator;
+    private RectTransform _rect;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _rect = GetComponent<RectTransform>();
     }
 
-    public void Show(string text)
+    public IEnumerator Show(string text)
     {
-        _animator.SetTrigger("show");
         orderLabel.text = text;
+
+        _rect.anchoredPosition = new Vector2(-1280, _rect.anchoredPosition.y);
+        var sequence = DOTween.Sequence();
+        sequence.Append(_rect.DOAnchorPosX(0, 0.5f).SetEase(Ease.OutQuint));
+        sequence.Append(_rect.DOAnchorPosX(1280f, 0.5f).SetEase(Ease.InQuint));
+
+        yield return sequence.WaitForCompletion();
     }
 }

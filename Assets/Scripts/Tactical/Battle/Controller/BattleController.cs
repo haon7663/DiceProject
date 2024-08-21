@@ -4,12 +4,11 @@ using Map;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BattleController : Singleton<BattleController>
+public class BattleController : StateMachine
 {
-    public Unit playerUnit;
-    public Unit enemyUnit;
-
-    public PlayerData PlayerData { get; private set; }
+    [Header("- Units -")]
+    public Unit player;
+    public Unit enemy;
 
     [Header("- Management -")]
     public DataManager dataManager;
@@ -26,35 +25,26 @@ public class BattleController : Singleton<BattleController>
     public StatPanelController statPanelController;
     public DiceResultPanelController diceResultPanelController;
     public TurnOrderController turnOrderController;
+    
+    public PlayerData PlayerData { get; private set; }
+    public Turn Turn { get; private set; }
+    public Unit Unit { get; set; }
 
     private void Start()
     {
         PlayerData = dataManager.PlayerData;
+        Turn = new Turn();
         
-        SetGame();
-        StartCoroutine(StartTurn(playerUnit, enemyUnit));
-    }
-
-    private void SetGame()
-    {
-        playerUnit.GetComponent<Health>().maxHp = playerUnit.GetComponent<Health>().curHp = PlayerData.curHp;
-        statPanelController.ConnectPanel(playerUnit);
-        
-        enemyUnit.GetComponent<Health>().maxHp = enemyUnit.GetComponent<Health>().curHp = enemyUnit.unitSO.maxHp;
-        statPanelController.ConnectPanel(enemyUnit);
-        
-        cardController.InitDeck(PlayerData.cards.ToCard());
+        ChangeState<InitBattleState>();
     }
 
     private IEnumerator StartTurn(Unit from, Unit to)
     {
         var isPlayerAtk = from.type == UnitType.Player;
         
-        turnOrderController.ShowPanel(isPlayerAtk);
-        
         yield return YieldInstructionCache.WaitForSeconds(1f);
         
-        var cards = enemyUnit.unitSO.cards
+        var cards = enemy.unitSO.cards
             .Where(card => isPlayerAtk ? card.type == CardType.Defence : card.type == CardType.Attack).ToList();
         var card = cards[Random.Range(0, cards.Count)];
         cardController.CopyToPrepareCard(card);

@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine : MonoBehaviour
+public abstract class StateMachine : MonoBehaviour
 {
 	public virtual State CurrentState
 	{
-		get { return _currentState; }
-		set { Transition(value); }
+		get => currentState;
+		set => Transition(value);
 	}
 
-	[SerializeField] protected State _currentState;
-	protected bool _inTransition;
+	[SerializeField] protected State currentState;
+	protected bool inTransition;
 
 	public virtual T GetState<T>() where T : State
 	{
@@ -20,7 +20,6 @@ public class StateMachine : MonoBehaviour
 		{
 			target = gameObject.AddComponent<T>();
 		}
-
 		return target;
 	}
 
@@ -31,25 +30,25 @@ public class StateMachine : MonoBehaviour
 
 	protected virtual void Transition(State value)
 	{
-		if (_currentState == value || _inTransition)
+		if (currentState == value || inTransition)
 		{
 			return;
 		}
 
-		_inTransition = true;
+		inTransition = true;
 
-		if (_currentState != null)
+		if (currentState != null)
 		{
-			_currentState.Exit();
+			currentState.Exit();
 		}
 
-		_currentState = value;
+		currentState = value;
 
-		if (_currentState != null)
+		if (currentState != null)
 		{
-			_currentState.Enter();
+			currentState.Enter();
 		}
 
-		_inTransition = false;
+		inTransition = false;
 	}
 }
