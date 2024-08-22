@@ -12,6 +12,17 @@ public class CommandSelectionState : BattleState
         {
             StartCoroutine(ComputerTurn());
         }
+        else
+        {
+            StartCoroutine(HumanTurn());
+        }
+    }
+    
+    private IEnumerator HumanTurn()
+    {
+        yield return new WaitUntil(() => CardController.Inst.playerPrepareCard);
+        
+        owner.ChangeState<UnitChangeState>();
     }
     
     private IEnumerator ComputerTurn()
