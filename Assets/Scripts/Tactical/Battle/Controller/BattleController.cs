@@ -47,11 +47,8 @@ public class BattleController : StateMachine
         var cards = enemy.unitSO.cards
             .Where(card => isPlayerAtk ? card.type == CardType.Defence : card.type == CardType.Attack).ToList();
         var card = cards[Random.Range(0, cards.Count)];
-        cardController.CopyToPrepareCard(card);
 
         yield return YieldInstructionCache.WaitForSeconds(1.5f);
-
-        yield return new WaitUntil(() => CardController.Inst.playerPrepareCard);
 
         //주사위 굴려
         //var cardSO = CardController.Inst.playerPrepareCard.cardSO;

@@ -12,17 +12,12 @@ public class CommandSelectionState : BattleState
         {
             StartCoroutine(ComputerTurn());
         }
-        else
-        {
-            StartCoroutine(HumanTurn());
-        }
     }
-    
-    private IEnumerator HumanTurn()
+
+    private void OnCardPrepare(object obj, CardSO data)
     {
-        yield return new WaitUntil(() => CardController.Inst.playerPrepareCard);
-        
-        owner.ChangeState<UnitChangeState>();
+        if (owner.Unit.type == UnitType.Enemy)
+            owner.ChangeState<UnitChangeState>();
     }
     
     private IEnumerator ComputerTurn()
@@ -33,10 +28,22 @@ public class CommandSelectionState : BattleState
                     : Unit.type == UnitType.Player ? card.type == CardType.Defence : card.type == CardType.Attack)
             .ToList();
         var card = cards[Random.Range(0, cards.Count)];
-        owner.cardController.CopyToPrepareCard(card);
+        owner.cardController.ShowCard(card, false);
+
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
         
-        yield return null;
-        
-        owner.ChangeState<UnitChangeState>();
+        owner.cardController.PrepareCard();
+    }
+
+    protected override void AddListeners()
+    {
+        base.AddListeners();
+        CardController.CardPrepareEvent += OnCardPrepare;
+    }
+    
+    protected override void RemoveListeners()
+    {
+        base.AddListeners();
+        CardController.CardPrepareEvent -= OnCardPrepare;
     }
 }
