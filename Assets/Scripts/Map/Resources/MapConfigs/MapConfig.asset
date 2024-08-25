@@ -26,7 +26,7 @@ MonoBehaviour:
   numOfStartingNodes:
     min: 1
     max: 1
-  extraPaths: 0
+  extraPaths: -1
   layers:
   - nodeType: 0
     randomizeNodes: 0

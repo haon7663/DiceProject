@@ -45,7 +45,7 @@ public class Card : MonoBehaviour
         if (usePanel.activeSelf)
         {
             usePanel.SetActive(false);
-            CardController.Inst.PrepareCard();
+            StartCoroutine(CardController.Inst.PrepareCard());
         }
         else
         {
@@ -64,6 +64,11 @@ public class Card : MonoBehaviour
         {
             _rect.anchoredPosition = pos;
         }
+    }
+    
+    public IEnumerator MoveTransformCoroutine(Vector2 pos, float dotweenTime = 0.25f)
+    {
+        yield return _rect.DOAnchorPos(pos, dotweenTime).WaitForCompletion();
     }
 
     public void SetAnimator(string animName)

@@ -18,6 +18,8 @@ public class CommandSelectionState : BattleState
     {
         if (owner.Unit.type == UnitType.Enemy)
             owner.ChangeState<UnitChangeState>();
+        else
+            owner.ChangeState<ActionSceneState>();
     }
     
     private IEnumerator ComputerTurn()
@@ -32,7 +34,7 @@ public class CommandSelectionState : BattleState
 
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
         
-        owner.cardController.PrepareCard();
+        StartCoroutine(owner.cardController.PrepareCard());
     }
 
     protected override void AddListeners()

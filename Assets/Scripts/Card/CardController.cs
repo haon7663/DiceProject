@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CardController : Singleton<CardController>
@@ -49,13 +50,13 @@ public class CardController : Singleton<CardController>
         _copyCard = copyCard;
     }
 
-    public void PrepareCard()
+    public IEnumerator PrepareCard()
     {
         if (!_copyCard)
-            return;
+            yield break;
 
-        _copyCard.SetAnimator("Prepare");
-        _copyCard.MoveTransform(new Vector3(_copyCard.isPlayer ? -304 : 304, 225));
+        yield return _copyCard.transform.DOScale(new Vector3(0.5f, 0.5f), 0.25f).WaitForCompletion();
+        yield return StartCoroutine(_copyCard.MoveTransformCoroutine(new Vector3(_copyCard.isPlayer ? -304 : 304, 225)));
         
         CardPrepareEvent?.Invoke(this, _copyCard.cardSO);
     }

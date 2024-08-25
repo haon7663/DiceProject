@@ -24,9 +24,4 @@ public class InitBattleState : BattleState
         
         owner.ChangeState<TurnChangeState>();
     }
-
-    private void SpawnUnit()
-    {
-        
-    }
 }
