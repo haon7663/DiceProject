@@ -13,6 +13,7 @@ public class ActionSceneState : BattleState
     private IEnumerator Action()
     {
         owner.interactionPanelController.Hide();
+        owner.topPanelController.Hide();
         yield return YieldInstructionCache.WaitForSeconds(1f);
             
         owner.mainCameraMovement.VibrationForTime(0.65f);
@@ -37,6 +38,7 @@ public class ActionSceneState : BattleState
         owner.mainCameraVolumeSettings.ResetVolume();
         
         owner.interactionPanelController.Show();
+        owner.topPanelController.Show();
 
         yield return null;
     }

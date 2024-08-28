@@ -9,8 +9,8 @@ public abstract class BattleState : State
     protected Turn Turn => owner.Turn;
     protected Unit Unit
     {
-        get => owner.Unit;
-        set => owner.Unit = value;
+        get => owner.CurrentUnit;
+        set => owner.CurrentUnit = value;
     }
     
     protected Driver driver;

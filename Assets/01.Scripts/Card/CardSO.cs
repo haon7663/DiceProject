@@ -12,9 +12,8 @@ public class CardSO : ScriptableObject
     public Sprite sprite;
     public string cardName;
     [TextArea] public string description;
-    [FormerlySerializedAs("cardType")] public CardType type;
-
-    [FormerlySerializedAs("cardData")]
+    public CardType type;
+    
     [Header("능력치")]
     public List<CardEffect> effects;
 }

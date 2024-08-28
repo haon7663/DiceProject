@@ -14,7 +14,7 @@ public class StatusEffect : MonoBehaviour
     {
         _unit = GetComponent<Unit>();
     }
-
+    
     public void AddEffect(StatusEffectSO effectSO, int stack)
     {
         UIManager.Inst.PopStatusEffectText(transform.position, effectSO, stack);
