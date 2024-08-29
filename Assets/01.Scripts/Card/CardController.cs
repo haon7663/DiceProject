@@ -16,11 +16,13 @@ public class CardController : Singleton<CardController>
     [SerializeField] private Transform cardParent;
 
     private List<Card> _cards;
+    private List<Card> _copyCards;
     private Card _copyCard;
 
     public void InitDeck(List<CardSO> cards)
     {
         _cards = new List<Card>();
+        _copyCards = new List<Card>();
 
         var atkCards = cards.FindAll(x => x.type == CardType.Attack);
         foreach (var cardSO in atkCards)
@@ -39,14 +41,15 @@ public class CardController : Singleton<CardController>
         }
     }
 
-    public void ShowCard(CardSO data, bool isPlayer)
+    public void CopyCard(CardSO data, bool isPlayer)
     {
         var copyCard = Instantiate(cardPrefab, canvas);
         copyCard.Init(data, false, isPlayer);
         copyCard.transform.SetAsLastSibling();
         copyCard.MoveTransform(new Vector2(0, 540), false);
         copyCard.SetAnimator("Show");
-
+        
+        _copyCards.Add(copyCard);
         _copyCard = copyCard;
     }
 
@@ -56,35 +59,34 @@ public class CardController : Singleton<CardController>
             yield break;
 
         yield return _copyCard.transform.DOScale(new Vector3(0.5f, 0.5f), 0.25f).WaitForCompletion();
-        yield return StartCoroutine(_copyCard.MoveTransformCoroutine(new Vector3(_copyCard.isPlayer ? -304 : 304, 225)));
+        yield return StartCoroutine(_copyCard.MoveTransformCoroutine(new Vector3(_copyCard.IsPlayer ? -304 : 304, 225)));
         
-        CardPrepareEvent?.Invoke(this, _copyCard.cardSO);
+        CardPrepareEvent?.Invoke(this, _copyCard.Data);
     }
 
 
-    public void UseCard()
+    public void UseCards()
     {
-        foreach (var card in _cards)
+        foreach (var copyCard in _copyCards)
         {
-            card.CloseUsePanel();
+            copyCard.SetAnimator("Use");
         }
-
-        if (!_copyCard)
-            return;
-
+        _copyCards.Clear();
         _copyCard = null;
     }
 
-    public void CancelCard()
+    public void CancelCards()
     {
         foreach (var card in _cards)
         {
             card.CloseUsePanel();
         }
 
-        if (!_copyCard)
+        if (!_copyCard || !_copyCard.IsPlayer)
             return;
-
+        
+        _copyCards.Remove(_copyCard);
+        Destroy(_copyCard.gameObject);
         _copyCard = null;
     }
 }

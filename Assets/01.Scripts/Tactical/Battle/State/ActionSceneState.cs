@@ -14,12 +14,15 @@ public class ActionSceneState : BattleState
     {
         owner.interactionPanelController.Hide();
         owner.topPanelController.Hide();
+        owner.cardController.UseCards();
         yield return YieldInstructionCache.WaitForSeconds(1f);
+
+        var orderMultiplier = owner.player ? 1 : -1;
             
         owner.mainCameraMovement.VibrationForTime(0.65f);
-        owner.mainCameraMovement.ProductionAtTime(new Vector3(-0.4f, 0.35f, -10), 3, 4.4f);
+        owner.mainCameraMovement.ProductionAtTime(new Vector3(0, 0.35f, -10), 6 * orderMultiplier, 4.6f);
         owner.highlightCameraMovement.VibrationForTime(0.5f);
-        owner.highlightCameraMovement.ProductionAtTime(new Vector3(-0.4f, 0.35f, -10), 1, 4f);
+        owner.highlightCameraMovement.ProductionAtTime(new Vector3(0, 0.35f, -10), 2 * orderMultiplier, 4f);
         owner.mainCameraVolumeSettings.SetVolume();
         
         var from = Turn.isPlayer ? owner.player : owner.enemy;
@@ -27,8 +30,9 @@ public class ActionSceneState : BattleState
         
         if (from.TryGetComponent<Act>(out var fromAct) && to.TryGetComponent<Act>(out var toAct))
         {
-            fromAct.AttackAction();
-            toAct.HitAction();
+            fromAct.PerformAction(from.unitSO.attacks.Random());
+            toAct.PerformAction(to.unitSO.hits.Random());
+            //임시로 랜덤 처리해둠, 나중에는 카드에 맞게 수정
         }
         
         yield return YieldInstructionCache.WaitForSeconds(1.2f);

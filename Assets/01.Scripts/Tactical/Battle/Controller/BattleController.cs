@@ -40,7 +40,15 @@ public class BattleController : StateMachine
     {
         PlayerData = dataManager.PlayerData;
         Turn = new Turn();
-        
-        ChangeState<InitBattleState>();
+
+        switch (GameManager.Inst.currentGameMode)
+        {
+            case GameMode.Battle:
+                ChangeState<InitBattleState>();
+                break;
+            case GameMode.Event:
+                ChangeState<InitEventState>();
+                break;
+        }
     }
 }

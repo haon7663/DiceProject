@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class Card : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class Card : MonoBehaviour
     [SerializeField] private TMP_Text descriptionLabel;
     [SerializeField] private GameObject usePanel;
 
-    public CardSO cardSO;
-    public bool isPlayer;
+    public CardSO Data { get; private set; }
+    public bool IsPlayer { get; private set; }
     
     private bool _useAble;
     
@@ -28,9 +29,9 @@ public class Card : MonoBehaviour
 
     public void Init(CardSO data, bool useAble, bool isPlayer = true)
     {
-        cardSO = data;
+        Data = data;
+        IsPlayer = isPlayer;
         _useAble = useAble;
-        this.isPlayer = isPlayer;
 
         nameLabel.text = data.cardName;
         descriptionLabel.text = data.description;
@@ -49,8 +50,9 @@ public class Card : MonoBehaviour
         }
         else
         {
+            CardController.Inst.CancelCards();
             usePanel.SetActive(true);
-            CardController.Inst.ShowCard(cardSO, isPlayer);
+            CardController.Inst.CopyCard(Data, IsPlayer);
         }
     }
 

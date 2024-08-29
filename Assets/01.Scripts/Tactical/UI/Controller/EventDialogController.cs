@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventOptionController : MonoBehaviour
+public class EventDialogController : MonoBehaviour
 {
     [SerializeField] private Transform layoutGroup;
     [SerializeField] private GameObject eventButtonPrefab;

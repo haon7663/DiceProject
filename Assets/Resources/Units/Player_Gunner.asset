@@ -10,17 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb523e5f96c424e4ea6dce3522df5b2e, type: 3}
-  m_Name: Player
+  m_Name: Player_Gunner
   m_EditorClassIdentifier: 
-  name: W
-  idleSprite: {fileID: 21300000, guid: b57a556947292db4ea78261b040b1981, type: 3}
-  attackSprite: {fileID: 21300000, guid: 44e797065334a0c48a956edc5d9404d5, type: 3}
-  attackEffectSprite: {fileID: 21300000, guid: 7bad32a8a768f4d47addeda772dace1d, type: 3}
-  hitSprite: {fileID: 21300000, guid: 5e01ec33c29a13149adb5790c631131c, type: 3}
-  hitEffectSprite: {fileID: 21300000, guid: aa39b43d40a6b4044b4eb0bd47d288f8, type: 3}
+  name: Gunner
+  idleSprite: {fileID: 21300000, guid: fb527f35c4f2369438b89db3c7b3b050, type: 3}
+  attacks:
+  - name: Default
+    actionSprite: {fileID: 21300000, guid: 649cd1f82a0be8541afab55112e5b721, type: 3}
+    effectSprite: {fileID: 21300000, guid: 1cb329f87635b744290949b8819b6bb7, type: 3}
+    startOffset: {x: 0.125, y: 0}
+    endOffset: {x: 0, y: 0}
+  hits:
+  - name: Default
+    actionSprite: {fileID: 21300000, guid: 7c72e9d7fe282554c867804a5825410a, type: 3}
+    effectSprite: {fileID: 21300000, guid: 4296c36ed303f464aa9dbeadb73b1ad5, type: 3}
+    startOffset: {x: 0.3, y: 0}
+    endOffset: {x: 0.1, y: 0}
   cards:
   - {fileID: 11400000, guid: 8cf7ad694acc87f4fb6e4b07a47ddc41, type: 2}
   - {fileID: 11400000, guid: 3ac81be69b1745a43801780a3bbd1893, type: 2}
   - {fileID: 11400000, guid: d5f58dae1c6b8d040b1e21be849c21cb, type: 2}
   - {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
-  maxHp: 50
+  maxHp: 40

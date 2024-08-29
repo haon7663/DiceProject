@@ -30,7 +30,7 @@ public class CommandSelectionState : BattleState
                     : Unit.type == UnitType.Player ? card.type == CardType.Defence : card.type == CardType.Attack)
             .ToList();
         var card = cards[Random.Range(0, cards.Count)];
-        owner.cardController.ShowCard(card, false);
+        owner.cardController.CopyCard(card, false);
 
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
         
