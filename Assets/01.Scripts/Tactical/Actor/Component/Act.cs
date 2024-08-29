@@ -2,84 +2,57 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Act : MonoBehaviour
 {
-    [SerializeField] private Vector2 defaultPosition;
-    [SerializeField] private Vector2 attackStartPosition;
-    [SerializeField] private Vector2 attackLastPosition;
-    [SerializeField] private Vector2 hitStartPosition;
-    [SerializeField] private Vector2 hitLastPosition;
-    
     private Unit _unit;
+    private Transform _spriteTransform;
     private SpriteRenderer _spriteRenderer;
-
-    public AnimationCurve curve;
 
     private void Awake()
     {
         _unit = GetComponent<Unit>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteTransform = transform.GetChild(0);
+        _spriteRenderer = _spriteTransform.GetComponent<SpriteRenderer>();
     }
 
-    public void AttackAction()
+    private void Start()
     {
-        var creatureSO = _unit.unitSO;
-        
-        gameObject.layer = 7;
-        transform.position = attackStartPosition;
-        _spriteRenderer.sprite = creatureSO.attackSprite;
-
-        var sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(attackLastPosition, 1.2f));
-        sequence.JoinCallback(() =>
-        {
-            var effect = new GameObject();
-            effect.layer = 7;
-            effect.transform.SetParent(transform);
-            effect.transform.localPosition = Vector3.zero;
-            
-            var effectSprite = effect.AddComponent<SpriteRenderer>();
-            effectSprite.sprite = creatureSO.attackEffectSprite;
-            effectSprite.sortingOrder = 2;
-            effectSprite.DOFade(0, 1f).SetEase(curve).OnComplete(() => Destroy(effect));
-        });
-        sequence.AppendCallback(() =>
-        {
-            _spriteRenderer.sprite = creatureSO.idleSprite;
-            gameObject.layer = 1;
-        });
-        sequence.Append(transform.DOMove(defaultPosition, 0.1f).SetEase(Ease.OutSine));
+        _spriteRenderer.sprite = _unit.unitSO.idleSprite;
     }
-    
-    public void HitAction()
+
+    public void PerformAction(AnimationData animationData)
     {
-        var creatureSO = _unit.unitSO;
+        var unitData = _unit.unitSO;
         
-        gameObject.layer = 7;
-        transform.position = hitStartPosition;
-        _spriteRenderer.sprite = _unit.unitSO.hitSprite;
+        _spriteRenderer.sprite = animationData.actionSprite;
+        _spriteTransform.gameObject.layer = 7;
+        _spriteTransform.localPosition = animationData.startOffset;
 
         var sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(hitLastPosition, 1.2f));
-        sequence.JoinCallback(() =>
-        {
-            var effect = new GameObject();
-            effect.layer = 7;
-            effect.transform.SetParent(transform);
-            effect.transform.localPosition = Vector3.zero;
-            
-            var effectSprite = effect.AddComponent<SpriteRenderer>();
-            effectSprite.sprite = creatureSO.hitEffectSprite;
-            effectSprite.sortingOrder = 2;
-            effectSprite.DOFade(0, 1f).SetEase(curve).OnComplete(() => Destroy(effect));
-        });
-        sequence.AppendCallback(() =>
-        {
-            _spriteRenderer.sprite = _unit.unitSO.idleSprite;
-            gameObject.layer = 1;
-        });
-        sequence.Append(transform.DOMove(defaultPosition, 0.1f).SetEase(Ease.OutSine));
+        sequence.Append(_spriteTransform.DOLocalMove(animationData.endOffset, 1.2f))
+            .JoinCallback(() => CreateEffect(animationData.effectSprite))
+            .Append(_spriteTransform.DOLocalMove(Vector3.zero, 0.15f).SetEase(Ease.OutSine))
+            .AppendCallback(() =>
+            {
+                _spriteRenderer.sprite = unitData.idleSprite;
+                gameObject.layer = 1;
+            });
+    }
+
+    private void CreateEffect(Sprite effectSprite)
+    {
+        var effect = new GameObject { layer = 7 };
+        effect.transform.SetParent(_spriteTransform);
+        effect.transform.localPosition = Vector3.zero;
+        effect.transform.localScale = Vector3.one;
+        effect.transform.localRotation = Quaternion.identity;
+
+        var effectSpriteRenderer = effect.AddComponent<SpriteRenderer>();
+        effectSpriteRenderer.sprite = effectSprite;
+        effectSpriteRenderer.sortingOrder = 2;
+        effectSpriteRenderer.DOFade(0, 1f).SetEase(Ease.InCirc).OnComplete(() => Destroy(effect));
     }
 }
