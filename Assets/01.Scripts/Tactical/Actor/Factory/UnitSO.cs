@@ -12,10 +12,8 @@ public class UnitSO : ScriptableObject
     
     [Header("스프라이트")]
     public Sprite idleSprite;
-    public Sprite attackSprite;
-    public Sprite attackEffectSprite;
-    public Sprite hitSprite;
-    public Sprite hitEffectSprite;
+    public List<AnimationData> attacks;
+    public List<AnimationData> hits;
 
     [Header("카드")] 
     public List<CardSO> cards;

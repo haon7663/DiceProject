@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour
 {
     public UnitType type;
     public UnitSO unitSO;
-    public Dictionary<StatType, CreatureStat> Stats = new();
+    public Dictionary<StatType, UnitStat> Stats = new();
     
     private void Start()
     {
@@ -22,14 +22,14 @@ public class Unit : MonoBehaviour
     
     private void Init()
     {
-        Stats = new Dictionary<StatType, CreatureStat>
+        Stats = new Dictionary<StatType, UnitStat>
         {
-            { StatType.MaxHealth, new CreatureStat() },
-            { StatType.Cost, new CreatureStat() },
-            { StatType.GetDamage, new CreatureStat() },
-            { StatType.TakeDamage, new CreatureStat() },
-            { StatType.TakeDefence, new CreatureStat() },
-            { StatType.TakeRecovery, new CreatureStat() },
+            { StatType.MaxHealth, new UnitStat() },
+            { StatType.Cost, new UnitStat() },
+            { StatType.GetDamage, new UnitStat() },
+            { StatType.TakeDamage, new UnitStat() },
+            { StatType.TakeDefence, new UnitStat() },
+            { StatType.TakeRecovery, new UnitStat() },
         };
     }
 }

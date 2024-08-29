@@ -2,7 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatureStat
+public class UnitStat
 {
     private readonly List<StatModifier> _statModifiers = new List<StatModifier>();
 

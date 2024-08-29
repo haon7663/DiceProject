@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 public class EventOptionButton : MonoBehaviour
 {
     [SerializeField] private TMP_Text descriptionLabel;
+    
     private EventOption _eventOption;
     
     public void Init(EventOption eventOption)
