@@ -1,18 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DiceRollingState : BattleState
 {
     public override void Enter()
     {
         base.Enter();
-        var diceTypes = owner.player.cardSO.cardEffects.SelectMany(cardEffect => cardEffect.diceTypes).ToList();
-        StartCoroutine(Rolling(diceTypes));
+        StartCoroutine(Rolling());
+    }
+
+    public IEnumerator Rolling()
+    {
+        var unit = owner.player;
+        var diceTypes = unit.cardSO.cardEffects.SelectMany(cardEffect => cardEffect.diceTypes).ToList();
+        yield return StartCoroutine(RollingDice(diceTypes));
     }
     
-    public IEnumerator Rolling(List<DiceType> diceTypes)
+    public IEnumerator RollingDice(List<DiceType> diceTypes)
     {   
         for (var i = 0; i < diceTypes.Count; i++)
         {
@@ -32,11 +40,5 @@ public class DiceRollingState : BattleState
 
             owner.diceResultPanelController.AddValue(owner.player, diceType.GetDiceValue());
         }
-        
-        owner.diceResultPanelController.Show();
-        
-        yield return YieldInstructionCache.WaitForSeconds(2f);
-        
-        owner.ChangeState<ActionSceneState>();
     }
 }
