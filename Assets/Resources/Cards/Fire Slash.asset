@@ -22,4 +22,4 @@ MonoBehaviour:
     cardBehaviorType: 0
     statusEffectSO: {fileID: 0}
     basicValue: 0
-    diceTypes: 0000000001000000
+    diceTypes: 0100000002000000

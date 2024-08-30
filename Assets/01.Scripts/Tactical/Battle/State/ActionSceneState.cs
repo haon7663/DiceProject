@@ -42,5 +42,7 @@ public class ActionSceneState : BattleState
         owner.topPanelController.Show();
 
         yield return null;
+        
+        owner.ChangeState<TurnChangeState>();
     }
 }

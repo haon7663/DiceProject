@@ -19,9 +19,9 @@ public class DiceResultPanel : MonoBehaviour
         resultLabel.text = _resultValue.ToString();
     }
 
-    public void AddValue(int value)
+    public void SetValue(int value)
     {
-        var targetValue = _resultValue + value;
-        DOTween.To(() => _resultValue, x => _resultValue = x, targetValue, 0.75f).OnUpdate(() => resultLabel.text = _resultValue.ToString());
+        DOTween.Complete(this);
+        DOTween.To(() => _resultValue, x => _resultValue = x, value, 0.75f).OnUpdate(() => resultLabel.text = _resultValue.ToString());
     }
 }

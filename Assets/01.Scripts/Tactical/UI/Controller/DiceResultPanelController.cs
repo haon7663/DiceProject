@@ -17,11 +17,11 @@ public class DiceResultPanelController : MonoBehaviour
         panel.Initialize(unit);
     }
 
-    public void AddValue(Unit unit, int value)
+    public void SetValue(Unit unit, int value)
     {
         var isPlayer = unit.type == UnitType.Player;
         var panel = isPlayer ? primaryPanel : secondaryPanel;
-        panel.AddValue(value);
+        panel.SetValue(value);
     }
 
     public void Show()

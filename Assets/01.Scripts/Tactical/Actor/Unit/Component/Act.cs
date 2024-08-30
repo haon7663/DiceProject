@@ -38,7 +38,7 @@ public class Act : MonoBehaviour
             .AppendCallback(() =>
             {
                 _spriteRenderer.sprite = unitData.idleSprite;
-                gameObject.layer = 1;
+                gameObject.layer = 0;
             });
     }
 

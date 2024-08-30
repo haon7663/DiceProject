@@ -11,7 +11,7 @@ public class Unit : MonoBehaviour
     public CardSO cardSO;
     public Dictionary<StatType, UnitStat> Stats = new();
 
-    public SerializableDictionary<CardBehaviorType, int> values;
+    public Dictionary<CardEffect, int> values;
     
     private void Start()
     {
