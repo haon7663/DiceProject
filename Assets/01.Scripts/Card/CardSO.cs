@@ -15,7 +15,7 @@ public class CardSO : ScriptableObject
     public CardType type;
     
     [Header("능력치")]
-    public List<CardEffect> effects;
+    public List<CardEffect> cardEffects;
 }
 
 public enum CardType { Attack, Defence }

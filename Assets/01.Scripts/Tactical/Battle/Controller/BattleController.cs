@@ -24,6 +24,7 @@ public class BattleController : StateMachine
     public StatPanelController statPanelController;
     public CardController cardController;
     public MapController mapController;
+    public HudController hudController;
     
     [Header("- Battle UI -")]
     public TurnOrderController turnOrderController;

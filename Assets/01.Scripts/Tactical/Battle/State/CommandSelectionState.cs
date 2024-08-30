@@ -17,9 +17,15 @@ public class CommandSelectionState : BattleState
     private void OnCardPrepare(object obj, CardSO data)
     {
         if (owner.CurrentUnit.type == UnitType.Enemy)
+        {
+            owner.enemy.cardSO = data;
             owner.ChangeState<UnitChangeState>();
+        }
         else
-            owner.ChangeState<ActionSceneState>();
+        {
+            owner.player.cardSO = data;
+            owner.ChangeState<FocusActionState>();
+        }
     }
     
     private IEnumerator ComputerTurn()

@@ -27,7 +27,7 @@ public class StatPanel : MonoBehaviour
         if (_unit.TryGetComponent<Health>(out var health))
         {
             health.OnHpChanged += HpChange;
-            HpChange();
+            HpChange(0);
         }
         if (_unit.TryGetComponent<StatusEffect>(out var status))
         {
@@ -36,7 +36,7 @@ public class StatPanel : MonoBehaviour
         }
     }
 
-    private void HpChange()
+    private void HpChange(int value)
     {
         if (!_unit.TryGetComponent<Health>(out var health))
             return;

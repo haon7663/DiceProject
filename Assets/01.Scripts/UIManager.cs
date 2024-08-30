@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -29,8 +30,9 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private TMP_Text enemyDiceTMP;
     [SerializeField] private TMP_Text enemyExpectDiceTMP;
     
+    [FormerlySerializedAs("damageTextHandlerPrefab")]
     [Header("")] 
-    [SerializeField] private DamageTextHandler damageTextHandlerPrefab;
+    [SerializeField] private DamageHud damageHudPrefab;
     [SerializeField] private RecoveryTextHandler recoveryTextHandlerPrefab;
     [SerializeField] private GameObject avoidTextHandlerPrefab;
 
@@ -45,8 +47,8 @@ public class UIManager : Singleton<UIManager>
 
     public void PopDamageText(Vector3 pos, int value)
     {
-        var damageText = Instantiate(damageTextHandlerPrefab, pos, Quaternion.identity, canvas);
-        damageText.Setup(value);
+        var damageText = Instantiate(damageHudPrefab, pos, Quaternion.identity, canvas);
+        //damageText.Initialize(value);
     }
     public void PopRecoveryText(Vector3 pos, int value)
     {

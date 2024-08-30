@@ -12,11 +12,6 @@ public class ActionSceneState : BattleState
 
     private IEnumerator Action()
     {
-        owner.interactionPanelController.Hide();
-        owner.topPanelController.Hide();
-        owner.cardController.UseCards();
-        yield return YieldInstructionCache.WaitForSeconds(1f);
-
         var orderMultiplier = owner.player ? 1 : -1;
             
         owner.mainCameraMovement.VibrationForTime(0.65f);
@@ -33,6 +28,7 @@ public class ActionSceneState : BattleState
             fromAct.PerformAction(from.unitSO.attacks.Random());
             toAct.PerformAction(to.unitSO.hits.Random());
             //임시로 랜덤 처리해둠, 나중에는 카드에 맞게 수정
+            owner.hudController.PopDamage(to.transform.position, 5);
         }
         
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
@@ -41,6 +37,7 @@ public class ActionSceneState : BattleState
         owner.highlightCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
         owner.mainCameraVolumeSettings.ResetVolume();
         
+        owner.diceResultPanelController.Hide();
         owner.interactionPanelController.Show();
         owner.topPanelController.Show();
 

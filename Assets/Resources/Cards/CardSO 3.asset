@@ -16,15 +16,10 @@ MonoBehaviour:
   cardName: "\uC57D\uC810 \uCC0C\uB974\uAE30"
   description: "<sprite=1><sprite=2><sprite=3> \uD53C\uD574\uB97C \uC8FC\uACE0\n\uCDE8\uC57D\uC744
     2 \uBD80\uC5EC\uD569\uB2C8\uB2E4.\n"
-  cardType: 0
-  cardData:
+  type: 0
+  cardEffects:
   - onSelf: 0
     behaviorType: 0
     statusEffectSO: {fileID: 0}
     basicValue: 0
     diceTypes: 010000000200000003000000
-  - onSelf: 0
-    behaviorType: 1
-    statusEffectSO: {fileID: 11400000, guid: b6fc715710423c749972a65f279dd8be, type: 2}
-    basicValue: 2
-    diceTypes: 

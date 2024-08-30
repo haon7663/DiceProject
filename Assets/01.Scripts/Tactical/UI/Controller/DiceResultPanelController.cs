@@ -14,10 +14,25 @@ public class DiceResultPanelController : MonoBehaviour
         var isPlayer = unit.type == UnitType.Player;
         var panel = isPlayer ? primaryPanel : secondaryPanel;
         panel.gameObject.SetActive(true);
+        panel.Initialize(unit);
+    }
+
+    public void AddValue(Unit unit, int value)
+    {
+        var isPlayer = unit.type == UnitType.Player;
+        var panel = isPlayer ? primaryPanel : secondaryPanel;
+        panel.AddValue(value);
+    }
+
+    public void Show()
+    {
+        primaryPanel.GetComponent<Panel>().SetPosition(PanelStates.Show, true, 1);
+        secondaryPanel.GetComponent<Panel>().SetPosition(PanelStates.Show, true, 1);
     }
     
-    public void ShowTopPanel()
+    public void Hide()
     {
-        topPanel.gameObject.SetActive(true);
+        primaryPanel.GetComponent<Panel>().SetPosition(PanelStates.Hide, true, 0.5f);
+        secondaryPanel.GetComponent<Panel>().SetPosition(PanelStates.Hide, true, 0.5f);
     }
 }

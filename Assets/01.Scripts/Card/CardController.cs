@@ -59,7 +59,7 @@ public class CardController : Singleton<CardController>
             yield break;
 
         yield return _copyCard.transform.DOScale(new Vector3(0.5f, 0.5f), 0.25f).WaitForCompletion();
-        yield return StartCoroutine(_copyCard.MoveTransformCoroutine(new Vector3(_copyCard.IsPlayer ? -304 : 304, 225)));
+        yield return StartCoroutine(_copyCard.MoveTransformCoroutine(new Vector3(_copyCard.IsPlayer ? -304 : 304, 150)));
         
         CardPrepareEvent?.Invoke(this, _copyCard.Data);
     }
