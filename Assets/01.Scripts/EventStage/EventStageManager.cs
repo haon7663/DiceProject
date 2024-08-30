@@ -149,7 +149,7 @@ public class EventStageManager : Singleton<EventStageManager>
                             DataManager.Inst.PlayerData.cards.Add(eventEffect.cardSO.ToJson());
                             break;
                         case CardEventType.Remove:
-                            if( DataManager.Inst.PlayerData.cards.Contains(eventEffect.cardSO.ToJson()))
+                            if(DataManager.Inst.PlayerData.cards.Contains(eventEffect.cardSO.ToJson()))
                                 DataManager.Inst.PlayerData.cards.Remove(eventEffect.cardSO.ToJson());
                             break;
                         case CardEventType.Upgrade:
