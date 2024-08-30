@@ -19,7 +19,7 @@ MonoBehaviour:
   type: 0
   cardEffects:
   - onSelf: 0
-    behaviorType: 0
+    cardBehaviorType: 0
     statusEffectSO: {fileID: 0}
     basicValue: 0
-    diceTypes: 0000000000000000
+    diceTypes: 0000000001000000

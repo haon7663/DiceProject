@@ -15,10 +15,10 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: a1167e48b8ca949408cc44c68c75166f, type: 3}
   cardName: "\uD0C0\uACA9"
   description: "<sprite=0> + 3 \uB9CC\uD07C \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4"
-  cardType: 0
-  cardData:
+  type: 0
+  cardEffects:
   - onSelf: 0
-    behaviorType: 0
+    cardBehaviorType: 0
     statusEffectSO: {fileID: 0}
     basicValue: 3
     diceTypes: 00000000

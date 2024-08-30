@@ -16,4 +16,9 @@ MonoBehaviour:
   cardName: "\uBC29\uC5B4"
   description: "1 + <sprite=0> \uB9CC\uD07C\n\uD53C\uD574\uB97C \uB35C \uBC1B\uC2B5\uB2C8\uB2E4"
   type: 1
-  effects: []
+  cardEffects:
+  - onSelf: 1
+    cardBehaviorType: 2
+    statusEffectSO: {fileID: 0}
+    basicValue: 1
+    diceTypes: 00000000

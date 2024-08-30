@@ -17,4 +17,9 @@ MonoBehaviour:
   description: "\uC801\uC758 \uC8FC\uC0AC\uC704 \uAC12\uBCF4\uB2E4\n<sprite=0><sprite=1>
     \uAC00 \uB192\uC73C\uBA74 \uD68C\uD53C\uD569\uB2C8\uB2E4."
   type: 1
-  effects: []
+  cardEffects:
+  - onSelf: 1
+    cardBehaviorType: 3
+    statusEffectSO: {fileID: 0}
+    basicValue: 0
+    diceTypes: 0000000001000000
