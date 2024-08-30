@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using GDX.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.Windows;
 using File = System.IO.File;
 
 [Serializable]

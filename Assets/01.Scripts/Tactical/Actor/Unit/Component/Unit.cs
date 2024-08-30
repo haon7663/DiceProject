@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GDX.Collections.Generic;
 using UnityEngine;
 
 public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600 }
@@ -9,6 +10,8 @@ public class Unit : MonoBehaviour
     public UnitSO unitSO;
     public CardSO cardSO;
     public Dictionary<StatType, UnitStat> Stats = new();
+
+    public SerializableDictionary<CardBehaviorType, int> values;
     
     private void Start()
     {

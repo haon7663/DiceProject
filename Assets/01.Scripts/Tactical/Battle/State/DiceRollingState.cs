@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GDX.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,20 +18,25 @@ public class DiceRollingState : BattleState
     {
         var unit = owner.player;
         var cardEffects = unit.cardSO.cardEffects;
+        
+        unit.values = new SerializableDictionary<CardBehaviorType, int>();
 
-        for (int i = 0; i < cardEffects.Count; i++)
+        var index = 0;
+        var maxIndex = cardEffects.SelectMany(cardEffect => cardEffect.diceTypes).Count();
+        foreach (var cardEffect in cardEffects)
         {
-            
-        }
-
-        for (var i = 0; i < diceTypes.Count; i++)
-        {
-            var diceType = diceTypes[i];
-
-            var defaultPos = new Vector3(2.5f * (i - (float)(diceTypes.Count - 1) / 2) - 10, 0);
-            var randPos = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * 0.4f;
-            var pos = defaultPos + randPos;
-            RollingDice(diceType, pos);
+            var diceTypes = cardEffect.diceTypes;
+            foreach (var diceType in diceTypes)
+            {
+                var defaultPos = new Vector3(2.5f * (index++ - (float)(maxIndex - 1) / 2) - 10, 0);
+                var randPos = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * 0.4f;
+                var pos = defaultPos + randPos;
+                
+                var value = RollingDice(diceType, pos);
+                unit.values.Add(cardEffect.cardBehaviorType, value);
+                
+                yield return YieldInstructionCache.WaitForSeconds(Random.Range(0.15f, 0.225f));
+            }
         }
     }
     
