@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CardType { Attack, Defence }
+public enum CardType { Attack, Defence, Both }
 
 [CreateAssetMenu(fileName = "CardSO", menuName = "Scriptable Object/CardSO")]
 public class CardSO : ScriptableObject
@@ -18,6 +18,7 @@ public class CardSO : ScriptableObject
 }
 
 public enum CardBehaviorType { Damage, StatusEffect, Defence, Avoid, Counter }
+public enum CardSpecialType { None, Conditional, EqualDice, Reversal }
 
 [Serializable]
 public class CardEffect
@@ -30,4 +31,9 @@ public class CardEffect
     [Header("스탯")]
     public int basicValue;
     public List<DiceType> dices;
+
+    [Header("특수")]
+    public CardSpecialType specialType;
+    [DrawIf("specialType", CardSpecialType.Conditional)]
+    public CompareType compareType;
 }

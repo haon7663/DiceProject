@@ -21,7 +21,7 @@ public static class CardJsonConverter
 
     public static CardSO ToCard(this CardJson cardJson)
     {
-        var cards = Resources.LoadAll<CardSO>($"Cards");
+        var cards = Resources.LoadAll<CardSO>("Cards");
         var card = cards.First(card => card.cardName == cardJson.cardName);
         if (card)
             return card;

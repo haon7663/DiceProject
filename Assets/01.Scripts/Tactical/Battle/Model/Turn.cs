@@ -10,7 +10,6 @@ public class Turn
     public void ChangeTurn(Unit unit)
     {
         actor = unit;
-
         isPlayer = unit.type == UnitType.Player;
     }
 }

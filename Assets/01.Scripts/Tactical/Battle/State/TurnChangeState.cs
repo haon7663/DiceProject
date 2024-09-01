@@ -17,6 +17,7 @@ public class TurnChangeState : BattleState
         else
             Turn.ChangeTurn(owner.player);
         
+        owner.cardController.ChangeCardsActive(Turn.isPlayer);
         yield return StartCoroutine(owner.turnOrderController.Show(Turn.isPlayer));
         
         owner.ChangeState<UnitChangeState>();

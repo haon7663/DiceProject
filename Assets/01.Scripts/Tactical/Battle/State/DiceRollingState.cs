@@ -33,14 +33,14 @@ public class DiceRollingState : BattleState
         unit.values = new Dictionary<CardEffect, int>();
 
         var index = 0;
-        var maxIndex = cardEffects.SelectMany(cardEffect => cardEffect.dices).Count();
+        var maxIndex = cardEffects.SelectMany(cardEffect => cardEffect.dices).Count(diceType => owner.PlayerData.dices[diceType] > 0);
 
         foreach (var cardEffect in cardEffects)
         {
             var totalValue = cardEffect.basicValue;
             var diceTypes = cardEffect.dices;
 
-            foreach (var diceType in diceTypes)
+            foreach (var diceType in diceTypes.Where(diceType => owner.PlayerData.dices[diceType] > 0))
             {
                 var pos = CalculateDicePosition(index++, maxIndex);
                 totalValue += unit.type == UnitType.Player ? RollingDice(diceType, pos) : diceType.GetDiceValue();
@@ -62,8 +62,6 @@ public class DiceRollingState : BattleState
 
     private int RollingDice(DiceType diceType, Vector3 pos)
     {
-        if (owner.PlayerData.dices[diceType] <= 0) return 0;
-        
         DataManager.Inst.PlayerData.dices[diceType]--;
 
         var value = diceType.GetDiceValue();

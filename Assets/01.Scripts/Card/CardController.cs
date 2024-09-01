@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class CardController : Singleton<CardController>
     [Header("트랜스폼")] 
     [SerializeField] private Transform canvas;
     [SerializeField] private Transform cardParent;
-
+    
     private List<Card> _cards;
     private List<Card> _copyCards;
     private Card _copyCard;
@@ -24,20 +25,23 @@ public class CardController : Singleton<CardController>
         _cards = new List<Card>();
         _copyCards = new List<Card>();
 
-        var atkCards = cards.FindAll(x => x.type == CardType.Attack);
-        foreach (var cardSO in atkCards)
+        foreach (var data in cards)
         {
             var card = Instantiate(cardPrefab, cardParent);
-            card.Init(cardSO, true);
+            card.Init(data, true);
             _cards.Add(card);
         }
+    }
 
-        var defCards = cards.FindAll(x => x.type == CardType.Defence);
-        foreach (var cardSO in defCards)
+    public void ChangeCardsActive(bool attack)
+    {
+        foreach (var card in _cards)
         {
-            var card = Instantiate(cardPrefab, cardParent);
-            card.Init(cardSO, true);
-            _cards.Add(card);
+            var type = card.Data.type;
+            var isActive = (attack ? type == CardType.Attack : type == CardType.Defence)
+                    || type == CardType.Both;
+            
+            card.gameObject.SetActive(isActive);
         }
     }
 

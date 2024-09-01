@@ -105,28 +105,12 @@ public class EventStageManager : Singleton<EventStageManager>
             yield return StartCoroutine(DiceManager.Inst.RollTheDices(eventOption.compareDiceTypes, 0,
                 value => diceValue = value));
         }
-        print("Log24");
         foreach (var eventEffect in eventOption.eventEffects)
         {
             if (eventOption.useCondition)
             {
-                switch (eventEffect.compareType)
-                {
-                    case CompareType.Less:
-                        if (diceValue > eventEffect.compareValue)
-                            continue;
-                        break;
-                    case CompareType.More:
-                        if (diceValue < eventEffect.compareValue)
-                            continue;
-                        break;
-                    case CompareType.Same:
-                        if (diceValue != eventEffect.compareValue)
-                            continue;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                if(!eventEffect.compareType.OnSatisfied(diceValue, eventEffect.compareValue))
+                    continue;
             }
 
             eventSpriteRenderer.sprite = evenqr;

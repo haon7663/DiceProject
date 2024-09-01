@@ -5,7 +5,6 @@ using UnityEngine;
 
 public enum EventEffectType { Hp, Dice, Card, Relic, None }
 public enum CardEventType { Add, Remove, Upgrade }
-public enum CompareType { More, Less, Same }
 
 [CreateAssetMenu(fileName = "EventSO", menuName = "Scriptable Object/EventSO")]
 public class EventSO : ScriptableObject

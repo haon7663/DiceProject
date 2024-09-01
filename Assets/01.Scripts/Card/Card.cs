@@ -9,6 +9,7 @@ using UnityEngine.Serialization;
 public class Card : MonoBehaviour
 {
     [SerializeField] private Image cardIcon;
+    [SerializeField] private Image typeIcon;
     [SerializeField] private TMP_Text nameLabel;
     [SerializeField] private TMP_Text descriptionLabel;
     [SerializeField] private GameObject usePanel;
@@ -36,6 +37,7 @@ public class Card : MonoBehaviour
         nameLabel.text = data.cardName;
         descriptionLabel.text = data.description;
         cardIcon.sprite = data.sprite;
+        typeIcon.sprite = Resources.Load<Sprite>($"Cards/Icon/{data.type.ToString()}");
     }
     
     public void OnPointClick()
