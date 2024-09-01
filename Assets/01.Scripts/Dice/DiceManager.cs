@@ -6,6 +6,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public enum DiceType { Four, Six, Eight, Twelve, Twenty }
+
 public class DiceManager : Singleton<DiceManager>
 {
     [SerializeField] private DiceObject dicePrefab;

@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+
+public enum CardType { Attack, Defence }
 
 [CreateAssetMenu(fileName = "CardSO", menuName = "Scriptable Object/CardSO")]
 public class CardSO : ScriptableObject
@@ -16,18 +17,17 @@ public class CardSO : ScriptableObject
     public List<CardEffect> cardEffects;
 }
 
-public enum CardType { Attack, Defence }
 public enum CardBehaviorType { Damage, StatusEffect, Defence, Avoid, Counter }
 
 [Serializable]
 public class CardEffect
 {
     public bool onSelf;
-    public CardBehaviorType cardBehaviorType;
-    [DrawIf("cardBehaviorType", CardBehaviorType.StatusEffect)]
+    public CardBehaviorType behaviorType;
+    [DrawIf("behaviorType", CardBehaviorType.StatusEffect)]
     public StatusEffectSO statusEffectSO;
     
     [Header("스탯")]
     public int basicValue;
-    public List<DiceType> diceTypes;
+    public List<DiceType> dices;
 }

@@ -33,12 +33,12 @@ public class DiceRollingState : BattleState
         unit.values = new Dictionary<CardEffect, int>();
 
         var index = 0;
-        var maxIndex = cardEffects.SelectMany(cardEffect => cardEffect.diceTypes).Count();
+        var maxIndex = cardEffects.SelectMany(cardEffect => cardEffect.dices).Count();
 
         foreach (var cardEffect in cardEffects)
         {
             var totalValue = cardEffect.basicValue;
-            var diceTypes = cardEffect.diceTypes;
+            var diceTypes = cardEffect.dices;
 
             foreach (var diceType in diceTypes)
             {
