@@ -10,18 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6891f8709446bc54ea9da214ba6f8ca7, type: 3}
-  m_Name: Avoid
+  m_Name: Judgment
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 0f8f5785f9532cc4dbeddacc6b6437c6, type: 3}
-  cardName: "\uD68C\uD53C"
-  description: "\uC801\uC758 \uC8FC\uC0AC\uC704 \uAC12\uBCF4\uB2E4\n<sprite=0><sprite=1>
-    \uAC00 \uB192\uC73C\uBA74 \uD68C\uD53C\uD569\uB2C8\uB2E4."
-  type: 1
+  sprite: {fileID: 21300000, guid: 172f7da34944ac0428d84cdde48c6ee5, type: 3}
+  cardName: "\uC2EC\uD310"
+  description: "30 - <sprite=3> \uB9CC\uD07C \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
+  type: 0
   cardEffects:
-  - onSelf: 1
-    behaviourType: 0
-    behaviourCompareType: 0
-    basicValue: 0
-    dices: 
+  - onSelf: 0
+    basicValue: 30
+    dices: 03000000
     specialType: 0
     compareType: 0
