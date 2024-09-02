@@ -8,13 +8,8 @@ public static class BattleSystem
     public static (bool, int) CompareBehaviours(List<Behaviour> behaviours)
     {
         var finalValue = behaviours.Sum(behaviour => behaviour.CalculateValue());
-
-        foreach (var behaviour in behaviours)
-        {
-            if (!behaviour.CalculateResult(finalValue))
-                return (false, 0);
-        }
+        var finalResult = behaviours.Any(behaviour => behaviour.CalculateResult(finalValue));
         
-        return (true, finalValue);
+        return (finalResult, finalValue);
     }
 }

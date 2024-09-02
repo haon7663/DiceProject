@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum CardType { Attack, Defence, Both }
 
-[CreateAssetMenu(fileName = "CardSO", menuName = "Scriptable Object/CardSO")]
+[CreateAssetMenu(fileName = "Card", menuName = "Scriptable Object/Card")]
 public class CardSO : ScriptableObject
 {
     [Header("정보")]
@@ -17,16 +17,13 @@ public class CardSO : ScriptableObject
     public List<CardEffect> cardEffects;
 }
 
-public enum CardBehaviorType { Damage, StatusEffect, Defence, Avoid, Counter }
 public enum CardSpecialType { None, Conditional, EqualDice, Reversal }
 
 [Serializable]
 public class CardEffect
 {
     public bool onSelf;
-    public CardBehaviorType behaviorType;
-    [DrawIf("behaviorType", CardBehaviorType.StatusEffect)]
-    public StatusEffectSO statusEffectSO;
+    public Behaviour behaviour;
     
     [Header("스탯")]
     public int basicValue;

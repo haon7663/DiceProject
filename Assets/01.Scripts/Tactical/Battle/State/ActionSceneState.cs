@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ActionSceneState : BattleState
@@ -28,7 +29,11 @@ public class ActionSceneState : BattleState
             fromAct.PerformAction(from.unitSO.attacks.Random());
             toAct.PerformAction(to.unitSO.hits.Random());
             //임시로 랜덤 처리해둠, 나중에는 카드에 맞게 수정
-            owner.hudController.PopDamage(to.transform.position, 5);
+
+            var behaviours = new List<Behaviour>();
+            behaviours.AddRange(from.cardSO.cardEffects.Select(effect => effect.behaviour));
+            behaviours.AddRange(to.cardSO.cardEffects.Select(effect => effect.behaviour));
+            var (success, value) = BattleSystem.CompareBehaviours(behaviours);
         }
         
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
