@@ -5,11 +5,13 @@ using UnityEngine;
 
 public static class BattleSystem
 {
-    public static (bool, int) CompareBehaviours(List<Behaviour> behaviours)
+    public static void CompareBehaviours(Unit from, Unit to, List<Behaviour> behaviours)
     {
         var finalValue = behaviours.Sum(behaviour => behaviour.CalculateValue());
-        var finalResult = behaviours.Any(behaviour => behaviour.CalculateResult(finalValue));
-        
-        return (finalResult, finalValue);
+
+        foreach (var behaviour in behaviours)
+        {
+            behaviour.PerformAction(to);
+        }
     }
 }

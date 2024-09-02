@@ -33,7 +33,7 @@ public class ActionSceneState : BattleState
             var behaviours = new List<Behaviour>();
             behaviours.AddRange(from.cardSO.cardEffects.Select(effect => effect.behaviour));
             behaviours.AddRange(to.cardSO.cardEffects.Select(effect => effect.behaviour));
-            var (success, value) = BattleSystem.CompareBehaviours(behaviours);
+            //var (success, value) = BattleSystem.CompareBehaviours(behaviours);
         }
         
         yield return YieldInstructionCache.WaitForSeconds(1.2f);

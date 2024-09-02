@@ -12,19 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6891f8709446bc54ea9da214ba6f8ca7, type: 3}
   m_Name: Postion Smash
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: a1167e48b8ca949408cc44c68c75166f, type: 3}
-  cardName: "\uC911\uB3C5 \uD0C0\uACA9"
-  description: "<sprite=0> \uB9CC\uD07C \uD53C\uD574\uB97C \uC8FC\uACE0\n<sprite=0>
-    \uB9CC\uD07C \uC911\uB3C5\uC744 \uBD80\uC5EC\uD569\uB2C8\uB2E4."
+  sprite: {fileID: 21300000, guid: 0c2f910ab03d3ae429f011dc4b7fbc1c, type: 3}
+  cardName: "\uAC15\uD0C0"
+  description: "<sprite=1><sprite=1> + 5\uB9CC\uD07C \uD53C\uD574\uB97C\n\uC90D\uB2C8\uB2E4."
   type: 0
   cardEffects:
   - onSelf: 0
     behaviorType: 0
     statusEffectSO: {fileID: 0}
-    basicValue: 0
-    dices: 00000000
-  - onSelf: 0
-    behaviorType: 0
-    statusEffectSO: {fileID: 11400000, guid: a0954f161df2d394483a64c0307b2023, type: 2}
-    basicValue: 0
-    dices: 00000000
+    basicValue: 5
+    dices: 0100000001000000
+    specialType: 0
+    compareType: 0
