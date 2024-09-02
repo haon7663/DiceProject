@@ -23,7 +23,8 @@ public enum CardSpecialType { None, Conditional, EqualDice, Reversal }
 public class CardEffect
 {
     public bool onSelf;
-    public Behaviour behaviour;
+    public BehaviourType behaviourType;
+    public CompareType behaviourCompareType;
     
     [Header("스탯")]
     public int basicValue;

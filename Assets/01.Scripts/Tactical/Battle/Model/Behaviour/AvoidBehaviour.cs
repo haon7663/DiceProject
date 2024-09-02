@@ -7,9 +7,4 @@
     public AvoidBehaviour(int value, CompareType compareType) : base(value, compareType)
     {
     }
-    
-    public override bool CalculateResult(int finalValue)
-    {
-        return compareType.OnSatisfied(finalValue, value);
-    }
 }

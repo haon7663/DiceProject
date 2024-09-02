@@ -22,9 +22,4 @@ public abstract class Behaviour
     {
         return true;
     }
-
-    public virtual void PerformAction(Unit target)
-    {
-        
-    }
 }
