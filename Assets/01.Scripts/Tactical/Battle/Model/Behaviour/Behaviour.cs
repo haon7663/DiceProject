@@ -2,11 +2,6 @@ public abstract class Behaviour
 {
     public int value;
     public CompareType compareType;
-
-    public Behaviour()
-    {
-        
-    }
     
     public Behaviour(int value)
     {
