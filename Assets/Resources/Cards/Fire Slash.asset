@@ -19,8 +19,9 @@ MonoBehaviour:
   type: 0
   behaviourInfos:
   - behaviourType: 0
+    statusEffectSO: {fileID: 0}
     basicValue: 0
-    diceTypes: 
+    diceTypes: 0100000002000000
     compareInfo:
       compareType: 0
       specialCompareType: 0

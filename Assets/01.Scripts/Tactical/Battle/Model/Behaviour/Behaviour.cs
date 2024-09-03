@@ -1,22 +1,24 @@
 using System;
 
-public abstract class Behaviour
+public class Behaviour
 {
-    public int Value { get; private set; }
+    public BehaviourType BehaviourType { get; private set; }
     public CompareInfo CompareInfo { get; private set; }
+    public int Value { get; private set; }
     
-    public Behaviour(int value, CompareInfo compareInfo)
+    public Behaviour(CompareInfo compareInfo, BehaviourType behaviourType, int value)
     {
-        Value = value;
+        BehaviourType = behaviourType;
         CompareInfo = compareInfo;
+        Value = value;
     }
 
-    public virtual bool IsSatisfied(int fromValue, int toValue)
+    public bool IsSatisfied(int fromValue, int toValue)
     {
         return CompareInfo.compareTargetType switch
         {
-            CompareTargetType.ConstValue => CompareInfo.compareType.OnSatisfied(fromValue, CompareInfo.value),
-            CompareTargetType.EachOther => CompareInfo.compareType.OnSatisfied(fromValue, toValue),
+            CompareTargetType.ConstValue => CompareInfo.compareType.IsSatisfied(fromValue, CompareInfo.value),
+            CompareTargetType.EachOther => CompareInfo.compareType.IsSatisfied(fromValue, toValue),
             _ => throw new ArgumentOutOfRangeException(),
         };
     }

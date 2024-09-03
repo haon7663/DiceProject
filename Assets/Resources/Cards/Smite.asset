@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6891f8709446bc54ea9da214ba6f8ca7, type: 3}
-  m_Name: Postion Smash
+  m_Name: Smite
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 0c2f910ab03d3ae429f011dc4b7fbc1c, type: 3}
   cardName: "\uAC15\uD0C0"
   description: "<sprite=1><sprite=1> + 5\uB9CC\uD07C \uD53C\uD574\uB97C\n\uC90D\uB2C8\uB2E4."
   type: 0
-  cardEffects:
-  - onSelf: 0
-    behaviorType: 0
+  behaviourInfos:
+  - behaviourType: 0
     statusEffectSO: {fileID: 0}
     basicValue: 5
-    dices: 0100000001000000
-    specialType: 0
-    compareType: 0
+    diceTypes: 0100000001000000
+    compareInfo:
+      compareType: 0
+      specialCompareType: 0
+      compareTargetType: 0
+      value: 0
+    onSelf: 0

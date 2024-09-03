@@ -16,9 +16,14 @@ MonoBehaviour:
   cardName: "\uC2EC\uD310"
   description: "30 - <sprite=3> \uB9CC\uD07C \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
   type: 0
-  cardEffects:
-  - onSelf: 0
+  behaviourInfos:
+  - behaviourType: 0
+    statusEffectSO: {fileID: 0}
     basicValue: 30
-    dices: 03000000
-    specialType: 0
-    compareType: 0
+    diceTypes: 03000000
+    compareInfo:
+      compareType: 0
+      specialCompareType: 0
+      compareTargetType: 0
+      value: 0
+    onSelf: 0

@@ -109,7 +109,7 @@ public class EventStageManager : Singleton<EventStageManager>
         {
             if (eventOption.useCondition)
             {
-                if(!eventEffect.compareType.OnSatisfied(diceValue, eventEffect.compareValue))
+                if(!eventEffect.compareType.IsSatisfied(diceValue, eventEffect.compareValue))
                     continue;
             }
 
