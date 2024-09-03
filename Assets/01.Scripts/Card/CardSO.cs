@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum CardType { Attack, Defence, Both }
 
@@ -14,7 +15,7 @@ public class CardSO : ScriptableObject
     public CardType type;
     
     [Header("능력치")]
-    public List<CardEffect> cardEffects;
+    public List<BehaviourInfo> behaviourInfos;
 }
 
 public enum CardSpecialType { None, Conditional, EqualDice, Reversal }
@@ -23,8 +24,7 @@ public enum CardSpecialType { None, Conditional, EqualDice, Reversal }
 public class CardEffect
 {
     public bool onSelf;
-    public BehaviourType behaviourType;
-    public CompareType behaviourCompareType;
+    public BehaviourInfo behaviourInfo;
     
     [Header("스탯")]
     public int basicValue;

@@ -1,10 +1,6 @@
 ﻿public class AvoidBehaviour : Behaviour
 {
-    public AvoidBehaviour(int value) : base(value)
-    {
-    }
-
-    public AvoidBehaviour(int value, CompareType compareType) : base(value, compareType)
+    public AvoidBehaviour(int value, CompareInfo compareInfo) : base(value, compareInfo)
     {
     }
 }

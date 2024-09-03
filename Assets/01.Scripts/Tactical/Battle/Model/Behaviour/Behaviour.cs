@@ -1,25 +1,23 @@
+using System;
+
 public abstract class Behaviour
 {
-    public int value;
-    public CompareType compareType;
+    public int Value { get; private set; }
+    public CompareInfo CompareInfo { get; private set; }
     
-    public Behaviour(int value)
+    public Behaviour(int value, CompareInfo compareInfo)
     {
-        this.value = value;
+        Value = value;
+        CompareInfo = compareInfo;
     }
 
-    public Behaviour(int value, CompareType compareType) : this(value)
+    public virtual bool IsSatisfied(int fromValue, int toValue)
     {
-        this.compareType = compareType;
-    }
-
-    public virtual int CalculateValue()
-    {
-        return 0;
-    }
-
-    public virtual bool CalculateResult(int finalValue)
-    {
-        return true;
+        return CompareInfo.compareTargetType switch
+        {
+            CompareTargetType.ConstValue => CompareInfo.compareType.OnSatisfied(fromValue, CompareInfo.value),
+            CompareTargetType.EachOther => CompareInfo.compareType.OnSatisfied(fromValue, toValue),
+            _ => throw new ArgumentOutOfRangeException(),
+        };
     }
 }

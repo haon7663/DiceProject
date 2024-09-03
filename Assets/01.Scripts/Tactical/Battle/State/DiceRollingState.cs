@@ -29,16 +29,16 @@ public class DiceRollingState : BattleState
 
     private IEnumerator RollDicesForUnit(Unit unit)
     {
-        var cardEffects = unit.cardSO.cardEffects;
-        unit.values = new Dictionary<CardEffect, int>();
+        var behaviourInfos = unit.cardSO.behaviourInfos;
+        unit.behaviourValues = new Dictionary<BehaviourInfo, int>();
 
         var index = 0;
-        var maxIndex = cardEffects.SelectMany(cardEffect => cardEffect.dices).Count(diceType => owner.PlayerData.dices[diceType] > 0);
+        var maxIndex = behaviourInfos.SelectMany(behaviourInfo => behaviourInfo.diceTypes).Count(diceType => owner.PlayerData.dices[diceType] > 0);
 
-        foreach (var cardEffect in cardEffects)
+        foreach (var behaviourInfo in behaviourInfos)
         {
-            var totalValue = cardEffect.basicValue;
-            var diceTypes = cardEffect.dices;
+            var totalValue = behaviourInfo.basicValue;
+            var diceTypes = behaviourInfo.diceTypes;
 
             foreach (var diceType in diceTypes.Where(diceType => owner.PlayerData.dices[diceType] > 0))
             {
@@ -48,7 +48,7 @@ public class DiceRollingState : BattleState
                 yield return YieldInstructionCache.WaitForSeconds(unit.type == UnitType.Player ? Random.Range(0.15f, 0.225f) : 0);
             }
 
-            unit.values.Add(cardEffect, totalValue);
+            unit.behaviourValues.Add(behaviourInfo, totalValue);
             owner.diceResultPanelController.SetValue(unit, totalValue);
         }
     }

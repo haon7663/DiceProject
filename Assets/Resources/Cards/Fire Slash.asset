@@ -17,9 +17,13 @@ MonoBehaviour:
   description: "<sprite=1><sprite=2> \uB9CC\uD07C \uD53C\uD574\uB97C \uC8FC\uACE0\n\uBC1C\uD654\uB97C
     2 \uBD80\uC5EC\uD569\uB2C8\uB2E4."
   type: 0
-  cardEffects:
-  - onSelf: 0
-    behaviorType: 0
-    statusEffectSO: {fileID: 0}
+  behaviourInfos:
+  - behaviourType: 0
     basicValue: 0
-    dices: 0100000002000000
+    diceTypes: 
+    compareInfo:
+      compareType: 0
+      specialCompareType: 0
+      compareTargetType: 0
+      value: 0
+    onSelf: 0

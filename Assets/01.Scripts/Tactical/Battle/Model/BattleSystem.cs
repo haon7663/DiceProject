@@ -7,8 +7,6 @@ public static class BattleSystem
 {
     public static void CompareBehaviours(Unit from, Unit to, List<Behaviour> behaviours)
     {
-        var finalValue = behaviours.Sum(behaviour => behaviour.CalculateValue());
-        
         
     }
 }

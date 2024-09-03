@@ -47,9 +47,9 @@ public class DrawIfPropertyDrawer : PropertyDrawer
         switch (comparedField.type)
         { // Possible extend cases to support your own type
             case "bool":
-                return comparedField.boolValue.Equals(drawIf.comparedValue);
+                return drawIf.reversal ? !comparedField.boolValue.Equals(drawIf.comparedValue) : comparedField.boolValue.Equals(drawIf.comparedValue);
             case "Enum":
-                return comparedField.enumValueIndex.Equals((int)drawIf.comparedValue);
+                return drawIf.reversal ? !comparedField.enumValueIndex.Equals((int)drawIf.comparedValue) : comparedField.enumValueIndex.Equals((int)drawIf.comparedValue);
             default:
                 Debug.LogError("Error: " + comparedField.type + " is not supported of " + path);
                 return true;

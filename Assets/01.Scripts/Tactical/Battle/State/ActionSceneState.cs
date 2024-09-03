@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,30 +31,16 @@ public class ActionSceneState : BattleState
             toAct.PerformAction(to.unitSO.hits.Random());
             //임시로 랜덤 처리해둠, 나중에는 카드에 맞게 수정
             
-            var behaviours = new List<Behaviour>();
-            foreach (var (cardEffect, value) in from.values)
+            var totalAttackValue = 0;
+            var totalDefenceValue = 0;
+            var isAvoid = false;
+            var isCounter = false;
+            foreach (var (behaviourInfo, value) in from.behaviourValues)
             {
-                switch (cardEffect.behaviourType)
-                {
-                    case BehaviourType.Attack:
-                        behaviours.Add(new AttackBehaviour(value, cardEffect.compareType));
-                        break;
-                    case BehaviourType.Defence:
-                        behaviours.Add(new DefenceBehaviour(value, cardEffect.compareType));
-                        break;
-                    case BehaviourType.Avoid:
-                        behaviours.Add(new AvoidBehaviour(value, cardEffect.compareType));
-                        break;
-                    case BehaviourType.Counter:
-                        behaviours.Add(new CounterBehaviour(value, cardEffect.compareType));
-                        break;
-                    case BehaviourType.StatusEffect:
-                        behaviours.Add(new StatusEffectBehaviour(value, cardEffect.compareType));
-                        break;
-                }
+                
             }
             
-            var finalValue = behaviours.Sum(behaviour => behaviour.CalculateValue());
+            //var finalValue = behaviours.Sum(behaviour => behaviour.CalculateValue());s
             
             /*var behaviours = new List<Behaviour>();
             behaviours.AddRange(from.cardSO.cardEffects.Select(effect => effect.behaviour));

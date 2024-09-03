@@ -1,10 +1,6 @@
 ﻿public class CounterBehaviour : Behaviour
 {
-    public CounterBehaviour(int value) : base(value)
-    {
-    }
-
-    public CounterBehaviour(int value, CompareType compareType) : base(value, compareType)
+    public CounterBehaviour(int value, CompareInfo compareInfo) : base(value, compareInfo)
     {
     }
 }
