@@ -26,4 +26,4 @@ MonoBehaviour:
       specialCompareType: 0
       compareTargetType: 1
       value: 0
-    onSelf: 0
+    onSelf: 1

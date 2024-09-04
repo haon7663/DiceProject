@@ -21,44 +21,8 @@ public class ActionSceneState : BattleState
         
         var from = Turn.isPlayer ? owner.player : owner.enemy;
         var to = Turn.isPlayer ? owner.enemy : owner.player;
-        
-        if (from.TryGetComponent<Act>(out var fromAct) && to.TryGetComponent<Act>(out var toAct))
-        {
-            var fromBehaviours = new List<Behaviour>();
-            foreach (var (behaviourInfo, value) in from.behaviourValues)
-                fromBehaviours.Add(new Behaviour(behaviourInfo.compareInfo, behaviourInfo.behaviourType, value));
-            
-            var toBehaviours = new List<Behaviour>();
-            foreach (var (behaviourInfo, value) in to.behaviourValues)
-                toBehaviours.Add(new Behaviour(behaviourInfo.compareInfo, behaviourInfo.behaviourType, value));
 
-            var fromValue = from.behaviourValues.Values.Sum();
-            var toValue = to.behaviourValues.Values.Sum();
-
-            var totalAttackValue = GetTotalValue(fromBehaviours, BehaviourType.Attack, fromValue, toValue);
-            var totalDefenceValue = GetTotalValue(toBehaviours, BehaviourType.Defence, toValue, fromValue);
-            var isAttack = HasBehaviour(fromBehaviours, BehaviourType.Attack, fromValue, toValue);
-            var isAvoid = HasBehaviour(toBehaviours, BehaviourType.Avoid, toValue, fromValue);
-            var isCounter = HasBehaviour(toBehaviours, BehaviourType.Counter, toValue, fromValue);
-            
-            var totalValue = totalAttackValue - totalDefenceValue > 1 ? totalAttackValue - totalDefenceValue : 1;
-            if (!isAvoid)
-            {
-                if (to.TryGetComponent<Health>(out var health))
-                    health.OnDamage(totalValue);
-                owner.hudController.PopDamage(to.transform.position, totalValue);
-            }
-
-            if (isAttack)
-            {
-                owner.mainCameraMovement.VibrationForTime(0.65f);
-                owner.highlightCameraMovement.VibrationForTime(0.5f);
-                
-                fromAct.PerformAction(from.unitSO.attacks.Random());
-                toAct.PerformAction(isAvoid ? to.unitSO.avoids.Random() : to.unitSO.hits.Random());
-            }
-            //임시로 랜덤 처리해둠, 나중에는 카드에 맞게 수정
-        }
+        ExecuteAction(from, to);
         
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
         
@@ -75,11 +39,127 @@ public class ActionSceneState : BattleState
         owner.ChangeState<TurnChangeState>();
     }
 
+    private void ExecuteAction(Unit from, Unit to)
+    {
+        if (!from.TryGetComponent<Act>(out var fromAct) || !to.TryGetComponent<Act>(out var toAct)) return;
+        
+        var fromBehaviours = new List<Behaviour>();
+        foreach (var (behaviourInfo, value) in from.behaviourValues)
+        {
+            var behaviour = new Behaviour(behaviourInfo.compareInfo, behaviourInfo.behaviourType, value,
+                behaviourInfo.onSelf);
+            fromBehaviours.Add(behaviour);
+        }
+
+        var toBehaviours = new List<Behaviour>();
+        foreach (var (behaviourInfo, value) in to.behaviourValues)
+        {
+            var behaviour = new Behaviour(behaviourInfo.compareInfo, behaviourInfo.behaviourType, value,
+                behaviourInfo.onSelf);
+            toBehaviours.Add(behaviour);
+        }
+
+        var toTotalValue = 0;
+        var fromTotalValue = 0;
+        var isAvoid = false;
+        var isCounter = false;
+
+        foreach (var behaviour in fromBehaviours)
+        {
+            var targetValue = from.behaviourValues.Values.Sum();
+            var opponentValue = to.behaviourValues.Values.Sum();
+
+            int totalValue = 0;
+
+            switch (behaviour.BehaviourType)
+            {
+                case BehaviourType.Attack:
+                    totalValue = GetTotalValue(new List<Behaviour> { behaviour }, BehaviourType.Attack, targetValue, opponentValue);
+                    break;
+                case BehaviourType.Defence:
+                    totalValue = -GetTotalValue(new List<Behaviour> { behaviour }, BehaviourType.Defence, targetValue, opponentValue);
+                    break;
+                case BehaviourType.Avoid:
+                    if (HasBehaviour(new List<Behaviour> { behaviour }, BehaviourType.Avoid, targetValue, opponentValue))
+                        isAvoid = true;
+                    break;
+                case BehaviourType.Counter:
+                    if (HasBehaviour(new List<Behaviour> { behaviour }, BehaviourType.Counter, targetValue, opponentValue))
+                        isCounter = true;
+                    break;
+            }
+
+            if (behaviour.OnSelf)
+                toTotalValue += totalValue;
+            else
+                fromTotalValue += totalValue;
+        }
+        
+        foreach (var behaviour in toBehaviours)
+        {
+            var targetValue = to.behaviourValues.Values.Sum();
+            var opponentValue = from.behaviourValues.Values.Sum();
+
+            int totalValue = 0;
+
+            switch (behaviour.BehaviourType)
+            {
+                case BehaviourType.Attack:
+                    totalValue = GetTotalValue(new List<Behaviour> { behaviour }, BehaviourType.Attack, targetValue, opponentValue);
+                    break;
+                case BehaviourType.Defence:
+                    totalValue = -GetTotalValue(new List<Behaviour> { behaviour }, BehaviourType.Defence, targetValue, opponentValue);
+                    break;
+                case BehaviourType.Avoid:
+                    if (HasBehaviour(new List<Behaviour> { behaviour }, BehaviourType.Avoid, targetValue, opponentValue))
+                        isAvoid = true;
+                    break;
+                case BehaviourType.Counter:
+                    if (HasBehaviour(new List<Behaviour> { behaviour }, BehaviourType.Counter, targetValue, opponentValue))
+                        isCounter = true;
+                    break;
+            }
+
+            if (behaviour.OnSelf)
+                fromTotalValue += totalValue;
+            else
+                toTotalValue += totalValue;
+        }
+
+        if (toTotalValue > 0)
+        {
+            if (from.TryGetComponent<Health>(out var health))
+                health.OnDamage(toTotalValue);
+            owner.hudController.PopDamage(from.transform.position, toTotalValue);
+        }
+
+        if (fromTotalValue > 0 && !isAvoid)
+        {
+            if (to.TryGetComponent<Health>(out var health))
+                health.OnDamage(fromTotalValue);
+            owner.hudController.PopDamage(to.transform.position, fromTotalValue);
+        }
+
+        if (HasBehaviour(fromBehaviours, BehaviourType.Attack, from.behaviourValues.Values.Sum(),
+                to.behaviourValues.Values.Sum()))
+        {
+            owner.mainCameraMovement.VibrationForTime(0.65f);
+            owner.highlightCameraMovement.VibrationForTime(0.5f);
+
+            fromAct.PerformAction(from.unitSO.attacks.Random());
+            toAct.PerformAction(
+                HasBehaviour(toBehaviours, BehaviourType.Avoid, to.behaviourValues.Values.Sum(),
+                    from.behaviourValues.Values.Sum())
+                    ? to.unitSO.avoids.Random()
+                    : to.unitSO.hits.Random());
+        }
+    }
+
     private int GetTotalValue(List<Behaviour> behaviours, BehaviourType behaviourType, int fromValue, int toValue)
     {
         return behaviours
             .Where(b => b.BehaviourType == behaviourType && b.IsSatisfied(fromValue, toValue))
-            .Select(b => b.Value).Sum();
+            .Sum(b => b.Value);
     }
 
     private bool HasBehaviour(List<Behaviour> behaviours, BehaviourType behaviourType, int fromValue, int toValue)
