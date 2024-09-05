@@ -46,16 +46,14 @@ public class ActionSceneState : BattleState
         var fromBehaviours = new List<Behaviour>();
         foreach (var (behaviourInfo, value) in from.behaviourValues)
         {
-            var behaviour = new Behaviour(behaviourInfo.compareInfo, behaviourInfo.behaviourType, value,
-                behaviourInfo.onSelf);
+            var behaviour = new AttackBehaviour(behaviourInfo.compareInfo, value, behaviourInfo.onSelf);
             fromBehaviours.Add(behaviour);
         }
 
         var toBehaviours = new List<Behaviour>();
         foreach (var (behaviourInfo, value) in to.behaviourValues)
         {
-            var behaviour = new Behaviour(behaviourInfo.compareInfo, behaviourInfo.behaviourType, value,
-                behaviourInfo.onSelf);
+            var behaviour = new AttackBehaviour(behaviourInfo.compareInfo, value, behaviourInfo.onSelf);
             toBehaviours.Add(behaviour);
         }
 

@@ -20,16 +20,6 @@ MonoBehaviour:
   behaviourInfos:
   - behaviourType: 0
     statusEffectSO: {fileID: 0}
-    basicValue: 5
-    diceTypes: 
-    compareInfo:
-      compareType: 0
-      specialCompareType: 0
-      compareTargetType: 0
-      value: 0
-    onSelf: 1
-  - behaviourType: 0
-    statusEffectSO: {fileID: 0}
     basicValue: 0
     diceTypes: 0100000002000000
     compareInfo:
