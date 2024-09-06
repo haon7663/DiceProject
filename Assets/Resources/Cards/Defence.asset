@@ -27,3 +27,4 @@ MonoBehaviour:
       compareTargetType: 1
       value: 0
     onSelf: 1
+    chargeInDice: 1

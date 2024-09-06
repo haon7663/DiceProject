@@ -21,4 +21,5 @@ public class BehaviourInfo
     
     [Header("#Special")]
     public bool onSelf;
+    public bool chargeInDice;
 }

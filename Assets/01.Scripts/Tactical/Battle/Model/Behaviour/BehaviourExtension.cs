@@ -2,12 +2,16 @@
 
 public static class BehaviourExtension
 {
-    public static Behaviour GetType(this BehaviourType behaviourType)
+    public static Type GetBehaviourClass(this BehaviourType behaviourType)
     {
-        switch (behaviourType)
+        return behaviourType switch
         {
-            case BehaviourType.Attack:
-                return new AttackBehaviour();
-        }
+            BehaviourType.Attack => typeof(AttackBehaviour),
+            BehaviourType.Defence => typeof(DefenceBehaviour),
+            BehaviourType.Avoid => typeof(AvoidBehaviour),
+            BehaviourType.Counter => typeof(CounterBehaviour),
+            BehaviourType.StatusEffect => typeof(StatusEffectBehaviour),
+            _ => throw new ArgumentOutOfRangeException(nameof(behaviourType), behaviourType, null)
+        };
     }
 }

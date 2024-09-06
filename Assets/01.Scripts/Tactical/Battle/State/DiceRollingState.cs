@@ -49,7 +49,8 @@ public class DiceRollingState : BattleState
             }
 
             unit.behaviourValues.Add(behaviourInfo, totalValue);
-            owner.diceResultPanelController.SetValue(unit, totalValue);
+            if (behaviourInfo.chargeInDice)
+                owner.diceResultPanelController.SetValue(unit, totalValue);
         }
     }
 
