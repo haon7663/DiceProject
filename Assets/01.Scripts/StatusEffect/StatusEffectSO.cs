@@ -78,5 +78,7 @@ public abstract class StatusEffectSO : ScriptableObject
         unit.GetComponent<StatusEffect>().RemoveEffect(this);
     }
 
+    public virtual int GetCurrentValue() => 0; 
+
     public int GetCurrentStack() => _stack;
 }

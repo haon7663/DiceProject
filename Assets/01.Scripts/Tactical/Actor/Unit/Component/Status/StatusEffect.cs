@@ -17,7 +17,6 @@ public class StatusEffect : MonoBehaviour
     
     public void AddEffect(StatusEffectSO effectSO, int stack)
     {
-        UIManager.Inst.PopStatusEffectText(transform.position, effectSO, stack);
         if (!enabledEffects.Exists(effect => effect.name == effectSO.name))
         {
             var newEffect = CreateEffectObject(effectSO);
@@ -42,14 +41,10 @@ public class StatusEffect : MonoBehaviour
         return effect;
     }
     
-    public void UpdateEffects()
+    public void UpdateEffect(StatusEffectSO effect)
     {
-        for (var i = enabledEffects.Count - 1; i >= 0; i--)
-        {
-            var effect = enabledEffects[i];
-            effect.UpdateEffect(_unit);
-            effect.UpdateStack(_unit);
-        }
+        effect.UpdateEffect(_unit);
+        effect.UpdateStack(_unit);
         OnStatusChanged?.Invoke();
     }
 
