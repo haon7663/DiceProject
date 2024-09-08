@@ -124,17 +124,17 @@ public class EventStageManager : Singleton<EventStageManager>
                         GameManager.Inst.player.OnDamage(-eventEffect.value);*/
                     break;
                 case EventEffectType.Dice:
-                    DataManager.Inst.PlayerData.dices[eventEffect.diceType] += eventEffect.isAdd ? 1 : -1;
+                    DataManager.Inst.playerData.dices[eventEffect.diceType] += eventEffect.isAdd ? 1 : -1;
                     break;
                 case EventEffectType.Card:
                     switch (eventEffect.cardEventType)
                     {
                         case CardEventType.Add:
-                            DataManager.Inst.PlayerData.cards.Add(eventEffect.cardSO.ToJson());
+                            DataManager.Inst.playerData.cards.Add(eventEffect.cardSO.ToJson());
                             break;
                         case CardEventType.Remove:
-                            if(DataManager.Inst.PlayerData.cards.Contains(eventEffect.cardSO.ToJson()))
-                                DataManager.Inst.PlayerData.cards.Remove(eventEffect.cardSO.ToJson());
+                            if(DataManager.Inst.playerData.cards.Contains(eventEffect.cardSO.ToJson()))
+                                DataManager.Inst.playerData.cards.Remove(eventEffect.cardSO.ToJson());
                             break;
                         case CardEventType.Upgrade:
                             break;

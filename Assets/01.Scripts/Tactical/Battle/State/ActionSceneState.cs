@@ -28,11 +28,10 @@ public class ActionSceneState : BattleState
         
         // 카메라 리셋 및 UI 업데이트
         ResetCameraProduction();
-        UpdateUI();
 
         yield return null;
         
-        owner.ChangeState<TurnChangeState>();
+        owner.ChangeState<DiversionActionState>();
     }
 
     // 카메라 연출 실행
@@ -52,26 +51,16 @@ public class ActionSceneState : BattleState
         owner.mainCameraVolumeSettings.ResetVolume();
     }
 
-    // UI 업데이트
-    private void UpdateUI()
-    {
-        owner.diceResultPanelController.Hide();
-        owner.interactionPanelController.Show();
-        owner.topPanelController.Show();
-    }
-
     // 행동 실행
     private void ExecuteAction(Unit from, Unit to)
     {
         var fromBehaviours = CreateBehaviours(from);
         var toBehaviours = CreateBehaviours(to);
-
-        // 피해 계산
-        var fromTotalDamage = CalculateDamage(fromBehaviours, toBehaviours, from, to);
-        var toTotalDamage = CalculateDamage(toBehaviours, fromBehaviours, to, from);
         
+        TakeDamage(from, to, fromBehaviours, toBehaviours);
+        TakeStatusEffect(from, to, fromBehaviours, toBehaviours);
         // 카메라 진동 및 유닛 액션 실행
-        ExecuteUnitActions(from, to, fromTotalDamage, toTotalDamage, fromBehaviours, toBehaviours);
+        ExecuteUnitActions(from, to, fromBehaviours, toBehaviours);
     }
 
     // 행동 리스트 생성
@@ -94,7 +83,7 @@ public class ActionSceneState : BattleState
     }
 
     // 피해 계산
-    private int CalculateDamage(List<Behaviour> attackerBehaviours, List<Behaviour> defenderBehaviours, Unit attacker, Unit defender)
+    private int CalculateDamage(Unit attacker, Unit defender, List<Behaviour> attackerBehaviours, List<Behaviour> defenderBehaviours)
     {
         return attackerBehaviours
                 .Where(b => !b.onSelf && b.IsSatisfied(attacker.behaviourValues, defender.behaviourValues))
@@ -104,26 +93,24 @@ public class ActionSceneState : BattleState
                 .Aggregate(0, (current, behaviour) => behaviour.GetValue(current));
     }
 
-    // 유닛 행동 실행
-    private void ExecuteUnitActions(Unit from, Unit to, int fromTotalDamage, int toTotalDamage, List<Behaviour> fromBehaviours, List<Behaviour> toBehaviours)
+    private void TakeDamage(Unit from, Unit to, List<Behaviour> fromBehaviours, List<Behaviour> toBehaviours)
     {
-        var isAvoid = IsSatisfiedBehaviours(to, from, toBehaviours, BehaviourType.Avoid);
+        var fromTotalDamage = CalculateDamage(from, to, fromBehaviours, toBehaviours);
+        var toTotalDamage = CalculateDamage(to, from, toBehaviours, fromBehaviours);
         
-        if (fromTotalDamage > 0 && !isAvoid)
+        fromTotalDamage = fromTotalDamage > 1 ? fromTotalDamage : 1;
+        toTotalDamage = toTotalDamage > 1 ? toTotalDamage : 1;
+        
+        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack) && !IsSatisfiedBehaviours(to, from, BehaviourType.Avoid))
         {
             if (to.TryGetComponent<Health>(out var toHealth))
             {
                 toHealth.OnDamage(fromTotalDamage);
                 owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
             }
-            if (to.TryGetComponent<StatusEffect>(out var toStatusEffect))
-            {
-                //toStatusEffect.AddEffect();
-                owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
-            }
         }
 
-        if (toTotalDamage > 0)
+        if (IsSatisfiedBehaviours(to, from, BehaviourType.Attack))
         {
             if (from.TryGetComponent<Health>(out var fromHealth))
             {
@@ -131,6 +118,49 @@ public class ActionSceneState : BattleState
                 owner.hudController.PopDamage(from.transform.position, toTotalDamage);
             }
         }
+    }
+    
+    private List<Behaviour> GetStatusEffectBehaviours(Unit attacker, Unit defender, List<Behaviour> attackerBehaviours, List<Behaviour> defenderBehaviours)
+    {
+        var attackerStatusEffectBehaviours = attackerBehaviours.Where(b => b is StatusEffectBehaviour);
+        var defenderStatusEffectBehaviours = defenderBehaviours.Where(b => b is StatusEffectBehaviour);
+        
+        var behaviours = new List<Behaviour>();
+        behaviours.AddRange(attackerStatusEffectBehaviours.Where(b => !b.onSelf && b.IsSatisfied(attacker.behaviourValues, defender.behaviourValues)));
+        behaviours.AddRange(defenderStatusEffectBehaviours.Where(b => b.onSelf && b.IsSatisfied(defender.behaviourValues, attacker.behaviourValues)));
+
+        return behaviours;
+    }
+
+    private void TakeStatusEffect(Unit from, Unit to, List<Behaviour> fromBehaviours, List<Behaviour> toBehaviours)
+    {
+        if (to.TryGetComponent<StatusEffect>(out var toStatusEffect))
+        {
+            foreach (var behaviour in GetStatusEffectBehaviours(from, to, fromBehaviours, toBehaviours))
+            {
+                if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
+                {
+                    toStatusEffect.AddEffect(statusEffectBehaviour.statusEffectSO, statusEffectBehaviour.value);
+                }
+            }
+        }
+        
+        if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect))
+        {
+            foreach (var behaviour in GetStatusEffectBehaviours(to, from, toBehaviours, fromBehaviours))
+            {
+                if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
+                {
+                    fromStatusEffect.AddEffect(statusEffectBehaviour.statusEffectSO, statusEffectBehaviour.value);
+                }
+            }
+        }
+    }
+
+    // 유닛 행동 실행
+    private void ExecuteUnitActions(Unit from, Unit to, List<Behaviour> fromBehaviours, List<Behaviour> toBehaviours)
+    {
+        var isAvoid = IsSatisfiedBehaviours(to, from, BehaviourType.Avoid);
         
         owner.mainCameraMovement.VibrationForTime(0.65f);
         owner.highlightCameraMovement.VibrationForTime(0.5f);
@@ -140,10 +170,15 @@ public class ActionSceneState : BattleState
         fromAct.PerformAction(from.unitSO.attacks.Random());
         toAct.PerformAction(isAvoid ? to.unitSO.avoids.Random() : to.unitSO.hits.Random());
     }
-    
-    private bool IsSatisfiedBehaviours(Unit from, Unit to, List<Behaviour> behaviours, BehaviourType behaviourType)
+
+    private bool IsSatisfiedBehaviours(Unit from, Unit to, BehaviourType behaviourType)
     {
-        return behaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
-            .Any(b => b.IsSatisfied(from.behaviourValues, to.behaviourValues));
+        var fromBehaviours = CreateBehaviours(from);
+        var toBehaviours = CreateBehaviours(to);
+
+        return fromBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
+                   .Any(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)) ||
+               toBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
+                   .Any(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues));
     }
 }

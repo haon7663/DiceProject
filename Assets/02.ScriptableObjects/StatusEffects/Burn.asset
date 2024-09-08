@@ -18,5 +18,6 @@ MonoBehaviour:
   label: "\uBC1C\uD654"
   statusEffectStackType: 100
   statusEffectCalculateType: 100
-  useStack: 0
-  damage: 2
+  useStack: 1
+  value: 2
+  multiplierValue: 3

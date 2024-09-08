@@ -63,7 +63,7 @@ public class DiceRollingState : BattleState
 
     private int RollingDice(DiceType diceType, Vector3 pos)
     {
-        DataManager.Inst.PlayerData.dices[diceType]--;
+        DataManager.Inst.playerData.dices[diceType]--;
 
         var value = diceType.GetDiceValue();
         var dice = DiceFactory.Create(diceType);

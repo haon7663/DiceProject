@@ -1,17 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class CardJson
 {
-    public string cardName;
+    public string name;
     public bool isUpgrade;
 
-    public CardJson(string cardName, bool isUpgrade)
+    public CardJson(string name, bool isUpgrade)
     {
-        this.cardName = cardName;
+        this.name = name;
         this.isUpgrade = isUpgrade;
     }
 }

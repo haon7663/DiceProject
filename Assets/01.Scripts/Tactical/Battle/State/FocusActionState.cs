@@ -7,10 +7,10 @@ public class FocusActionState : BattleState
     public override void Enter()
     {
         base.Enter();
-        StartCoroutine(Action());
+        StartCoroutine(Focus());
     }
 
-    private IEnumerator Action()
+    private IEnumerator Focus()
     {
         owner.interactionPanelController.Hide();
         owner.topPanelController.Hide();

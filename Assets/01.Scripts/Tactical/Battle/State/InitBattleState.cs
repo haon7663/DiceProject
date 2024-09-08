@@ -12,11 +12,15 @@ public class InitBattleState : BattleState
 
     private IEnumerator Init()
     {
-        owner.player.GetComponent<Health>().maxHp = owner.player.GetComponent<Health>().curHp = owner.PlayerData.curHp;
+        if (owner.player.TryGetComponent<Health>(out var playerHealth))
+            playerHealth.maxHp = playerHealth.curHp = owner.PlayerData.curHp;
+        if (owner.player.TryGetComponent<Relic>(out var relic))
+            relic.relics = owner.PlayerData.relics.ToRelic();
         owner.statPanelController.ConnectPanel(owner.player);
         owner.diceResultPanelController.ConnectPanel(owner.player);
         
-        owner.enemy.GetComponent<Health>().maxHp = owner.enemy.GetComponent<Health>().curHp = owner.enemy.unitSO.maxHp;
+        if (owner.enemy.TryGetComponent<Health>(out var enemyHealth))
+            enemyHealth.maxHp = enemyHealth.curHp = owner.enemy.unitSO.maxHp;
         owner.statPanelController.ConnectPanel(owner.enemy);
         owner.diceResultPanelController.ConnectPanel(owner.enemy);
         

@@ -39,7 +39,7 @@ public class BattleController : StateMachine
     
     private void Start()
     {
-        PlayerData = dataManager.PlayerData;
+        PlayerData = dataManager.playerData;
         Turn = new Turn();
 
         switch (GameManager.Inst.currentGameMode)

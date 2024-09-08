@@ -22,7 +22,7 @@ public static class CardJsonConverter
     public static CardSO ToCard(this CardJson cardJson)
     {
         var cards = Resources.LoadAll<CardSO>("Cards");
-        var card = cards.First(card => card.cardName == cardJson.cardName);
+        var card = cards.First(card => card.cardName == cardJson.name);
         if (card)
             return card;
         Debug.LogWarning("Card was null in CardJsonConverter.ToCard()");

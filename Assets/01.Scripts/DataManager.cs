@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using GDX.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Serialization;
 using File = System.IO.File;
 
 [Serializable]
@@ -23,9 +24,9 @@ public class PlayerData
     public List<CardJson> cards;
 
     [Header("유물")]
-    public List<RelicSO> relics;
+    public List<RelicJson> relics;
 
-    public PlayerData(string creatureName, int maxHp, List<CardJson> cards)
+    public PlayerData(string creatureName, int maxHp, List<CardJson> cards, List<RelicJson> relics)
     {
         name = creatureName;
         
@@ -42,14 +43,13 @@ public class PlayerData
         curHp = maxHp;
         
         this.cards = cards;
-
-        relics = new List<RelicSO>();
+        this.relics = relics;
     }
 }
 
 public class DataManager : SingletonDontDestroyOnLoad<DataManager>
 {
-    public PlayerData PlayerData;
+    public PlayerData playerData;
 
     private static string _playerDataFilePath;
 
@@ -62,7 +62,7 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
             var playerDataJson = File.ReadAllText(_playerDataFilePath);
             var playerData = JsonConvert.DeserializeObject<PlayerData>(playerDataJson);
 
-            PlayerData = playerData;
+            this.playerData = playerData;
         }
         else
         {
@@ -72,15 +72,15 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
 
     public void Generate(UnitSO unitSO)
     {
-        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, unitSO.cards.ToJson());
-        PlayerData = playerData;
+        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, unitSO.cards.ToJson(), new List<RelicJson>());
+        this.playerData = playerData;
     }
     
     public void Save()
     {
-        if (PlayerData == null) return;
+        if (playerData == null) return;
 
-        var json = JsonConvert.SerializeObject(PlayerData, Formatting.Indented,
+        var json = JsonConvert.SerializeObject(playerData, Formatting.Indented,
             new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
         
         File.WriteAllText(_playerDataFilePath, json);

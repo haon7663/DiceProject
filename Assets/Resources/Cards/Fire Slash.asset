@@ -29,3 +29,14 @@ MonoBehaviour:
       value: 0
     onSelf: 0
     chargeInDice: 1
+  - behaviourType: 4
+    statusEffectSO: {fileID: 11400000, guid: fc5faf18d141ef342b3b033a9535e7f6, type: 2}
+    basicValue: 2
+    diceTypes: 
+    compareInfo:
+      compareType: 0
+      specialCompareType: 0
+      compareTargetType: 0
+      value: 0
+    onSelf: 0
+    chargeInDice: 0

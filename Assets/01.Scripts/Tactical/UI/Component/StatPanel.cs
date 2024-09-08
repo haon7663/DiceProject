@@ -58,7 +58,7 @@ public class StatPanel : MonoBehaviour
             return;
 
         if(_statusIcons is { Count: > 0 })
-            _statusIcons.ForEach(Destroy);
+            _statusIcons.ForEach(icon => Destroy(icon.gameObject));
         _statusIcons = new List<StatusIcon>();
 
         foreach (var effect in status.enabledEffects)

@@ -11,6 +11,7 @@ public class HudController : Singleton<HudController>
     [Header("Prefabs")]
     [SerializeField] private Hud damageHud;
     [SerializeField] private Hud recoveryHud;
+    [SerializeField] private Hud statusEffectHud;
 
     [Header("Values")]
     [SerializeField] private Vector2 offset;
@@ -27,5 +28,11 @@ public class HudController : Singleton<HudController>
     {
         var hud = Instantiate(damageHud, canvas);
         hud.Initialize(_camera.WorldToScreenPoint(pos + offset + Random.insideUnitCircle * randomRadius), value);
+    }
+    
+    public void PopStatusEffect(Vector2 pos, int value, Sprite sprite)
+    {
+        var hud = Instantiate(statusEffectHud, canvas);
+        hud.Initialize(_camera.WorldToScreenPoint(pos + offset + Random.insideUnitCircle * randomRadius), value, sprite);
     }
 }
