@@ -7,7 +7,6 @@ using UnityEngine;
 public class RelicSO : ScriptableObject
 {
     public new string name;
-    
-    [JsonIgnore]
     public Sprite sprite;
+    public BehaviourInfo behaviourInfo;
 }
