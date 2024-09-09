@@ -36,6 +36,7 @@ public class BattleController : StateMachine
     public PlayerData PlayerData { get; private set; }
     public Turn Turn { get; private set; }
     public Unit CurrentUnit { get; set; }
+    public VictorType Victor { get; private set; }
     
     private void Start()
     {
@@ -51,5 +52,15 @@ public class BattleController : StateMachine
                 ChangeState<InitEventState>();
                 break;
         }
+    }
+
+    public void VictoryEventHandler()
+    {
+        Victor = VictorType.Player;
+    }
+    
+    public void DefeatEventHandler()
+    {
+        Victor = VictorType.Enemy;
     }
 }

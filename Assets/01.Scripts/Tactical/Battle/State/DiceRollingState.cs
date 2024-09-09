@@ -37,20 +37,26 @@ public class DiceRollingState : BattleState
 
         foreach (var behaviourInfo in behaviourInfos)
         {
-            var totalValue = behaviourInfo.basicValue;
+            var totalValue = 0;
             var diceTypes = behaviourInfo.diceTypes;
 
             foreach (var diceType in diceTypes.Where(diceType => owner.PlayerData.dices[diceType] > 0))
             {
                 var pos = CalculateDicePosition(index++, maxIndex);
-                totalValue += unit.type == UnitType.Player ? RollingDice(diceType, pos) : diceType.GetDiceValue();
 
-                yield return YieldInstructionCache.WaitForSeconds(unit.type == UnitType.Player ? Random.Range(0.15f, 0.225f) : 0);
+                if (unit.type == UnitType.Player)
+                {
+                    totalValue += RollingDice(diceType, pos);
+                    yield return YieldInstructionCache.WaitForSeconds(Random.Range(0.15f, 0.225f));
+                }
+                else
+                {
+                    totalValue += diceType.GetDiceValue();
+                }
             }
 
             unit.behaviourValues.Add(behaviourInfo, totalValue);
-            if (behaviourInfo.chargeInDice)
-                owner.diceResultPanelController.SetValue(unit, totalValue);
+            owner.diceResultPanelController.SetValue(unit, totalValue);
         }
     }
 

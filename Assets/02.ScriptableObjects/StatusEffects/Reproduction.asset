@@ -19,4 +19,5 @@ MonoBehaviour:
   statusEffectStackType: 300
   statusEffectCalculateType: 100
   useStack: 1
-  recovery: 0
+  value: 0
+  multiplierValue: 1

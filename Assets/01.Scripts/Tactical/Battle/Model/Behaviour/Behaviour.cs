@@ -15,8 +15,8 @@ public class Behaviour
     
     public bool IsSatisfied(Dictionary<BehaviourInfo, int> from, Dictionary<BehaviourInfo, int> to)
     {
-        var fromTotalValue = from.Where(b => b.Key.chargeInDice).Sum(b => b.Value);
-        var toTotalValue = to.Where(b => b.Key.chargeInDice).Sum(b => b.Value);
+        var fromTotalValue = from.Sum(b => b.Value);
+        var toTotalValue = to.Sum(b => b.Value);
         return IsSatisfied(fromTotalValue, toTotalValue);
     }
 

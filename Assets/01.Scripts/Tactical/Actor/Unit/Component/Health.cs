@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     public event Action<int> OnHpChanged;
+    public event Action OnDeath;
     
     public int maxHp;
     public int curHp;
@@ -15,7 +16,12 @@ public class Health : MonoBehaviour
     {
         curHp -= value;
         if (curHp <= 0)
+        {
             curHp = 0;
+            OnDeath?.Invoke();
+            if (TryGetComponent<Act>(out var act))
+                act.DeathAction(GetComponent<Unit>().unitSO.hits.Random());
+        }
         OnHpChanged?.Invoke(value);
     }
     public void OnRecovery(int value)

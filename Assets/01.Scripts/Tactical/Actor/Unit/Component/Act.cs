@@ -23,6 +23,20 @@ public class Act : MonoBehaviour
         _spriteRenderer.sprite = _unit.unitSO.idleSprite;
     }
 
+    public void DeathAction(AnimationData animationData)
+    {
+        _spriteRenderer.sprite = animationData.actionSprite;
+        _spriteTransform.gameObject.layer = 7;
+        _spriteTransform.localPosition = animationData.startOffset;
+
+        var sequence = DOTween.Sequence();
+        sequence.Append(_spriteTransform.DOLocalMove(animationData.endOffset, 1.2f))
+            .JoinCallback(() => CreateEffect(animationData.effectSprite))
+            .Join(_spriteRenderer.DOColor(Color.black, 0.9f))
+            .Append(_spriteRenderer.DOFade(0, 0.3f))
+            .OnComplete(() => Destroy(gameObject));
+    }
+
     public void PerformAction(AnimationData animationData)
     {
         var unitData = _unit.unitSO;

@@ -54,13 +54,9 @@ public class ActionSceneState : BattleState
     // 행동 실행
     private void ExecuteAction(Unit from, Unit to)
     {
-        var fromBehaviours = CreateBehaviours(from);
-        var toBehaviours = CreateBehaviours(to);
-        
-        TakeDamage(from, to, fromBehaviours, toBehaviours);
-        TakeStatusEffect(from, to, fromBehaviours, toBehaviours);
-        // 카메라 진동 및 유닛 액션 실행
-        ExecuteUnitActions(from, to, fromBehaviours, toBehaviours);
+        TakeDamage(from, to);
+        TakeStatusEffect(from, to);
+        ExecuteUnitActions(from, to);
     }
 
     // 행동 리스트 생성
@@ -72,7 +68,7 @@ public class ActionSceneState : BattleState
             var behaviour = (Behaviour)Activator.CreateInstance(behaviourInfo.behaviourType.GetBehaviourClass());
             behaviour.compareInfo = behaviourInfo.compareInfo;
             behaviour.onSelf = behaviourInfo.onSelf;
-            behaviour.value = value;
+            behaviour.value = value + behaviourInfo.basicValue;
             if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
             {
                 statusEffectBehaviour.statusEffectSO = behaviourInfo.statusEffectSO;
@@ -83,20 +79,23 @@ public class ActionSceneState : BattleState
     }
 
     // 피해 계산
-    private int CalculateDamage(Unit attacker, Unit defender, List<Behaviour> attackerBehaviours, List<Behaviour> defenderBehaviours)
+    private int CalculateDamage(Unit from, Unit to)
     {
-        return attackerBehaviours
-                .Where(b => !b.onSelf && b.IsSatisfied(attacker.behaviourValues, defender.behaviourValues))
+        var fromBehaviours = CreateBehaviours(from);
+        var toBehaviours = CreateBehaviours(to);
+        
+        return fromBehaviours
+                .Where(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues))
                 .Aggregate(0, (current, behaviour) => behaviour.GetValue(current)) +
-               defenderBehaviours
-                .Where(b => b.onSelf && b.IsSatisfied(defender.behaviourValues, attacker.behaviourValues))
+               toBehaviours
+                .Where(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues))
                 .Aggregate(0, (current, behaviour) => behaviour.GetValue(current));
     }
 
-    private void TakeDamage(Unit from, Unit to, List<Behaviour> fromBehaviours, List<Behaviour> toBehaviours)
+    private void TakeDamage(Unit from, Unit to)
     {
-        var fromTotalDamage = CalculateDamage(from, to, fromBehaviours, toBehaviours);
-        var toTotalDamage = CalculateDamage(to, from, toBehaviours, fromBehaviours);
+        var fromTotalDamage = CalculateDamage(from, to);
+        var toTotalDamage = CalculateDamage(to, from);
         
         fromTotalDamage = fromTotalDamage > 1 ? fromTotalDamage : 1;
         toTotalDamage = toTotalDamage > 1 ? toTotalDamage : 1;
@@ -120,23 +119,26 @@ public class ActionSceneState : BattleState
         }
     }
     
-    private List<Behaviour> GetStatusEffectBehaviours(Unit attacker, Unit defender, List<Behaviour> attackerBehaviours, List<Behaviour> defenderBehaviours)
+    private List<Behaviour> GetStatusEffectBehaviours(Unit from, Unit to)
     {
-        var attackerStatusEffectBehaviours = attackerBehaviours.Where(b => b is StatusEffectBehaviour);
-        var defenderStatusEffectBehaviours = defenderBehaviours.Where(b => b is StatusEffectBehaviour);
+        var fromBehaviours = CreateBehaviours(from);
+        var toBehaviours = CreateBehaviours(to);
+        
+        var fromStatusEffectBehaviours = fromBehaviours.Where(b => b is StatusEffectBehaviour);
+        var toStatusEffectBehaviours = toBehaviours.Where(b => b is StatusEffectBehaviour);
         
         var behaviours = new List<Behaviour>();
-        behaviours.AddRange(attackerStatusEffectBehaviours.Where(b => !b.onSelf && b.IsSatisfied(attacker.behaviourValues, defender.behaviourValues)));
-        behaviours.AddRange(defenderStatusEffectBehaviours.Where(b => b.onSelf && b.IsSatisfied(defender.behaviourValues, attacker.behaviourValues)));
+        behaviours.AddRange(fromStatusEffectBehaviours.Where(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)));
+        behaviours.AddRange(toStatusEffectBehaviours.Where(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues)));
 
         return behaviours;
     }
 
-    private void TakeStatusEffect(Unit from, Unit to, List<Behaviour> fromBehaviours, List<Behaviour> toBehaviours)
+    private void TakeStatusEffect(Unit from, Unit to)
     {
         if (to.TryGetComponent<StatusEffect>(out var toStatusEffect))
         {
-            foreach (var behaviour in GetStatusEffectBehaviours(from, to, fromBehaviours, toBehaviours))
+            foreach (var behaviour in GetStatusEffectBehaviours(from, to))
             {
                 if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
                 {
@@ -147,7 +149,7 @@ public class ActionSceneState : BattleState
         
         if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect))
         {
-            foreach (var behaviour in GetStatusEffectBehaviours(to, from, toBehaviours, fromBehaviours))
+            foreach (var behaviour in GetStatusEffectBehaviours(to, from))
             {
                 if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
                 {
@@ -158,7 +160,7 @@ public class ActionSceneState : BattleState
     }
 
     // 유닛 행동 실행
-    private void ExecuteUnitActions(Unit from, Unit to, List<Behaviour> fromBehaviours, List<Behaviour> toBehaviours)
+    private void ExecuteUnitActions(Unit from, Unit to)
     {
         var isAvoid = IsSatisfiedBehaviours(to, from, BehaviourType.Avoid);
         
