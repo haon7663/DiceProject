@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,15 @@ public class TurnChangeState : BattleState
     public override void Enter()
     {
         base.Enter();
-        StartCoroutine(ChangeTurn());
+        switch (owner.Victor)
+        {
+            case VictorType.None:
+                StartCoroutine(ChangeTurn());
+                break;
+            default:
+                StartCoroutine(CheckVictor());
+                break;
+        }
     }
 
     private IEnumerator ChangeTurn()

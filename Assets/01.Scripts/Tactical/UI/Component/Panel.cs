@@ -53,7 +53,7 @@ public class Panel : MonoBehaviour
         _rect = GetComponent<RectTransform>();
         _canvasGroup = GetComponent<CanvasGroup>();
         
-        SetPosition(PanelStates.Hide);
+        SetPosition(positionList[0]);
     }
 
     public void SetPosition(PanelStates state, bool useDotween = false, float dotweenTime = 0.2f)

@@ -14,6 +14,7 @@ public class DiversionActionState : BattleState
     {
         owner.interactionPanelController.Show();
         owner.topPanelController.Show();
+        owner.diceResultPanelController.Hide();
         
         yield return YieldInstructionCache.WaitForSeconds(1f);
         

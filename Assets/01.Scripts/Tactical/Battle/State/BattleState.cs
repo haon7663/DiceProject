@@ -25,4 +25,18 @@ public abstract class BattleState : State
         driver = Unit ? Unit.GetComponent<Driver>() : null;
         base.Enter();
     }
+
+    protected IEnumerator CheckVictor()
+    {
+        yield return null;
+        switch (owner.Victor)
+        {
+            case VictorType.Player:
+                owner.ChangeState<VictoryState>();
+                break;
+            case VictorType.Enemy:
+                owner.ChangeState<DefeatState>();
+                break;
+        }
+    }
 }
