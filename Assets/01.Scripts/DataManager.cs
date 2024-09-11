@@ -13,13 +13,14 @@ public class PlayerData
     [Header("기본 정보")]
     public string name;
     
-    [Header("주사위")]
-    public SerializableDictionary<DiceType, int> dices;
-    
     [Header("체력")]
     public int maxHp;
     public int curHp;
 
+    [Header("자원")]
+    public int gold;
+    public SerializableDictionary<DiceType, int> dices;
+    
     [Header("카드")]
     public List<CardJson> cards;
 
