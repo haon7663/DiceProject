@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class RewardPanel : MonoBehaviour
 {
+    [SerializeField] private RewardItem rewardPrefab;
     [SerializeField] private Transform rewardParent;
-    [SerializeField] private GameObject rewardPrefab;
 
     private Panel _panel;
 
@@ -15,8 +15,14 @@ public class RewardPanel : MonoBehaviour
         _panel = GetComponent<Panel>();
     }
 
-    public void Initialize()
+    public void Initialize(List<Reward> rewards)
     {
         _panel.SetPosition(PanelStates.Show, true);
+
+        foreach (var reward in rewards)
+        {
+            var rewardItem = Instantiate(rewardPrefab, rewardParent);
+            rewardItem.Initialize(reward);
+        }
     }
 }
