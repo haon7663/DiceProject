@@ -9,6 +9,8 @@ namespace Map
     {
         public MapConfig config;
         public MapView view;
+        public Panel panel;
+        
         public Map CurrentMap { get; private set; }
 
         private static string _mapFileString;
@@ -25,6 +27,16 @@ namespace Map
             {
                 GenerateNewMap();
             }
+        }
+
+        public void Show()
+        {
+            panel.SetPosition(PanelStates.Show, true);
+        }
+        
+        public void Hide()
+        {
+            panel.SetPosition(PanelStates.Hide, true);
         }
 
         public void GenerateNewMap()
