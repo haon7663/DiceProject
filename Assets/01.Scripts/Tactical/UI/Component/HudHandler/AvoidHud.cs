@@ -1,15 +1,11 @@
-using System;
+﻿using DG.Tweening;
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.UI;
 
-public class DamageHud : Hud
+public class AvoidHud : Hud
 {
-    public override void Initialize(Vector2 pos, int value)
+    public override void Initialize(Vector2 pos)
     {
-        base.Initialize(pos, value);
-        
-        label.text = $"-{value}";
+        base.Initialize(pos);
         
         var sequence = DOTween.Sequence();
         sequence.Append(rect.DOAnchorPosY(rect.anchoredPosition.y + 200, 1f));

@@ -1,13 +1,17 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StatusEffectHud : Hud
 {
+    [SerializeField] private Image icon;
+    
     public override void Initialize(Vector2 pos, int value, Sprite sprite)
     {
         base.Initialize(pos, value, sprite);
 
         label.text = $"{value}";
+        icon.sprite = sprite;
         
         var sequence = DOTween.Sequence();
         sequence.Append(rect.DOAnchorPosY(rect.anchoredPosition.y + 200, 1f));

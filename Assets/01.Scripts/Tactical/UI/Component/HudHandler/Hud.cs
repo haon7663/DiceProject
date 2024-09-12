@@ -7,13 +7,17 @@ using UnityEngine.UI;
 public abstract class Hud : MonoBehaviour
 {
     [SerializeField] protected TMP_Text label;
-    [SerializeField] protected Image icon;
 
     protected RectTransform rect;
     
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+    }
+    
+    public virtual void Initialize(Vector2 pos)
+    {
+        transform.position = pos;
     }
 
     public virtual void Initialize(Vector2 pos, int value)
@@ -24,6 +28,5 @@ public abstract class Hud : MonoBehaviour
     public virtual void Initialize(Vector2 pos, int value, Sprite sprite)
     {
         transform.position = pos;
-        icon.sprite = sprite;
     }
 }

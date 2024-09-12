@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class HudController : Singleton<HudController>
@@ -9,6 +10,7 @@ public class HudController : Singleton<HudController>
     [SerializeField] private Transform canvas;
     
     [Header("Prefabs")]
+    [SerializeField] private Hud avoidHud;
     [SerializeField] private Hud damageHud;
     [SerializeField] private Hud recoveryHud;
     [SerializeField] private Hud statusEffectHud;
@@ -22,6 +24,12 @@ public class HudController : Singleton<HudController>
     private void Start()
     {
         _camera = Camera.main;
+    }
+
+    public void PopAvoid(Vector2 pos)
+    {
+        var hud = Instantiate(avoidHud, canvas);
+        hud.Initialize(_camera.WorldToScreenPoint(pos + offset + Random.insideUnitCircle * randomRadius));
     }
 
     public void PopDamage(Vector2 pos, int value)
