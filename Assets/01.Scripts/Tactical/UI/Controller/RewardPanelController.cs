@@ -12,4 +12,10 @@ public class RewardPanelController : MonoBehaviour
         backgroundPanel.SetPosition(PanelStates.Show, true);
         rewardPanel.Initialize(rewards);
     }
+    
+    public void Hide()
+    {
+        backgroundPanel.SetPosition(PanelStates.Hide, true);
+        rewardPanel.panel.SetPosition(PanelStates.Hide, true);
+    }
 }

@@ -5,19 +5,14 @@ using UnityEngine;
 
 public class RewardPanel : MonoBehaviour
 {
+    public Panel panel;
+    
     [SerializeField] private RewardItem rewardPrefab;
     [SerializeField] private Transform rewardParent;
-
-    private Panel _panel;
-
-    private void Awake()
-    {
-        _panel = GetComponent<Panel>();
-    }
-
+    
     public void Initialize(List<Reward> rewards)
     {
-        _panel.SetPosition(PanelStates.Show, true);
+        panel.SetPosition(PanelStates.Show, true);
 
         foreach (var reward in rewards)
         {

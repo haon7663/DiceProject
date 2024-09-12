@@ -35,6 +35,7 @@ public class DiceRollingState : BattleState
         var index = 0;
         var maxIndex = behaviourInfos.SelectMany(behaviourInfo => behaviourInfo.diceTypes).Count(diceType => owner.PlayerData.dices[diceType] > 0);
 
+        var displayTotalValue = 0;
         foreach (var behaviourInfo in behaviourInfos)
         {
             var totalValue = 0;
@@ -56,8 +57,9 @@ public class DiceRollingState : BattleState
             }
 
             unit.behaviourValues.Add(behaviourInfo, totalValue);
-            owner.diceResultPanelController.SetValue(unit, totalValue);
+            displayTotalValue += totalValue;
         }
+        owner.diceResultPanelController.SetValue(unit, displayTotalValue);
     }
 
     private Vector3 CalculateDicePosition(int index, int maxIndex)

@@ -100,21 +100,35 @@ public class ActionSceneState : BattleState
         fromTotalDamage = fromTotalDamage > 1 ? fromTotalDamage : 1;
         toTotalDamage = toTotalDamage > 1 ? toTotalDamage : 1;
         
-        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack) && !IsSatisfiedBehaviours(to, from, BehaviourType.Avoid))
+        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
         {
-            if (to.TryGetComponent<Health>(out var toHealth))
+            if (IsSatisfiedBehaviours(from, to, BehaviourType.Avoid))
             {
-                toHealth.OnDamage(fromTotalDamage);
-                owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
+                owner.hudController.PopAvoid(to.transform.position);
+            }
+            else
+            {
+                if (to.TryGetComponent<Health>(out var toHealth))
+                {
+                    toHealth.OnDamage(fromTotalDamage);
+                    owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
+                }
             }
         }
 
         if (IsSatisfiedBehaviours(to, from, BehaviourType.Attack))
         {
-            if (from.TryGetComponent<Health>(out var fromHealth))
+            if (IsSatisfiedBehaviours(to, from, BehaviourType.Avoid))
             {
-                fromHealth.OnDamage(toTotalDamage);
-                owner.hudController.PopDamage(from.transform.position, toTotalDamage);
+                owner.hudController.PopAvoid(from.transform.position);
+            }
+            else
+            {
+                if (from.TryGetComponent<Health>(out var fromHealth))
+                {
+                    fromHealth.OnDamage(toTotalDamage);
+                    owner.hudController.PopDamage(from.transform.position, toTotalDamage);
+                }
             }
         }
     }
@@ -136,7 +150,7 @@ public class ActionSceneState : BattleState
 
     private void TakeStatusEffect(Unit from, Unit to)
     {
-        if (to.TryGetComponent<StatusEffect>(out var toStatusEffect))
+        if (to.TryGetComponent<StatusEffect>(out var toStatusEffect) && !IsSatisfiedBehaviours(from, to, BehaviourType.Avoid))
         {
             foreach (var behaviour in GetStatusEffectBehaviours(from, to))
             {
@@ -147,7 +161,7 @@ public class ActionSceneState : BattleState
             }
         }
         
-        if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect))
+        if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect) && !IsSatisfiedBehaviours(to, from, BehaviourType.Avoid))
         {
             foreach (var behaviour in GetStatusEffectBehaviours(to, from))
             {
@@ -162,7 +176,7 @@ public class ActionSceneState : BattleState
     // 유닛 행동 실행
     private void ExecuteUnitActions(Unit from, Unit to)
     {
-        var isAvoid = IsSatisfiedBehaviours(to, from, BehaviourType.Avoid);
+        var isAvoid = IsSatisfiedBehaviours(from, to, BehaviourType.Avoid);
         
         owner.mainCameraMovement.VibrationForTime(0.65f);
         owner.highlightCameraMovement.VibrationForTime(0.5f);
@@ -178,11 +192,9 @@ public class ActionSceneState : BattleState
         var fromBehaviours = CreateBehaviours(from);
         var toBehaviours = CreateBehaviours(to);
         
-        Debug.Log($"BehaviourType: {behaviourType} / FValue: { from.behaviourValues.Sum(b => b.Value) } / TValue: { to.behaviourValues.Sum(b => b.Value) }");
-
         return fromBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
                    .Any(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)) ||
                toBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
-                   .Any(b => b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues));
+                   .Any(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues));
     }
 }
