@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RewardState : BattleState
 {
@@ -8,6 +11,34 @@ public class RewardState : BattleState
     {
         base.Enter();
         owner.rewardPanelController.Show(CalculateReward());
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        owner.rewardPanelController.Hide();
+    }
+
+    protected override void AddListeners()
+    {
+        BattleInputController.ButtonEvent += OnButton;
+    }
+    
+    protected override void RemoveListeners()
+    {
+        BattleInputController.ButtonEvent -= OnButton;
+    }
+
+    private void OnButton(object obj, ButtonEventType eventType)
+    {
+        switch (eventType)
+        {
+            case ButtonEventType.Skip:
+                owner.ChangeState<MapSelectionState>();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(eventType), eventType, null);
+        }
     }
 
     private List<Reward> CalculateReward() 
