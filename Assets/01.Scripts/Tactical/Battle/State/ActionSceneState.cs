@@ -177,10 +177,12 @@ public class ActionSceneState : BattleState
     {
         var fromBehaviours = CreateBehaviours(from);
         var toBehaviours = CreateBehaviours(to);
+        
+        Debug.Log($"BehaviourType: {behaviourType} / FValue: { from.behaviourValues.Sum(b => b.Value) } / TValue: { to.behaviourValues.Sum(b => b.Value) }");
 
         return fromBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
                    .Any(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)) ||
                toBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
-                   .Any(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues));
+                   .Any(b => b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues));
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
@@ -9,8 +10,7 @@ public class DamageHud : Hud
         base.Initialize(pos, value);
         
         label.text = $"-{value}";
-
-        var rect = label.rectTransform;
+        
         var sequence = DOTween.Sequence();
         sequence.Append(rect.DOAnchorPosY(rect.anchoredPosition.y + 200, 1f));
         sequence.Insert(0.7f, label.DOFade(0f, 0.3f).SetEase(Ease.Linear)).OnComplete(() => Destroy(gameObject));

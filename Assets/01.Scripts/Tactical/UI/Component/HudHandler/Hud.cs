@@ -9,14 +9,21 @@ public abstract class Hud : MonoBehaviour
     [SerializeField] protected TMP_Text label;
     [SerializeField] protected Image icon;
 
+    protected RectTransform rect;
+    
+    private void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+    }
+
     public virtual void Initialize(Vector2 pos, int value)
     {
-        label.transform.position = pos;
+        transform.position = pos;
     }
     
     public virtual void Initialize(Vector2 pos, int value, Sprite sprite)
     {
-        label.transform.position = pos;
+        transform.position = pos;
         icon.sprite = sprite;
     }
 }
