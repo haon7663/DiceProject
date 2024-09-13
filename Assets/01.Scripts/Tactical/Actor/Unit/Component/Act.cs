@@ -18,9 +18,13 @@ public class Act : MonoBehaviour
         _spriteRenderer = _spriteTransform.GetComponent<SpriteRenderer>();
     }
 
-    private void Start()
+    public void Init()
     {
         _spriteRenderer.sprite = _unit.unitSO.idleSprite;
+        _spriteRenderer.DOColor(Color.white, 0.4f).From(Color.black);
+
+        if (_unit.type == UnitType.Player)
+            transform.DOMoveX(-1.35f, 0.4f).From(-3f);
     }
 
     public void DeathAction(AnimationData animationData)

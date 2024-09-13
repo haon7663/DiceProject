@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using GDX.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public enum StatType { MaxHealth = 100, Cost = 200, GetDamage = 300, TakeDamage = 400, TakeDefence = 500, TakeRecovery = 600 }
