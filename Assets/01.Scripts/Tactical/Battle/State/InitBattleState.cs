@@ -12,7 +12,7 @@ public class InitBattleState : BattleState
 
     private IEnumerator Init()
     {
-        owner.cardController.InitDeck(owner.PlayerData.cards.ToCard());
+        owner.interactionCardController.InitDeck(owner.PlayerData.cards.ToCard());
         
         if (owner.player.TryGetComponent<Health>(out var playerHealth))
         {
@@ -26,6 +26,7 @@ public class InitBattleState : BattleState
         owner.statPanelController.ConnectPanel(owner.player);
         owner.diceResultPanelController.ConnectPanel(owner.player);
         
+        owner.enemy.gameObject.SetActive(true);
         if (owner.enemy.TryGetComponent<Health>(out var enemyHealth))
         {
             enemyHealth.maxHp = enemyHealth.curHp = owner.enemy.unitSO.maxHp;

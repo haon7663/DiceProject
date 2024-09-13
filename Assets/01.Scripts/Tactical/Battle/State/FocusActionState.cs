@@ -14,7 +14,7 @@ public class FocusActionState : BattleState
     {
         owner.interactionPanelController.Hide();
         owner.topPanelController.Hide();
-        owner.cardController.UseCards();
+        owner.displayCardController.Hide();
         
         yield return YieldInstructionCache.WaitForSeconds(1f);
         

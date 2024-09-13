@@ -37,9 +37,9 @@ public class ActionSceneState : BattleState
     // 카메라 연출 실행
     private void PerformCameraProduction()
     {
-        var orderMultiplier = owner.player ? 1 : -1;
+        var orderMultiplier = Unit.type == UnitType.Player ? 1 : -1;
         owner.mainCameraMovement.ProductionAtTime(new Vector3(0, 0.35f, -10), 3 * orderMultiplier, 4.6f);
-        owner.highlightCameraMovement.ProductionAtTime(new Vector3(0, 0.35f, -10), 0, 4f);
+        owner.highlightCameraMovement.ProductionAtTime(new Vector3(-0.2f * orderMultiplier, 0.35f, -10), 0, 4f);
         owner.mainCameraVolumeSettings.SetVolume();
     }
 

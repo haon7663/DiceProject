@@ -78,7 +78,7 @@ public class Panel : MonoBehaviour
     public void SetPosition(Position p, bool useDotween = false, float dotweenTime = 0.2f)
     {
         CurrentPosition = p;
-
+        DOTween.Complete(this);
         if (useDotween)
         {
             _rect.DOAnchorPos(p.offset, dotweenTime);

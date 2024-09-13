@@ -18,20 +18,20 @@ MonoBehaviour:
   - name: Default
     actionSprite: {fileID: 21300000, guid: 649cd1f82a0be8541afab55112e5b721, type: 3}
     effectSprite: {fileID: 21300000, guid: 1cb329f87635b744290949b8819b6bb7, type: 3}
-    startOffset: {x: 0.125, y: 0}
-    endOffset: {x: 0, y: 0}
+    startOffset: {x: 0.3, y: 0}
+    endOffset: {x: 0.175, y: 0}
   hits:
   - name: Default
     actionSprite: {fileID: 21300000, guid: 7c72e9d7fe282554c867804a5825410a, type: 3}
     effectSprite: {fileID: 21300000, guid: 4296c36ed303f464aa9dbeadb73b1ad5, type: 3}
-    startOffset: {x: 0.3, y: 0}
-    endOffset: {x: 0.1, y: 0}
+    startOffset: {x: 0, y: 0}
+    endOffset: {x: -0.2, y: 0}
   avoids:
   - name: Default
     actionSprite: {fileID: 21300000, guid: 7c72e9d7fe282554c867804a5825410a, type: 3}
     effectSprite: {fileID: 0}
-    startOffset: {x: 0.3, y: 0}
-    endOffset: {x: 0, y: 0}
+    startOffset: {x: 0, y: 0}
+    endOffset: {x: -0.2, y: 0}
   cards:
   - {fileID: 11400000, guid: 8cf7ad694acc87f4fb6e4b07a47ddc41, type: 2}
   - {fileID: 11400000, guid: 3ac81be69b1745a43801780a3bbd1893, type: 2}

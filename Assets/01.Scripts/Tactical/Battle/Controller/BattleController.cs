@@ -22,7 +22,8 @@ public class BattleController : StateMachine
     public InteractionPanelController interactionPanelController;
     public TopPanelController topPanelController;
     public StatPanelController statPanelController;
-    public CardController cardController;
+    public InteractionCardController interactionCardController;
+    public DisplayCardController displayCardController;
     public MapController mapController;
     public HudController hudController;
     public RewardPanelController rewardPanelController;
