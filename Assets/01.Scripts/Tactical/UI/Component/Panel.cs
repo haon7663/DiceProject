@@ -9,6 +9,7 @@ public enum PanelStates
 {
     Hide,
     Show,
+    Custom
 }
 
 public class Panel : MonoBehaviour
@@ -17,6 +18,8 @@ public class Panel : MonoBehaviour
     public class Position
     {
         public PanelStates state;
+        [DrawIf("state", PanelStates.Custom)]
+        public string stateName;
         public Vector2 offset;
         public float alpha;
         public bool blockRay;
@@ -44,6 +47,12 @@ public class Panel : MonoBehaviour
             return positionList.FirstOrDefault(p => p.state == state);
         }
     }
+    
+    public Position this[string stateName] {
+        get {
+            return positionList.FirstOrDefault(p => p.stateName == stateName);
+        }
+    }
 
     private RectTransform _rect;
     private CanvasGroup _canvasGroup;
@@ -59,6 +68,11 @@ public class Panel : MonoBehaviour
     public void SetPosition(PanelStates state, bool useDotween = false, float dotweenTime = 0.2f)
     {
         SetPosition(this[state], useDotween, dotweenTime);
+    }
+    
+    public void SetPosition(string stateName, bool useDotween = false, float dotweenTime = 0.2f)
+    {
+        SetPosition(this[stateName], useDotween, dotweenTime);
     }
 
     public void SetPosition(Position p, bool useDotween = false, float dotweenTime = 0.2f)

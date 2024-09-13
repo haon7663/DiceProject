@@ -12,9 +12,9 @@ public class DiversionActionState : BattleState
 
     private IEnumerator Diversion()
     {
-        owner.interactionPanelController.Show();
         owner.topPanelController.Show();
         owner.diceResultPanelController.Hide();
+        owner.interactionPanelController.Disable();
         
         yield return YieldInstructionCache.WaitForSeconds(1f);
         

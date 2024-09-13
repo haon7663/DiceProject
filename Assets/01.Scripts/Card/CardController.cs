@@ -43,6 +43,8 @@ public class CardController : Singleton<CardController>
             
             card.gameObject.SetActive(isActive);
         }
+
+        cardParent.transform.localPosition = Vector3.zero;
     }
 
     public void CopyCard(CardSO data, bool isPlayer)

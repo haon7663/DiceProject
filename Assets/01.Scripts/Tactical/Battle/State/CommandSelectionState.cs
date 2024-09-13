@@ -10,7 +10,12 @@ public class CommandSelectionState : BattleState
         base.Enter();
         if (driver.Current == Drivers.Computer)
         {
+            owner.interactionPanelController.Disable();
             StartCoroutine(ComputerTurn());
+        }
+        else
+        {
+            owner.interactionPanelController.Enable();
         }
     }
 

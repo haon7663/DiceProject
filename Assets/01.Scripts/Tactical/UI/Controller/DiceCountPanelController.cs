@@ -10,10 +10,10 @@ public class DiceCountPanelController : MonoBehaviour
 
     private void Start()
     {
-        SetCount();
+        UpdateCount();
     }
 
-    public void SetCount()
+    public void UpdateCount()
     {
         foreach (var dice in DataManager.Inst.playerData.dices)
         {

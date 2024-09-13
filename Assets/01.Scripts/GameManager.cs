@@ -7,8 +7,6 @@ public enum GameMode { Battle, Event, Shop, Boss }
 public class GameManager : SingletonDontDestroyOnLoad<GameManager>
 {
     public Unit player;
-    public Unit enemy;
-    
     public GameMode currentGameMode;
 }
 
