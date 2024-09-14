@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatusEffectUpdateState : BattleState
+public class UpdateStatusEffectState : BattleState
 {
     public override void Enter()
     {
