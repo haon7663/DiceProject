@@ -37,9 +37,9 @@ public class ActionSceneState : BattleState
     // 카메라 연출 실행
     private void PerformCameraProduction()
     {
-        var orderMultiplier = Unit.type == UnitType.Player ? 1 : -1;
-        owner.mainCameraMovement.ProductionAtTime(new Vector3(0, 0.35f, -10), 3 * orderMultiplier, 4.6f);
-        owner.highlightCameraMovement.ProductionAtTime(new Vector3(-0.2f * orderMultiplier, 0.35f, -10), 0, 4f);
+        var orderMultiplier = Turn.isPlayer ? 1 : -1;
+        owner.mainCameraMovement.ProductionAtTime(new Vector3(0, 0.35f, -10), -0.5f * orderMultiplier, 4.6f);
+        owner.highlightCameraMovement.ProductionAtTime(new Vector3(0.2f * orderMultiplier, 0.35f, -10), -5 * orderMultiplier, 4f);
         owner.mainCameraVolumeSettings.SetVolume();
     }
 
@@ -75,6 +75,24 @@ public class ActionSceneState : BattleState
             }
             behaviours.Add(behaviour);
         }
+
+        if (unit.TryGetComponent<Relic>(out var relic))
+        {
+            foreach (var relicSO in relic.relics)
+            {
+                var behaviourInfo = relicSO.behaviourInfo;
+                var behaviour = (Behaviour)Activator.CreateInstance(relicSO.behaviourInfo.behaviourType.GetBehaviourClass());
+                behaviour.compareInfo = behaviourInfo.compareInfo;
+                behaviour.onSelf = behaviourInfo.onSelf;
+                behaviour.value = behaviourInfo.basicValue;
+                if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
+                {
+                    statusEffectBehaviour.statusEffectSO = behaviourInfo.statusEffectSO;
+                }
+                behaviours.Add(behaviour);
+            }
+        }
+        
         return behaviours;
     }
 
@@ -96,6 +114,12 @@ public class ActionSceneState : BattleState
     {
         var fromTotalDamage = CalculateDamage(from, to);
         var toTotalDamage = CalculateDamage(to, from);
+
+        fromTotalDamage = from.Stats[StatType.GetDamage].GetValue(fromTotalDamage);
+        fromTotalDamage = to.Stats[StatType.TakeDamage].GetValue(fromTotalDamage);
+        
+        toTotalDamage = to.Stats[StatType.GetDamage].GetValue(toTotalDamage);
+        toTotalDamage = from.Stats[StatType.TakeDamage].GetValue(toTotalDamage);
         
         fromTotalDamage = fromTotalDamage > 1 ? fromTotalDamage : 1;
         toTotalDamage = toTotalDamage > 1 ? toTotalDamage : 1;
@@ -152,6 +176,21 @@ public class ActionSceneState : BattleState
     {
         if (to.TryGetComponent<StatusEffect>(out var toStatusEffect) && !IsSatisfiedBehaviours(from, to, BehaviourType.Avoid))
         {
+            for (var i = toStatusEffect.enabledEffects.Count - 1; i >= 0; i--)
+            {
+                var effect = toStatusEffect.enabledEffects[i];
+                switch (effect.statusEffectStackType)
+                {
+                    case StatusEffectStackType.AfterAttack:
+                        if (IsSatisfiedBehaviours(to, from, BehaviourType.Attack))
+                            effect.UpdateStack(to);
+                        break;
+                    case StatusEffectStackType.AfterHit:
+                        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
+                            effect.UpdateStack(to);
+                        break;
+                }
+            }
             foreach (var behaviour in GetStatusEffectBehaviours(from, to))
             {
                 if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
@@ -163,6 +202,21 @@ public class ActionSceneState : BattleState
         
         if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect) && !IsSatisfiedBehaviours(to, from, BehaviourType.Avoid))
         {
+            for (var i = fromStatusEffect.enabledEffects.Count - 1; i >= 0; i--)
+            {
+                var effect = fromStatusEffect.enabledEffects[i];
+                switch (effect.statusEffectStackType)
+                {
+                    case StatusEffectStackType.AfterAttack:
+                        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
+                            effect.UpdateStack(from);
+                        break;
+                    case StatusEffectStackType.AfterHit:
+                        if (IsSatisfiedBehaviours(to, from, BehaviourType.Attack))
+                            effect.UpdateStack(from);
+                        break;
+                }
+            }
             foreach (var behaviour in GetStatusEffectBehaviours(to, from))
             {
                 if (behaviour is StatusEffectBehaviour statusEffectBehaviour)

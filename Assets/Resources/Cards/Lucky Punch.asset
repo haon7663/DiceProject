@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6891f8709446bc54ea9da214ba6f8ca7, type: 3}
+  m_Name: Lucky Punch
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 36e58d8be17e9734691eee6aa8a12a0b, type: 3}
+  cardName: "\uB7ED\uD0A4 \uD380\uCE58"
+  description: "<sprite=0> \uB9CC\uD07C \uD53C\uD574\uB97C \uC8FC\uACE0\n2\uB9CC\uD07C
+    \uD589\uC6B4\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  type: 0
+  behaviourInfos:
+  - behaviourType: 0
+    statusEffectSO: {fileID: 0}
+    basicValue: 0
+    diceTypes: 00000000
+    compareInfo:
+      compareType: 0
+      specialCompareType: 0
+      compareTargetType: 0
+      value: 0
+    onSelf: 0
+    specialBehaviourType: 0
+  - behaviourType: 4
+    statusEffectSO: {fileID: 11400000, guid: 7cad5db77a2378f45b77ee5ad7367f33, type: 2}
+    basicValue: 1
+    diceTypes: 
+    compareInfo:
+      compareType: 0
+      specialCompareType: 0
+      compareTargetType: 0
+      value: 0
+    onSelf: 1
+    specialBehaviourType: 0

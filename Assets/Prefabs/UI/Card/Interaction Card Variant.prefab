@@ -493,6 +493,11 @@ MonoBehaviour:
     offset: {x: 0, y: 75}
     alpha: 1
     blockRay: 1
+  - state: 2
+    stateName: Use
+    offset: {x: 0, y: 100}
+    alpha: 0
+    blockRay: 0
 --- !u!225 &7712773570181989875
 CanvasGroup:
   m_ObjectHideFlags: 0

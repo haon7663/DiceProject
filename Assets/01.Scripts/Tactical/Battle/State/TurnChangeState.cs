@@ -29,6 +29,6 @@ public class TurnChangeState : BattleState
         yield return StartCoroutine(owner.interactionCardController.ChangeDeck(Turn.isPlayer));
         yield return StartCoroutine(owner.turnOrderController.Show(Turn.isPlayer));
         
-        owner.ChangeState<StatusEffectUpdateState>();
+        owner.ChangeState<UpdateStatusEffectState>();
     }
 }

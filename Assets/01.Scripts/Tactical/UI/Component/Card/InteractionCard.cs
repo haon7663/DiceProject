@@ -6,15 +6,17 @@ public class InteractionCard : Card
 {
     public event Action<CardSO, bool> Copy;
     public event Action<bool> Prepare;
+    public event Action<InteractionCard> Interact;
     
     private bool _isPrepared;
     
     public void OnPointerClick()
     {
+        Interact?.Invoke(this);
         if (_isPrepared)
         {
             Prepare?.Invoke(true);
-            panel.SetPosition(PanelStates.Show, true);
+            panel.SetPosition("Use", true, 0.5f);
             _isPrepared = false;
         }
         else
@@ -23,5 +25,11 @@ public class InteractionCard : Card
             panel.SetPosition("Ready", true);
             _isPrepared = true;
         }
+    }
+    
+    public void OnCancel()
+    {
+        panel.SetPosition(PanelStates.Show, true);
+        _isPrepared = false;
     }
 }

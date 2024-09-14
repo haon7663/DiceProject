@@ -77,14 +77,16 @@ public class Panel : MonoBehaviour
 
     public void SetPosition(Position p, bool useDotween = false, float dotweenTime = 0.2f)
     {
+        DOTween.Kill(_canvasGroup);
+        DOTween.Kill(_rect);
+        
         CurrentPosition = p;
-        DOTween.Complete(this);
         if (useDotween)
         {
             _rect.DOAnchorPos(p.offset, dotweenTime);
             if (_canvasGroup)
             {
-                DOVirtual.Float(_canvasGroup.alpha, p.alpha, dotweenTime, a => _canvasGroup.alpha = a);
+                _canvasGroup.DOFade(p.alpha, dotweenTime);
                 _canvasGroup.blocksRaycasts = p.blockRay;
             }
         }

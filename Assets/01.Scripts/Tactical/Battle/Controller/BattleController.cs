@@ -9,6 +9,7 @@ public class BattleController : StateMachine
     [Header("- Units -")]
     public Unit player;
     public Unit enemy;
+    public EventObject eventObject;
 
     [Header("- Management -")]
     public DataManager dataManager;

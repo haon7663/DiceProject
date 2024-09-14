@@ -3,6 +3,7 @@
     public override void Enter()
     {
         base.Enter();
+        owner.interactionPanelController.Enable();
         owner.mapController.Show();
     }
 }

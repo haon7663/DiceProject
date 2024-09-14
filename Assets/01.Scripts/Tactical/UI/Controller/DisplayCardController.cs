@@ -24,15 +24,24 @@ public class DisplayCardController : MonoBehaviour
     {
         var card = Instantiate(cardPrefab, parent);
         card.Init(data);
-        card.MoveTransform(new Vector2(0, 540));
+        card.MoveTransform(new Vector2(0, 1600));
         card.SetAnim("Show");
+        card.panel.SetPosition(PanelStates.Show, true);
         
         card.transform.SetAsLastSibling();
 
         if (isPlayer)
+        {
+            if (playerCard)
+                Destroy(playerCard.gameObject);
             playerCard = card;
+        }
         else
+        {
+            if (enemyCard)
+                Destroy(enemyCard.gameObject);
             enemyCard = card;
+        }
     }
 
     public void PrepareCard(bool isPlayer)
@@ -43,7 +52,7 @@ public class DisplayCardController : MonoBehaviour
 
         var sequence = DOTween.Sequence();
         sequence.Append(card.transform.DOScale(new Vector3(0.5f, 0.5f), 0.25f));
-        sequence.AppendCallback(() => card.MoveTransform(new Vector3(isPlayer ? -304 : 304, 150), true));
+        sequence.AppendCallback(() => card.MoveTransform(new Vector3(isPlayer ? -304 : 304, 1350), true));
         sequence.AppendInterval(0.25f);
         sequence.AppendCallback(() => CardPrepareEvent?.Invoke(this, card.Data));
     }

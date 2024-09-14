@@ -20,11 +20,11 @@ MonoBehaviour:
   - behaviourType: 4
     statusEffectSO: {fileID: 11400000, guid: a0954f161df2d394483a64c0307b2023, type: 2}
     basicValue: 0
-    diceTypes: 01000000
+    diceTypes: 02000000
     compareInfo:
       compareType: 0
       specialCompareType: 0
       compareTargetType: 0
       value: 0
     onSelf: 0
-    chargeInDice: 0
+    specialBehaviourType: 0

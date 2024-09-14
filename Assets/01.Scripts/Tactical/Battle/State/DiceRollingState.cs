@@ -56,6 +56,8 @@ public class DiceRollingState : BattleState
                 }
             }
 
+            totalValue = unit.Stats[StatType.Fortune].GetValue(totalValue);
+            
             unit.behaviourValues.Add(behaviourInfo, totalValue);
             displayTotalValue += totalValue;
         }

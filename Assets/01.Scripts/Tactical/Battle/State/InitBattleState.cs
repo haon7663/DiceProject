@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InitBattleState : BattleState
@@ -13,7 +14,8 @@ public class InitBattleState : BattleState
     private IEnumerator Init()
     {
         owner.interactionCardController.InitDeck(owner.PlayerData.cards.ToCard());
-        
+
+        owner.player.unitSO = Resources.LoadAll<UnitSO>("Units/Player").FirstOrDefault(unit => unit.name == owner.PlayerData.name);
         if (owner.player.TryGetComponent<Health>(out var playerHealth))
         {
             playerHealth.maxHp = playerHealth.curHp = owner.PlayerData.curHp;
@@ -27,6 +29,7 @@ public class InitBattleState : BattleState
         owner.diceResultPanelController.ConnectPanel(owner.player);
         
         owner.enemy.gameObject.SetActive(true);
+        owner.enemy.unitSO = Resources.LoadAll<UnitSO>("Units/CommonEnemy").Random();
         if (owner.enemy.TryGetComponent<Health>(out var enemyHealth))
         {
             enemyHealth.maxHp = enemyHealth.curHp = owner.enemy.unitSO.maxHp;
