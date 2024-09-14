@@ -15,10 +15,11 @@ public class TickRecoveryStatusEffectSO : StatusEffectSO
     
     public override void UpdateEffect(Unit unit)
     {
-        if (!unit.TryGetComponent<Health>(out var health))
-            return;
-        
-        health.OnRecovery(GetCurrentValue());
+        if (unit.TryGetComponent<Health>(out var health))
+        {
+            health.OnRecovery(GetCurrentValue());
+        }
+        base.UpdateEffect(unit);
     }
     
     public override int GetCurrentValue()

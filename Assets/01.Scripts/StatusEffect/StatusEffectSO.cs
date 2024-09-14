@@ -2,18 +2,21 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum StatusEffectStackType { Duration = 100, Intensity = 200, IntensityAndDuration = 300, Counter = 400, No = 500 }
+public enum StatusEffectStackType { Duration = 100, AfterAttack = 200, AfterHit = 300 }
+public enum StatusEffectStackDecreaseType { Minus = 100, Extinction = 200, None = 300 }
 public enum StatusEffectCalculateType { Accumulate = 100, Initialize = 200, Each = 300 }
 
 public abstract class StatusEffectSO : ScriptableObject
 {
     public new string name;
     [TextArea] public string description;
-    [FormerlySerializedAs("statusEffectSprite")] public Sprite sprite;
+    public Sprite sprite;
     
     public string label;
     
     public StatusEffectStackType statusEffectStackType = StatusEffectStackType.Duration;
+    public StatusEffectStackDecreaseType statusEffectStackDecreaseType = StatusEffectStackDecreaseType.Minus;
+    public int minusValue = 1;
     public StatusEffectCalculateType statusEffectCalculateType = StatusEffectCalculateType.Accumulate;
     
     private int _stack;
@@ -43,24 +46,23 @@ public abstract class StatusEffectSO : ScriptableObject
     
     public virtual void UpdateEffect(Unit unit)
     {
-        
+        if (statusEffectStackType == StatusEffectStackType.Duration)
+        {
+            UpdateStack(unit);
+        }
     }
 
     public void UpdateStack(Unit unit)
     {
-        switch (statusEffectStackType)
+        switch (statusEffectStackDecreaseType)
         {
-            case StatusEffectStackType.Duration:
-                _stack--;
+            case StatusEffectStackDecreaseType.Minus:
+                _stack -= minusValue;
                 break;
-            case StatusEffectStackType.IntensityAndDuration:
-                _stack--;
+            case StatusEffectStackDecreaseType.Extinction:
+                _stack = 0;
                 break;
-            case StatusEffectStackType.Intensity:
-                break;
-            case StatusEffectStackType.Counter:
-                break;
-            case StatusEffectStackType.No:
+            case StatusEffectStackDecreaseType.None:
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

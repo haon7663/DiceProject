@@ -10,6 +10,7 @@ public class StatStatusEffectSO : StatusEffectSO
     [SerializeField] private StatModifierType statModifierType;
     [DrawIf("statModifierType", StatModifierType.Add)] [SerializeField] private bool useStack;
     [DrawIf("useStack", false)] [SerializeField] private float value;
+    [DrawIf("useStack", true)] [SerializeField] private float multiplierValue;
 
     private StatModifier _statModifier;
     
@@ -31,7 +32,7 @@ public class StatStatusEffectSO : StatusEffectSO
         _statModifier = statModifierType switch
         {
             StatModifierType.Multiply => new StatModifier(statModifierType, value),
-            StatModifierType.Add => new StatModifier(statModifierType, useStack ? GetCurrentStack() : value),
+            StatModifierType.Add => new StatModifier(statModifierType, useStack ? GetCurrentStack() * multiplierValue : value),
             _ => _statModifier
         };
     }
