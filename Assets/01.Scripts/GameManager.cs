@@ -8,6 +8,13 @@ public class GameManager : SingletonDontDestroyOnLoad<GameManager>
 {
     public Unit player;
     public GameMode currentGameMode;
+
+    public float battleSpeed = 1;
+
+    private void Awake()
+    {
+        Time.timeScale = battleSpeed;
+    }
 }
 
 public static class YieldInstructionCache
