@@ -14,10 +14,8 @@ public class InteractionCardController : MonoBehaviour
     [SerializeField] private InteractionCard cardPrefab;
 
     [Header("트랜스폼")] 
-    [SerializeField] private Transform canvas;
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private RectTransform contentRect;
-    [SerializeField] private Transform parent;
     
     private List<InteractionCard> _interactionCards;
     private InteractionCard _current;
@@ -28,7 +26,7 @@ public class InteractionCardController : MonoBehaviour
 
         foreach (var data in cards)
         {
-            var card = Instantiate(cardPrefab, parent);
+            var card = Instantiate(cardPrefab, contentRect.transform);
             card.Init(data);
             _interactionCards.Add(card);
 
@@ -51,7 +49,7 @@ public class InteractionCardController : MonoBehaviour
     {
         yield return HideCards(isAttackTurn);
         
-        parent.transform.localPosition = Vector3.zero;
+        contentRect.transform.localPosition = Vector3.zero;
         
         SetCardsActive(isAttackTurn);
         

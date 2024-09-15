@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum GameMode { Battle, Event, Shop, Boss }
+public enum GameMode { Battle, Event, Chest, Shop, Boss }
 
 public class GameManager : SingletonDontDestroyOnLoad<GameManager>
 {

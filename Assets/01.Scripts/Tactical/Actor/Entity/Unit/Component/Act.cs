@@ -10,12 +10,16 @@ public class Act : MonoBehaviour
     private Unit _unit;
     private Transform _spriteTransform;
     private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
+    
+    private static readonly int Idle = Animator.StringToHash("Idle");
 
     private void Awake()
     {
         _unit = GetComponent<Unit>();
         _spriteTransform = transform.GetChild(0);
         _spriteRenderer = _spriteTransform.GetComponent<SpriteRenderer>();
+        _animator = _spriteTransform.GetComponent<Animator>();
     }
 
     public void Init()
@@ -32,6 +36,7 @@ public class Act : MonoBehaviour
         _spriteRenderer.sprite = animationData.actionSprite;
         _spriteTransform.gameObject.layer = 7;
         _spriteTransform.localPosition = animationData.startOffset;
+        _animator.SetBool(Idle, false);
 
         var sequence = DOTween.Sequence();
         sequence.Append(_spriteTransform.DOLocalMove(animationData.endOffset, 1.2f))
@@ -48,6 +53,7 @@ public class Act : MonoBehaviour
         _spriteRenderer.sprite = animationData.actionSprite;
         _spriteTransform.gameObject.layer = 7;
         _spriteTransform.localPosition = animationData.startOffset;
+        _animator.SetBool(Idle, false);
 
         var sequence = DOTween.Sequence();
         sequence.Append(_spriteTransform.DOLocalMove(animationData.endOffset, 1.2f))
@@ -57,6 +63,7 @@ public class Act : MonoBehaviour
             {
                 _spriteRenderer.sprite = unitData.idleSprite;
                 _spriteTransform.gameObject.layer = 0;
+                _animator.SetBool(Idle, true);
             });
     }
 

@@ -102,8 +102,9 @@ public class EventStageManager : Singleton<EventStageManager>
         var diceValue = 0;
         if (eventOption.useCondition)
         {
-            yield return StartCoroutine(DiceManager.Inst.RollTheDices(eventOption.diceTypes, 0,
-                value => diceValue = value));
+            yield return null;
+            /*yield return StartCoroutine(DiceManager.Inst.RollTheDices(eventOption.diceTypes, 0,
+                value => diceValue = value));*/
         }
         foreach (var eventEffect in eventOption.eventEffects)
         {

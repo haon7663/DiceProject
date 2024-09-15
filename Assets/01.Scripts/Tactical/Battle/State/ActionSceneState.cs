@@ -14,15 +14,15 @@ public class ActionSceneState : BattleState
 
     private IEnumerator Action()
     {
-        // 카메라 설정 및 연출
-        PerformCameraProduction();
-
         // 유닛 정보 설정
         var from = Turn.isPlayer ? owner.player : owner.enemy;
         var to = Turn.isPlayer ? owner.enemy : owner.player;
 
         // 행동 실행
         ExecuteAction(from, to);
+        
+        // 카메라 설정 및 연출
+        PerformCameraProduction(from, to);
         
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
         
@@ -32,23 +32,6 @@ public class ActionSceneState : BattleState
         yield return null;
         
         owner.ChangeState<DiversionActionState>();
-    }
-
-    // 카메라 연출 실행
-    private void PerformCameraProduction()
-    {
-        var orderMultiplier = Turn.isPlayer ? 1 : -1;
-        owner.mainCameraMovement.ProductionAtTime(new Vector3(0, 0.35f, -10), -0.5f * orderMultiplier, 4.6f);
-        owner.highlightCameraMovement.ProductionAtTime(new Vector3(0.2f * orderMultiplier, 0.35f, -10), -5 * orderMultiplier, 4f);
-        owner.mainCameraVolumeSettings.SetVolume();
-    }
-
-    // 카메라와 UI 초기화
-    private void ResetCameraProduction()
-    {
-        owner.mainCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
-        owner.highlightCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
-        owner.mainCameraVolumeSettings.ResetVolume();
     }
 
     // 행동 실행
@@ -136,6 +119,8 @@ public class ActionSceneState : BattleState
                 {
                     toHealth.OnDamage(fromTotalDamage);
                     owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
+                    /*if (IsSatisfiedBehaviours(from, to, BehaviourType.Defence))
+                        owner.hudController.Pop(to.transform.position, fromTotalDamage);*/
                 }
             }
         }
@@ -230,15 +215,53 @@ public class ActionSceneState : BattleState
     // 유닛 행동 실행
     private void ExecuteUnitActions(Unit from, Unit to)
     {
-        var isAvoid = IsSatisfiedBehaviours(from, to, BehaviourType.Avoid);
+        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
+        {
+            var isAvoid = IsSatisfiedBehaviours(from, to, BehaviourType.Avoid);
         
-        owner.mainCameraMovement.VibrationForTime(0.65f);
-        owner.highlightCameraMovement.VibrationForTime(0.5f);
+            owner.mainCameraMovement.VibrationForTime(0.65f);
+            owner.highlightCameraMovement.VibrationForTime(0.5f);
 
-        if (!from.TryGetComponent<Act>(out var fromAct) || !to.TryGetComponent<Act>(out var toAct)) return;
+            if (!from.TryGetComponent<Act>(out var fromAct) || !to.TryGetComponent<Act>(out var toAct)) return;
+            
+            fromAct.PerformAction(from.unitSO.attacks.Random());
+            toAct.PerformAction(isAvoid ? to.unitSO.avoids.Random() : to.unitSO.hits.Random());
+        }
+    }
+    
+    // 카메라 연출 실행
+    private void PerformCameraProduction(Unit from, Unit to)
+    {
+        var intensity = 5f;
+        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
+        {
+            if (CalculateDamage(from, to) > 7)
+            {
+                owner.mainCameraVolumeSettings.SetGrayVolume();
+            }
+            else
+            {
+                intensity = 2.5f;
+                owner.mainCameraVolumeSettings.SetNormalVolume();
+            }
+        }
+        else
+        {
+            intensity = 0f;
+            owner.mainCameraVolumeSettings.SetNormalVolume();
+        }
         
-        fromAct.PerformAction(from.unitSO.attacks.Random());
-        toAct.PerformAction(isAvoid ? to.unitSO.avoids.Random() : to.unitSO.hits.Random());
+        var orderMultiplier = Turn.isPlayer ? 1 : -1;
+        owner.mainCameraMovement.ProductionAtTime(new Vector3(0, 0.35f, -10), -intensity * 0.5f * orderMultiplier, 4.6f);
+        owner.highlightCameraMovement.ProductionAtTime(new Vector3(0.2f * orderMultiplier, 0.35f, -10), -intensity * orderMultiplier, 4f);
+    }
+
+    // 카메라와 UI 초기화
+    private void ResetCameraProduction()
+    {
+        owner.mainCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
+        owner.highlightCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
+        owner.mainCameraVolumeSettings.ResetVolume();
     }
 
     private bool IsSatisfiedBehaviours(Unit from, Unit to, BehaviourType behaviourType)

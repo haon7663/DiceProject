@@ -11,7 +11,7 @@ namespace Map
 {
     public class MapPlayerTracker : Singleton<MapPlayerTracker>
     {
-        public float enterNodeDelay = 1f;
+        public float enterNodeDelay = 0.5f;
         [FormerlySerializedAs("mapManager")] public MapController mapController;
         public MapView view;
         
@@ -58,7 +58,7 @@ namespace Map
             {
                 case NodeType.MinorEnemy:
                     GameManager.Inst.currentGameMode = GameMode.Battle;
-                    SceneManager.LoadScene("Battle");
+                    Fade.Inst.FadeOut("Battle");
                     break;
                 case NodeType.EliteEnemy:
                     break;

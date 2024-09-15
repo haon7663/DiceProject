@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 36e58d8be17e9734691eee6aa8a12a0b, type: 3}
   cardName: "\uB7ED\uD0A4 \uD380\uCE58"
-  description: "<sprite=0> \uB9CC\uD07C \uD53C\uD574\uB97C \uC8FC\uACE0\n2\uB9CC\uD07C
+  description: "<sprite=0> \uB9CC\uD07C \uD53C\uD574\uB97C \uC8FC\uACE0\n1\uB9CC\uD07C
     \uD589\uC6B4\uC744 \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   type: 0
   behaviourInfos:

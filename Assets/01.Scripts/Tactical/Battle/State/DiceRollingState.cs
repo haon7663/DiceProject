@@ -75,12 +75,14 @@ public class DiceRollingState : BattleState
     {
         DataManager.Inst.playerData.dices[diceType]--;
         owner.diceCountPanelController.UpdateCount();
-
-        var value = diceType.GetDiceValue();
-        var dice = DiceFactory.Create(diceType);
         
+        var dice = DiceFactory.Create(diceType);
         dice.transform.position = pos;
         dice.transform.rotation = Quaternion.Euler(0, Random.Range(-15f, 15f), 0);
+
+        var value = diceType.GetDiceValue();
+        var diceObject = dice.GetComponent<DiceObject>();
+        diceObject.Initialize(value);
 
         return value;
     }
