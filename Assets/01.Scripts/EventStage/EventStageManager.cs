@@ -102,14 +102,14 @@ public class EventStageManager : Singleton<EventStageManager>
         var diceValue = 0;
         if (eventOption.useCondition)
         {
-            yield return StartCoroutine(DiceManager.Inst.RollTheDices(eventOption.compareDiceTypes, 0,
+            yield return StartCoroutine(DiceManager.Inst.RollTheDices(eventOption.diceTypes, 0,
                 value => diceValue = value));
         }
         foreach (var eventEffect in eventOption.eventEffects)
         {
             if (eventOption.useCondition)
             {
-                if(!eventEffect.compareType.IsSatisfied(diceValue, eventEffect.compareValue))
+                if(!eventEffect.compareInfo.compareType.IsSatisfied(diceValue, eventEffect.compareInfo.value))
                     continue;
             }
 

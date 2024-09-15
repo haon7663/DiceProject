@@ -15,7 +15,7 @@ public class InitEventState : EventState
         owner.player.GetComponent<Health>().maxHp = owner.player.GetComponent<Health>().curHp = owner.PlayerData.curHp;
         owner.statPanelController.ConnectPanel(owner.player);
         
-        owner.gameObject.SetActive(true);
+        owner.eventObject.gameObject.SetActive(true);
         //owner.eventObject.SetSprite();
         
         yield return null;
