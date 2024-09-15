@@ -13,6 +13,7 @@ public class VolumeSettings : MonoBehaviour
     private float _vignetteSmoothness;
     private bool _colorAdjustmentsActive;
     private bool _channelMixerActive;
+    private float _chromaticAberrationIntensity;
     private bool _chromaticAberrationActive;
 
     private void Awake()
@@ -32,11 +33,14 @@ public class VolumeSettings : MonoBehaviour
             _colorAdjustmentsActive = colorAdjustments.active;
         if(_volume.profile.TryGet(out ChannelMixer channelMixer))
             _colorAdjustmentsActive = channelMixer.active;
-        if(_volume.profile.TryGet(out ChromaticAberration chromaticAberration))
+        if (_volume.profile.TryGet(out ChromaticAberration chromaticAberration))
+        {
+            _chromaticAberrationIntensity = chromaticAberration.intensity.value;
             _chromaticAberrationActive = chromaticAberration.active;
+        }
     }
 
-    public void SetVolume()
+    public void SetGrayVolume()
     {
         if (_volume.profile.TryGet(out Vignette vignette))
         {
@@ -47,8 +51,25 @@ public class VolumeSettings : MonoBehaviour
             colorAdjustments.active = true;
         if(_volume.profile.TryGet(out ChannelMixer channelMixer))
             channelMixer.active = true;
-        if(_volume.profile.TryGet(out ChromaticAberration chromaticAberration))
+        if (_volume.profile.TryGet(out ChromaticAberration chromaticAberration))
+        {
+            chromaticAberration.intensity.value = 0.853f;
             chromaticAberration.active = true;
+        }
+    }
+    
+    public void SetNormalVolume()
+    {
+        if (_volume.profile.TryGet(out Vignette vignette))
+        {
+            vignette.intensity.value = 0.4f;
+            vignette.smoothness.value = 0.4f;
+        }
+        if(_volume.profile.TryGet(out ChromaticAberration chromaticAberration))
+        {
+            chromaticAberration.intensity.value = 0.4f;
+            chromaticAberration.active = true;
+        }
     }
     
     public void ResetVolume()
