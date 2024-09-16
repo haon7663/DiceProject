@@ -2,15 +2,33 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InteractionCard : Card
+public class InteractionCard : Card, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
 {
     public event Action<CardSO, bool> Copy;
     public event Action<bool> Prepare;
     public event Action<InteractionCard> Interact;
     
     private bool _isPrepared;
+    private Vector2 _startPos;
+    private Vector2 _endPos;
     
-    public void OnPointerClick()
+    public void OnCancel()
+    {
+        panel.SetPosition(PanelStates.Show, true);
+        _isPrepared = false;
+    }
+    
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        _startPos = transform.parent.position;
+    }
+    
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        _endPos = transform.parent.position;
+    }
+    
+    public void OnPointerClick(PointerEventData eventData)
     {
         Interact?.Invoke(this);
         if (_isPrepared)
@@ -25,11 +43,5 @@ public class InteractionCard : Card
             panel.SetPosition("Ready", true);
             _isPrepared = true;
         }
-    }
-    
-    public void OnCancel()
-    {
-        panel.SetPosition(PanelStates.Show, true);
-        _isPrepared = false;
     }
 }

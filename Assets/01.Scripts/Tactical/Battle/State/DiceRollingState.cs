@@ -8,11 +8,21 @@ using Random = UnityEngine.Random;
 
 public class DiceRollingState : BattleState
 {
+    private List<DiceObject> _diceObjects;
+    
     public override void Enter()
     {
         base.Enter();
+        _diceObjects = new List<DiceObject>();
         StartCoroutine(RollingDices());
     }
+    public override void Exit()
+    {
+        base.Exit();
+        _diceObjects.ForEach(dice => Destroy(dice.gameObject));
+        _diceObjects.Clear();
+    }
+    
 
     private IEnumerator RollingDices()
     {
@@ -54,9 +64,9 @@ public class DiceRollingState : BattleState
                 {
                     totalValue += diceType.GetDiceValue();
                 }
+                Debug.Log($"기존 주사위 값: {totalValue}, 행운 보너스: {unit.Stats[StatType.Fortune].GetValue(totalValue)}");
+                totalValue = unit.Stats[StatType.Fortune].GetValue(totalValue);
             }
-
-            totalValue = unit.Stats[StatType.Fortune].GetValue(totalValue);
             
             unit.behaviourValues.Add(behaviourInfo, totalValue);
             displayTotalValue += totalValue;
@@ -83,6 +93,7 @@ public class DiceRollingState : BattleState
         var value = diceType.GetDiceValue();
         var diceObject = dice.GetComponent<DiceObject>();
         diceObject.Initialize(value);
+        _diceObjects.Add(diceObject);
 
         return value;
     }

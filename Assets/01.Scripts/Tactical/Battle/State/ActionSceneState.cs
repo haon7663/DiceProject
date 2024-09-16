@@ -118,9 +118,9 @@ public class ActionSceneState : BattleState
                 if (to.TryGetComponent<Health>(out var toHealth))
                 {
                     toHealth.OnDamage(fromTotalDamage);
-                    owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
-                    /*if (IsSatisfiedBehaviours(from, to, BehaviourType.Defence))
-                        owner.hudController.Pop(to.transform.position, fromTotalDamage);*/
+                    owner.hudController.PopDamage(to.transform.position, GetSatisfiedBehavioursSum(from, to, BehaviourType.Attack));
+                    if (IsSatisfiedBehaviours(from, to, BehaviourType.Defence))
+                        owner.hudController.PopDefence(to.transform.position, GetSatisfiedBehavioursSum(from, to, BehaviourType.Defence));
                 }
             }
         }
@@ -137,6 +137,8 @@ public class ActionSceneState : BattleState
                 {
                     fromHealth.OnDamage(toTotalDamage);
                     owner.hudController.PopDamage(from.transform.position, toTotalDamage);
+                    if (IsSatisfiedBehaviours(to, from, BehaviourType.Defence))
+                        owner.hudController.PopDefence(from.transform.position, GetSatisfiedBehavioursSum(to, from, BehaviourType.Defence));
                 }
             }
         }
@@ -273,5 +275,16 @@ public class ActionSceneState : BattleState
                    .Any(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)) ||
                toBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
                    .Any(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues));
+    }
+    
+    private int GetSatisfiedBehavioursSum(Unit from, Unit to, BehaviourType behaviourType)
+    {
+        var fromBehaviours = CreateBehaviours(from);
+        var toBehaviours = CreateBehaviours(to);
+        
+        return fromBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
+                   .Where(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)).Sum(b => b.value) +
+               toBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
+                   .Where(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues)).Sum(b => b.value);
     }
 }

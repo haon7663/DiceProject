@@ -36,7 +36,7 @@ public class PlayerData
             { DiceType.Four, 9999999 },
             { DiceType.Six, 12 },
             { DiceType.Eight, 6 },
-            { DiceType.Twelve, 2 },
+            { DiceType.Twelve, 24 },
             { DiceType.Twenty, 1 },
         };
 

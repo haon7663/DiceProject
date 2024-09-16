@@ -20,4 +20,9 @@ public class PausePanel : MonoBehaviour
         panel.SetPosition(PanelStates.Hide, true, 0.25f);
         contentPanel.SetPosition(PanelStates.Hide, true, 0.25f);
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

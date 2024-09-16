@@ -36,6 +36,15 @@ public class InteractionCardController : MonoBehaviour
             card.Prepare += displayCardController.PrepareCard;
         }
     }
+
+    public void CancelAllCards()
+    {
+        foreach (var card in _interactionCards.Where(c => c.gameObject.activeSelf))
+        {
+            card.OnCancel();
+        }
+        displayCardController.CancelCard(true);
+    }
     
     private void CancelCards(CardSO data, bool isPlayer)
     {

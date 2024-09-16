@@ -57,6 +57,20 @@ public class DisplayCardController : MonoBehaviour
         sequence.AppendCallback(() => CardPrepareEvent?.Invoke(this, card.Data));
     }
 
+    public void CancelCard(bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            if (playerCard)
+                Destroy(playerCard.gameObject);
+        }
+        else
+        {
+            if (enemyCard)
+                Destroy(enemyCard.gameObject);
+        }
+    }
+
     public void Hide()
     {
         playerCard?.Hide();
