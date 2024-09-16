@@ -25,7 +25,7 @@ public class StatusEffect : MonoBehaviour
         else
         {
             var effect = enabledEffects.Find(effect => effect.name == effectSO.name);
-            if (!effect.DuplicateEffect(stack))
+            if (!effect.DuplicateEffect(_unit, stack))
             {
                 var newEffect = CreateEffectObject(effect);
                 newEffect.ApplyEffect(_unit, stack);

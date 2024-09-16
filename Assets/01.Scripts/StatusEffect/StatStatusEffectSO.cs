@@ -21,6 +21,15 @@ public class StatStatusEffectSO : StatusEffectSO
         unit.Stats[statType].AddModifier(_statModifier);
     }
     
+    public override bool DuplicateEffect(Unit unit, int stack)
+    {
+        var result = base.DuplicateEffect(unit, stack);
+        unit.Stats[statType].RemoveModifier(_statModifier);
+        SetModifier();
+        unit.Stats[statType].AddModifier(_statModifier);
+        return result;
+    }
+    
     public override void RemoveEffect(Unit unit)
     {
         unit.Stats[statType].RemoveModifier(_statModifier);

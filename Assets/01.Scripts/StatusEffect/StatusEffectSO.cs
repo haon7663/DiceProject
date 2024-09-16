@@ -26,15 +26,15 @@ public abstract class StatusEffectSO : ScriptableObject
         _stack = stack;
     }
     
-    public bool DuplicateEffect(int duration)
+    public virtual bool DuplicateEffect(Unit unit, int stack)
     {
         switch (statusEffectCalculateType)
         {
             case StatusEffectCalculateType.Accumulate:
-                _stack += duration;
+                _stack += stack;
                 break;
             case StatusEffectCalculateType.Initialize:
-                _stack = duration;
+                _stack = stack;
                 break;
             case StatusEffectCalculateType.Each:
                 return false;
