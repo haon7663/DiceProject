@@ -9,7 +9,7 @@ public class DefenceHud : Hud
     {
         base.Initialize(pos, value);
         
-        label.text = $"-{value}";
+        label.text = $"방어 -{value}";
         
         var sequence = DOTween.Sequence();
         sequence.Append(rect.DOAnchorPosY(rect.anchoredPosition.y + 200, 1f));
