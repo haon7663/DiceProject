@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Weak
   description: 
-  sprite: {fileID: 436570015, guid: 6fbe59a48bd3dac49bc7eee86b4eae03, type: 3}
+  sprite: {fileID: 76650570, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
   label: "\uC57D\uD654"
   statusEffectStackType: 200
   statusEffectStackDecreaseType: 100

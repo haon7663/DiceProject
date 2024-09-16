@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Solidity
   description: 
-  sprite: {fileID: 21300000, guid: f912b2ca56108444e92feb441f723dab, type: 3}
+  sprite: {fileID: -1755982565, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
   label: "\uACAC\uACE0"
   statusEffectStackType: 300
   statusEffectStackDecreaseType: 100

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Misfortune
   description: 
-  sprite: {fileID: 0}
+  sprite: {fileID: -2027445364, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
   label: "\uBD88\uC6B4"
   statusEffectStackType: 100
   statusEffectStackDecreaseType: 100
