@@ -47,12 +47,19 @@ namespace Map
         {
             MapLayer layer = _config.layers[layerIndex];
             List<Node> nodesOnThisLayer = new List<Node>();
+            
+            float offset = 2 * _config.GridWidth / 2f;
+            Debug.LogWarning(_config.GridWidth);
 
             for (int i = 0; i < _config.GridWidth; i++)
             {
                 NodeType nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? RandomNodes.Random() : layer.nodeType;
                 var blueprint = _config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random();
-                Node node = new Node(nodeType, blueprint.name, new MapVector(i, layerIndex));
+                Node node = new Node(nodeType, blueprint.name, new MapVector(i, layerIndex))
+                {
+                    position = new Vector2(-offset + i * 2, layerIndex)
+                };
+                Debug.Log(new Vector2(-offset + i * 2, layerIndex));
                 nodesOnThisLayer.Add(node);
             }
 

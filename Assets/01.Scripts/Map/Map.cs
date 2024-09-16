@@ -37,5 +37,16 @@ namespace Map
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
         }
+        
+        public float DistanceBetweenFirstAndLastLayers()
+        {
+            Node bossNode = GetBossNode();
+            Node firstLayerNode = nodes.FirstOrDefault(n => n.point.Y == 0);
+
+            if (bossNode == null || firstLayerNode == null)
+                return 0f;
+
+            return bossNode.position.y - firstLayerNode.position.y;
+        }
     }
 }

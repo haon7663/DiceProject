@@ -1,18 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace Map
 {
     public class MapPlayerTracker : Singleton<MapPlayerTracker>
     {
         public float enterNodeDelay = 0.5f;
-        [FormerlySerializedAs("mapManager")] public MapController mapController;
+        public MapController mapController;
         public MapView view;
         
         public void SelectNode(MapNode mapNode)
@@ -54,6 +50,7 @@ namespace Map
             // load appropriate scene with context based on nodeType:
             // or show appropriate GUI over the map: 
             // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
+            
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.MinorEnemy:

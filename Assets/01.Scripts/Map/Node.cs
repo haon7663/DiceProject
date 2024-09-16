@@ -15,6 +15,7 @@ namespace Map
         [JsonConverter(typeof(StringEnumConverter))]
         public readonly NodeType nodeType;
         public readonly string blueprintName;
+        public Vector2 position;
 
         public Node(NodeType nodeType, string blueprintName, MapVector point)
         {

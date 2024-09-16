@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 namespace Map
@@ -14,10 +15,14 @@ namespace Map
         
         [SerializeField] private GameObject nodePrefab;
         [SerializeField] private GameObject linePrefab;
-        [SerializeField] private Transform mapParent;
+
+        [SerializeField] private ScrollRect scrollRect;
+        [SerializeField] private RectTransform contentRect;
 
         [SerializeField] private int linePointCount;
         [SerializeField] private float offsetFromNodes;
+        
+        [SerializeField] private float padding;
 
         [SerializeField] private Color visitedColor;
         [SerializeField] private Color lockedColor;
@@ -33,6 +38,8 @@ namespace Map
             
             CreateNodes(map.nodes);
 
+            SetParentPosition();
+
             DrawLines();
 
             SetNodeColor();
@@ -41,8 +48,8 @@ namespace Map
 
         private void ClearMap()
         {
-            for (var i = 0; i < mapParent.childCount; i++)
-                Destroy(mapParent.GetChild(i).gameObject);
+            for (var i = 0; i < contentRect.childCount; i++)
+                Destroy(contentRect.GetChild(i).gameObject);
             
             _mapNodes = new List<MapNode>();
             _lineConnections = new List<LineConnection>();
@@ -59,7 +66,7 @@ namespace Map
         
         private MapNode CreateMapNode(Node node)
         {
-            var mapNode = Instantiate(nodePrefab, mapParent).GetComponent<MapNode>();
+            var mapNode = Instantiate(nodePrefab, contentRect.transform).GetComponent<MapNode>();
             mapNode.Init(node, GetBlueprint(node.nodeType), GetNodePosition(node));
             return mapNode;
         }
@@ -76,7 +83,7 @@ namespace Map
 
         private void AddLineConnection(MapNode from, MapNode to)
         {
-            UILineRenderer lineRenderer = Instantiate(linePrefab, mapParent).GetComponent<UILineRenderer>();
+            UILineRenderer lineRenderer = Instantiate(linePrefab, contentRect.transform).GetComponent<UILineRenderer>();
             lineRenderer.transform.SetAsFirstSibling();
             
             RectTransform fromRT = from.transform as RectTransform;
@@ -104,9 +111,22 @@ namespace Map
             _lineConnections.Add(new LineConnection(lineRenderer, from, to));
         }
 
-        private void SetStartingPosition()
+        private void SetParentPosition()
         {
+            if (Map.path.Count == 0) return;
+                
+            Canvas.ForceUpdateCanvases();
+
+            Vector2 contentPos = scrollRect.transform.InverseTransformPoint(contentRect.position);
+            Vector2 targetPos = scrollRect.transform.InverseTransformPoint(GetNode(Map.path[^1]).transform.position);
+            Vector2 offset = contentPos - targetPos;
+
+            float contentMinX = -contentRect.sizeDelta.x;
+            float contentMaxX = 0f;
+
+            float targetPosX = Mathf.Clamp(offset.x + 540f, contentMinX, contentMaxX);
             
+            contentRect.anchoredPosition = new Vector2(targetPosX, 0);
         }
 
         public void SetNodeColor()
@@ -141,7 +161,8 @@ namespace Map
         }
         private Vector2 GetNodePosition(Node node)
         {
-            return new Vector2(node.point.Y, node.point.X);
+            float length = padding + Map.DistanceBetweenFirstAndLastLayers();
+            return new Vector2((padding - length) / 2 + node.point.Y, node.point.X);
         }
         private MapConfig GetConfig(string configName)
         {
