@@ -24,10 +24,13 @@ public class PlayerData
     [Header("카드")]
     public List<CardJson> cards;
 
+    [Header("아이템")]
+    public string[] items;
+
     [Header("유물")]
     public List<RelicJson> relics;
 
-    public PlayerData(string creatureName, int maxHp, List<CardJson> cards, List<RelicJson> relics)
+    public PlayerData(string creatureName, int maxHp, List<CardJson> cards, string[] items, List<RelicJson> relics)
     {
         name = creatureName;
         
@@ -44,6 +47,7 @@ public class PlayerData
         curHp = maxHp;
         
         this.cards = cards;
+        this.items = items;
         this.relics = relics;
     }
 }
@@ -54,8 +58,10 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
 
     private static string _playerDataFilePath;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         _playerDataFilePath = Path.Combine(Application.persistentDataPath, "data.json");
         
         if (File.Exists(_playerDataFilePath))
@@ -67,13 +73,13 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
         }
         else
         {
-            Generate(GameManager.Inst.player.unitSO);
+            Generate("아리엘".ToPlayer());
         }
     }
 
     public void Generate(UnitSO unitSO)
     {
-        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, unitSO.cards.ToJson(), new List<RelicJson>());
+        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, unitSO.cards.ToJson(), new string[8], new List<RelicJson>());
         this.playerData = playerData;
     }
     

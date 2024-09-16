@@ -6,13 +6,13 @@ public enum GameMode { Battle, Event, Chest, Shop, Boss }
 
 public class GameManager : SingletonDontDestroyOnLoad<GameManager>
 {
-    public Unit player;
     public GameMode currentGameMode;
 
     public float battleSpeed = 1;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         Time.timeScale = battleSpeed;
     }
 }

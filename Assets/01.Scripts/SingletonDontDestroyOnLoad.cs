@@ -21,15 +21,8 @@ public class SingletonDontDestroyOnLoad<T> : MonoBehaviour where T : MonoBehavio
         }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        if (transform.parent != null && transform.root != null)
-        {
-            DontDestroyOnLoad(transform.root.gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+        DontDestroyOnLoad(gameObject);
     }
 }
