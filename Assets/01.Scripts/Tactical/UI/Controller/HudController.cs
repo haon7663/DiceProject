@@ -10,9 +10,10 @@ public class HudController : Singleton<HudController>
     [SerializeField] private Transform canvas;
     
     [Header("Prefabs")]
-    [SerializeField] private Hud avoidHud;
     [SerializeField] private Hud damageHud;
     [SerializeField] private Hud recoveryHud;
+    [SerializeField] private Hud defenceHud;
+    [SerializeField] private Hud avoidHud;
     [SerializeField] private Hud statusEffectHud;
 
     [Header("Values")]
@@ -35,6 +36,12 @@ public class HudController : Singleton<HudController>
     public void PopDamage(Vector2 pos, int value)
     {
         var hud = Instantiate(damageHud, canvas);
+        hud.Initialize(_camera.WorldToScreenPoint(pos + offset + Random.insideUnitCircle * randomRadius), value);
+    }
+    
+    public void PopDefence(Vector2 pos, int value)
+    {
+        var hud = Instantiate(defenceHud, canvas);
         hud.Initialize(_camera.WorldToScreenPoint(pos + offset + Random.insideUnitCircle * randomRadius), value);
     }
     

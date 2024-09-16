@@ -3,13 +3,13 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class DamageHud : Hud
+public class DefenceHud : Hud
 {
     public override void Initialize(Vector2 pos, int value)
     {
         base.Initialize(pos, value);
         
-        label.text = $"{value}";
+        label.text = $"-{value}";
         
         var sequence = DOTween.Sequence();
         sequence.Append(rect.DOAnchorPosY(rect.anchoredPosition.y + 200, 1f));

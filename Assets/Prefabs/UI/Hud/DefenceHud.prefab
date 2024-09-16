@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6891778235484601353, guid: 7aea820335e96cf489c8f230134359ee, type: 3}
       propertyPath: m_text
-      value: "\uBC29\uC5B4\uD568 -5"
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 6891778235484601353, guid: 7aea820335e96cf489c8f230134359ee, type: 3}
       propertyPath: m_fontColor.b
@@ -82,7 +82,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9030753248449810695, guid: 7aea820335e96cf489c8f230134359ee, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 200
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 9030753248449810695, guid: 7aea820335e96cf489c8f230134359ee, type: 3}
       propertyPath: m_LocalPosition.x
@@ -138,7 +138,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4202180554195077768, guid: 7aea820335e96cf489c8f230134359ee, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5509394222807025927}
+      addedObject: {fileID: 5699469912520856287}
   m_SourcePrefab: {fileID: 100100000, guid: 7aea820335e96cf489c8f230134359ee, type: 3}
 --- !u!114 &2887428226573505022 stripped
 MonoBehaviour:
@@ -156,7 +156,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4202180554195077768, guid: 7aea820335e96cf489c8f230134359ee, type: 3}
   m_PrefabInstance: {fileID: 8626283785048714743}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5509394222807025927
+--- !u!114 &5699469912520856287
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5613617729460266879}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c721dd32d084b3c9922cd4272563a82, type: 3}
+  m_Script: {fileID: 11500000, guid: d35953ed3f634e3a8fac19aa4c07bf91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 2887428226573505022}
