@@ -51,12 +51,13 @@ public class DiceRollingState : BattleState
             var totalValue = 0;
             var diceTypes = behaviourInfo.diceTypes;
 
-            foreach (var diceType in diceTypes.Where(diceType => owner.PlayerData.dices[diceType] > 0))
+            foreach (var diceType in diceTypes)
             {
-                var pos = CalculateDicePosition(index++, maxIndex);
-
                 if (unit.type == UnitType.Player)
                 {
+                    if (owner.PlayerData.dices[diceType] <= 0) continue;
+                    
+                    var pos = CalculateDicePosition(index++, maxIndex);
                     totalValue += RollingDice(diceType, pos);
                     yield return YieldInstructionCache.WaitForSeconds(Random.Range(0.15f, 0.225f));
                 }
