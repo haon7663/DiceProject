@@ -12,4 +12,9 @@ public class ItemSO : ScriptableObject
     
     [Header("능력치")]
     public List<BehaviourInfo> behaviourInfos;
+
+    public void Execute()
+    {
+        
+    }
 }
