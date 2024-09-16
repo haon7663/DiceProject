@@ -23,6 +23,7 @@ public class DialogController : MonoBehaviour
     {
         var dialog = Instantiate(dialogPrefab, contentRect.transform);
         _dialogs.Add(dialog);
+        
         SetParentPosition(dialog);
     }
 
@@ -30,21 +31,29 @@ public class DialogController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
             GenerateDialog();
+    }
 
+    public void UpdateDialogTransparency()
+    {
         foreach (var dialog in _dialogs)
         {
             var dialogPos = scrollRect.transform.InverseTransformPoint(dialog.transform.position);
 
             var alpha = dialogPos.y switch
             {
-                < 0 => Mathf.Clamp01(1 - Mathf.Abs(dialogPos.y) / 50f),
-                > 100 => Mathf.Clamp01(1 - (dialogPos.y - 100) / 50f),
+                < -65f => Mathf.Clamp01(1 - (Mathf.Abs(dialogPos.y) - 65f) / 50f),
+                > 35f => Mathf.Clamp01(1 - (dialogPos.y - 35f) / 50f),
                 _ => 1f
             };
 
-            dialog.SetAlpha(alpha);
+            dialog.SetTrasnparency(alpha);
         }
+    }
 
+    public void SetUnderMark()
+    {
+        if (_dialogs.Count < 2) return;
+        
         if (scrollRect.transform.InverseTransformPoint(_dialogs.Last().transform.position).y < -65f && !_isShown)
         {
             DOTween.Kill(underMark);
@@ -68,6 +77,6 @@ public class DialogController : MonoBehaviour
         Vector2 dialogPos = scrollRect.transform.InverseTransformPoint(dialog.transform.position);
         Vector2 offset = contentPos - dialogPos;
         
-        contentRect.DOAnchorPosY(offset.y - 30, 0.25f);
+        contentRect.DOAnchorPosY(offset.y - 160f, 0.25f);
     }
 }
