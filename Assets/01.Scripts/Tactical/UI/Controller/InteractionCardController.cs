@@ -62,6 +62,8 @@ public class InteractionCardController : MonoBehaviour
         
         SetCardsActive(isAttackTurn);
         
+        yield return YieldInstructionCache.WaitForSeconds(0.15f);
+        
         yield return ShowCards(isAttackTurn);
     }
 
@@ -82,6 +84,7 @@ public class InteractionCardController : MonoBehaviour
 
         foreach (var card in cardsToShow)
         {
+            card.gameObject.SetActive(true);
             card.Show();
             yield return YieldInstructionCache.WaitForSeconds(0.1f);
         }
@@ -89,9 +92,10 @@ public class InteractionCardController : MonoBehaviour
 
     private void SetCardsActive(bool isAttackTurn)
     {
-        foreach (var card in _interactionCards)
+        var cardsToHide = _interactionCards.Where(card => ShouldHideCard(card.Data.type, isAttackTurn));
+        foreach (var card in cardsToHide)
         {
-            card.gameObject.SetActive(ShouldShowCard(card.Data.type, isAttackTurn));
+            card.gameObject.SetActive(false);
         }
     }
 
