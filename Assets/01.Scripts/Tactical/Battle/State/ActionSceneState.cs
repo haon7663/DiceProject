@@ -118,7 +118,7 @@ public class ActionSceneState : BattleState
                 if (to.TryGetComponent<Health>(out var toHealth))
                 {
                     toHealth.OnDamage(fromTotalDamage);
-                    owner.hudController.PopDamage(to.transform.position, GetSatisfiedBehavioursSum(from, to, BehaviourType.Attack));
+                    owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
                     if (IsSatisfiedBehaviours(from, to, BehaviourType.Defence))
                         owner.hudController.PopDefence(to.transform.position, GetSatisfiedBehavioursSum(from, to, BehaviourType.Defence));
                 }
@@ -217,18 +217,15 @@ public class ActionSceneState : BattleState
     // 유닛 행동 실행
     private void ExecuteUnitActions(Unit from, Unit to)
     {
-        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
-        {
-            var isAvoid = IsSatisfiedBehaviours(from, to, BehaviourType.Avoid);
+        var isAvoid = IsSatisfiedBehaviours(from, to, BehaviourType.Avoid);
         
-            owner.mainCameraMovement.VibrationForTime(0.65f);
-            owner.highlightCameraMovement.VibrationForTime(0.5f);
+        owner.mainCameraMovement.VibrationForTime(0.65f);
+        owner.highlightCameraMovement.VibrationForTime(0.5f);
 
-            if (!from.TryGetComponent<Act>(out var fromAct) || !to.TryGetComponent<Act>(out var toAct)) return;
+        if (!from.TryGetComponent<Act>(out var fromAct) || !to.TryGetComponent<Act>(out var toAct)) return;
             
-            fromAct.PerformAction(from.unitSO.attacks.Random());
-            toAct.PerformAction(isAvoid ? to.unitSO.avoids.Random() : to.unitSO.hits.Random());
-        }
+        fromAct.PerformAction(from.unitSO.attacks.Random());
+        toAct.PerformAction(isAvoid ? to.unitSO.avoids.Random() : to.unitSO.hits.Random());
     }
     
     // 카메라 연출 실행
