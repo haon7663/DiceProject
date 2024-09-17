@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class ItemPanelController : MonoBehaviour
 {
+    [SerializeField] private InventoryPanelController inventoryPanelController;
     [SerializeField] private ItemPanel itemPanel;
 
-    public void Show(ItemSO itemSO)
+    public void Show(ItemSO itemSO, int index)
     {
-        itemPanel.Initialize(itemSO);
+        itemPanel.Initialize(itemSO, index);
         itemPanel.panel.SetPosition(PanelStates.Show, true, 0.25f);
+        itemPanel.Use += inventoryPanelController.RemoveItem;
     }
     
     public void Hide()

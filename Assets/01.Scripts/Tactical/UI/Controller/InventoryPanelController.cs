@@ -33,12 +33,22 @@ public class InventoryPanelController : MonoBehaviour
             var item = itemName != "" ? itemName.ToItem() : null;
             if (!item) return;
             _inventoryFrames[i].Initialize(item);
-            _inventoryFrames[i].button.onClick.AddListener(() => SelectItem(item));
+            
+            var index = i;
+            _inventoryFrames[i].button.onClick.AddListener(() => SelectItem(item, index));
         }
     }
 
-    public void SelectItem(ItemSO itemSO)
+    public void RemoveItem(int index)
     {
-        itemPanelController.Show(itemSO);
+        if (_inventoryFrames[index])
+        {
+            _inventoryFrames[index].Remove();
+        }
+    }
+
+    public void SelectItem(ItemSO itemSO, int index)
+    {
+        itemPanelController.Show(itemSO, index);
     }
 }

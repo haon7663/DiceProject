@@ -17,6 +17,11 @@ public class InventoryFrame : MonoBehaviour
         icon.sprite = itemSO.sprite;
         icon.gameObject.SetActive(true);
     }
-    
-    
+
+    public void Remove()
+    {
+        Data = null;
+        icon.sprite = null;
+        icon.gameObject.SetActive(false);
+    }
 }

@@ -107,9 +107,9 @@ public class ActionSceneState : BattleState
         fromTotalDamage = fromTotalDamage > 1 ? fromTotalDamage : 1;
         toTotalDamage = toTotalDamage > 1 ? toTotalDamage : 1;
         
-        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
+        if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to))
         {
-            if (IsSatisfiedBehaviours(from, to, BehaviourType.Avoid))
+            if (BehaviourType.Avoid.IsSatisfiedBehaviours(from, to))
             {
                 owner.hudController.PopAvoid(to.transform.position);
             }
@@ -119,15 +119,15 @@ public class ActionSceneState : BattleState
                 {
                     toHealth.OnDamage(fromTotalDamage);
                     owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
-                    if (IsSatisfiedBehaviours(from, to, BehaviourType.Defence))
-                        owner.hudController.PopDefence(to.transform.position, GetSatisfiedBehavioursSum(from, to, BehaviourType.Defence));
+                    if (BehaviourType.Defence.IsSatisfiedBehaviours(from, to))
+                        owner.hudController.PopDefence(to.transform.position, BehaviourType.Defence.GetSatisfiedBehavioursSum(from, to));
                 }
             }
         }
 
-        if (IsSatisfiedBehaviours(to, from, BehaviourType.Attack))
+        if (BehaviourType.Attack.IsSatisfiedBehaviours(to, from))
         {
-            if (IsSatisfiedBehaviours(to, from, BehaviourType.Avoid))
+            if (BehaviourType.Avoid.IsSatisfiedBehaviours(to, from))
             {
                 owner.hudController.PopAvoid(from.transform.position);
             }
@@ -137,8 +137,8 @@ public class ActionSceneState : BattleState
                 {
                     fromHealth.OnDamage(toTotalDamage);
                     owner.hudController.PopDamage(from.transform.position, toTotalDamage);
-                    if (IsSatisfiedBehaviours(to, from, BehaviourType.Defence))
-                        owner.hudController.PopDefence(from.transform.position, GetSatisfiedBehavioursSum(to, from, BehaviourType.Defence));
+                    if (BehaviourType.Defence.IsSatisfiedBehaviours(to, from))
+                        owner.hudController.PopDefence(from.transform.position, BehaviourType.Defence.GetSatisfiedBehavioursSum(to, from));
                 }
             }
         }
@@ -161,7 +161,7 @@ public class ActionSceneState : BattleState
 
     private void TakeStatusEffect(Unit from, Unit to)
     {
-        if (to.TryGetComponent<StatusEffect>(out var toStatusEffect) && !IsSatisfiedBehaviours(from, to, BehaviourType.Avoid))
+        if (to.TryGetComponent<StatusEffect>(out var toStatusEffect) && !BehaviourType.Avoid.IsSatisfiedBehaviours(from, to))
         {
             for (var i = toStatusEffect.enabledEffects.Count - 1; i >= 0; i--)
             {
@@ -169,11 +169,11 @@ public class ActionSceneState : BattleState
                 switch (effect.statusEffectStackType)
                 {
                     case StatusEffectStackType.AfterAttack:
-                        if (IsSatisfiedBehaviours(to, from, BehaviourType.Attack))
+                        if (BehaviourType.Attack.IsSatisfiedBehaviours(to, from))
                             effect.UpdateStack(to);
                         break;
                     case StatusEffectStackType.AfterHit:
-                        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
+                        if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to))
                             effect.UpdateStack(to);
                         break;
                 }
@@ -187,7 +187,7 @@ public class ActionSceneState : BattleState
             }
         }
         
-        if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect) && !IsSatisfiedBehaviours(to, from, BehaviourType.Avoid))
+        if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect) && !BehaviourType.Avoid.IsSatisfiedBehaviours(to, from))
         {
             for (var i = fromStatusEffect.enabledEffects.Count - 1; i >= 0; i--)
             {
@@ -195,11 +195,11 @@ public class ActionSceneState : BattleState
                 switch (effect.statusEffectStackType)
                 {
                     case StatusEffectStackType.AfterAttack:
-                        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
+                        if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to))
                             effect.UpdateStack(from);
                         break;
                     case StatusEffectStackType.AfterHit:
-                        if (IsSatisfiedBehaviours(to, from, BehaviourType.Attack))
+                        if (BehaviourType.Attack.IsSatisfiedBehaviours(to, from))
                             effect.UpdateStack(from);
                         break;
                 }
@@ -217,7 +217,7 @@ public class ActionSceneState : BattleState
     // 유닛 행동 실행
     private void ExecuteUnitActions(Unit from, Unit to)
     {
-        var isAvoid = IsSatisfiedBehaviours(from, to, BehaviourType.Avoid);
+        var isAvoid = BehaviourType.Avoid.IsSatisfiedBehaviours(from, to);
         
         owner.mainCameraMovement.VibrationForTime(0.65f);
         owner.highlightCameraMovement.VibrationForTime(0.5f);
@@ -232,7 +232,7 @@ public class ActionSceneState : BattleState
     private void PerformCameraProduction(Unit from, Unit to)
     {
         var intensity = 5f;
-        if (IsSatisfiedBehaviours(from, to, BehaviourType.Attack))
+        if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to))
         {
             if (CalculateDamage(from, to) > 7)
             {
@@ -261,27 +261,5 @@ public class ActionSceneState : BattleState
         owner.mainCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
         owner.highlightCameraMovement.ProductionAtTime(new Vector3(0, 0, -10), 0, 5, true);
         owner.mainCameraVolumeSettings.ResetVolume();
-    }
-
-    private bool IsSatisfiedBehaviours(Unit from, Unit to, BehaviourType behaviourType)
-    {
-        var fromBehaviours = CreateBehaviours(from);
-        var toBehaviours = CreateBehaviours(to);
-        
-        return fromBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
-                   .Any(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)) ||
-               toBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
-                   .Any(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues));
-    }
-    
-    private int GetSatisfiedBehavioursSum(Unit from, Unit to, BehaviourType behaviourType)
-    {
-        var fromBehaviours = CreateBehaviours(from);
-        var toBehaviours = CreateBehaviours(to);
-        
-        return fromBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
-                   .Where(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)).Sum(b => b.value) +
-               toBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
-                   .Where(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues)).Sum(b => b.value);
     }
 }

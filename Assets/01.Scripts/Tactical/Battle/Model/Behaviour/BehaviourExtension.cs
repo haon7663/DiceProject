@@ -17,6 +17,25 @@ public static class BehaviourExtension
         };
     }
     
+    public static List<Behaviour> CreateBehaviours(this List<BehaviourInfo> behaviourInfos)
+    {
+        var behaviours = new List<Behaviour>();
+        foreach (var behaviourInfo in behaviourInfos)
+        {
+            var behaviour = (Behaviour)Activator.CreateInstance(behaviourInfo.behaviourType.GetBehaviourClass());
+            behaviour.compareInfo = behaviourInfo.compareInfo;
+            behaviour.onSelf = behaviourInfo.onSelf;
+            behaviour.value =  behaviourInfo.basicValue;
+            if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
+            {
+                statusEffectBehaviour.statusEffectSO = behaviourInfo.statusEffectSO;
+            }
+            behaviours.Add(behaviour);
+        }
+        
+        return behaviours;
+    }
+    
     public static List<Behaviour> CreateBehaviours(Unit unit)
     {
         var behaviours = new List<Behaviour>();
