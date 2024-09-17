@@ -39,6 +39,8 @@ namespace Map
             view.SetNodeColor();
             view.SetLineColor();
             //mapNode.ShowSwirlAnimation();*/
+            
+            DataManager.Inst.Save();
 
             DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(() => EnterNode(mapNode));
         }

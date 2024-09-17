@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59888d42ac7c04741a9a1342f4556eb2, type: 3}
+  m_Name: Recovery Potion
+  m_EditorClassIdentifier: 
+  sprite: {fileID: -1392013555, guid: 54909e96ef7487f44a54a092bdb793c8, type: 3}
+  itemName: "\uD68C\uBCF5 \uBB3C\uC57D"
+  description: "\uCCB4\uB825\uC744 10 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
+  behaviourInfos:
+  - behaviourType: 0
+    statusEffectSO: {fileID: 11400000, guid: 406ddef5c7bfc6540b92e8fb10cbe4f9, type: 2}
+    basicValue: -10
+    diceTypes: 
+    compareInfo:
+      compareType: 0
+      specialCompareType: 0
+      compareTargetType: 0
+      value: 0
+    onSelf: 1
+    specialBehaviourType: 0
+  rewardInfos:
+  - rewardType: 1
+    count:
+      min: 0
+      max: 0
+    isRandom: 1
+    cardSO: {fileID: 0}
+    diceType: 0
+    itemSO: {fileID: 0}
+    relicSO: {fileID: 0}

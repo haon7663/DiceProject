@@ -10,6 +10,7 @@ public class ItemSO : ScriptableObject
     public string itemName;
     [TextArea] public string description;
     
-    [Header("능력치")]
+    [Header("효과")]
     public List<BehaviourInfo> behaviourInfos;
+    public List<RewardInfo> rewardInfos;
 }

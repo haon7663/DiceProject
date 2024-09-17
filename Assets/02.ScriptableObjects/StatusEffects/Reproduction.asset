@@ -17,7 +17,7 @@ MonoBehaviour:
   sprite: {fileID: -117338925, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
   label: "\uC7AC\uC0DD"
   statusEffectStackType: 100
-  statusEffectStackDecreaseType: 100
+  statusEffectStackDecreaseType: 200
   minusValue: 1
   statusEffectCalculateType: 100
   useStack: 1

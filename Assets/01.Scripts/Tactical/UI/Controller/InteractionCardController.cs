@@ -81,7 +81,6 @@ public class InteractionCardController : MonoBehaviour
     private IEnumerator ShowCards(bool isAttackTurn)
     {
         var cardsToShow = _interactionCards.Where(card => ShouldShowCard(card.Data.type, isAttackTurn));
-
         foreach (var card in cardsToShow)
         {
             card.gameObject.SetActive(true);
@@ -111,6 +110,12 @@ public class InteractionCardController : MonoBehaviour
 
     private void SetParentPosition(Card card)
     {
+        var count = 0;
+        for (var i = 0; i < contentRect.childCount; i++)
+            if (contentRect.GetChild(i).gameObject.activeSelf)
+                count++;
+        if (count <= 3) return;
+        
         DOTween.Kill(contentRect);
         Canvas.ForceUpdateCanvases();
 

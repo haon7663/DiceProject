@@ -44,6 +44,7 @@ public class InventoryPanelController : MonoBehaviour
         if (_inventoryFrames[index])
         {
             _inventoryFrames[index].Remove();
+            DataManager.Inst.playerData.items[index] = "";
         }
     }
 

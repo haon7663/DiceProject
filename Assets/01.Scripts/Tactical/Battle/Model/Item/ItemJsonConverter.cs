@@ -4,18 +4,14 @@ using UnityEngine;
 
 public static class ItemJsonConverter
 {
-    public static string ToString(this ItemSO itemSO)
+    public static string ToJson(this ItemSO itemSO)
     {
         return itemSO.itemName;
     }
 
-    public static List<string> ToString(this List<ItemSO> itemSOs)
+    public static List<string> ToJson(this List<ItemSO> itemSOs)
     {
-        foreach (var c in itemSOs.Select(itemSO => itemSO.itemName))
-        {
-            Debug.Log(c);
-        }
-        return itemSOs.Select(itemSO => itemSO.ToString()).ToList();
+        return itemSOs.Select(itemSO => itemSO.ToJson()).ToList();
     }
 
     public static ItemSO ToItem(this string name)

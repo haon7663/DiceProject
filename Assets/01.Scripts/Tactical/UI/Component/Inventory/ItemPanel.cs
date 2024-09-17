@@ -66,5 +66,12 @@ public class ItemPanel : MonoBehaviour
                 }
             }
         }
+
+        var rewardInfos = Data.rewardInfos;
+        
+        foreach (var rewardInfo in rewardInfos)
+        {
+            
+        }
     }
 }

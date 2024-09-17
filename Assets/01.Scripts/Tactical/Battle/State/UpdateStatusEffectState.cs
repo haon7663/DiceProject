@@ -26,6 +26,8 @@ public class UpdateStatusEffectState : BattleState
         
         for (var i = 0; i < statusEffect.enabledEffects.Count; i++)
         {
+            if (!unit) continue;
+            
             var effect = statusEffect.enabledEffects[i];
             owner.hudController.PopStatusEffect(unit.transform.position, effect.GetCurrentValue(), effect.sprite);
             statusEffect.UpdateEffect(effect);
