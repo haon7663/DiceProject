@@ -2,18 +2,30 @@
 
 public class ItemReward : Reward
 {
+    private ItemSO _itemSO;
+
+    public ItemReward(ItemSO itemSO)
+    {
+        _itemSO = itemSO;
+    }
+    
     public override Sprite GetSprite()
     {
-        throw new System.NotImplementedException();
+        return _itemSO.sprite;
     }
 
     public override string GetLabel()
     {
-        throw new System.NotImplementedException();
+        return _itemSO.itemName;
     }
 
     public override void Execute()
     {
-        throw new System.NotImplementedException();
+        for (var i = 0; i < 8; i++)
+        {
+            if (DataManager.Inst.playerData.items[i] != "") continue;
+            DataManager.Inst.playerData.items[i] = _itemSO.ToJson();
+            break;
+        }
     }
 }

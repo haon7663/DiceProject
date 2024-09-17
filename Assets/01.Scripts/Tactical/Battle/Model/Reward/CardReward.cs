@@ -1,7 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CardReward : Reward
 {
+    private List<CardSO> cards;
+    
+    public CardReward(List<CardSO> cards)
+    {
+        this.cards = cards;
+    }
+    
     public override Sprite GetSprite()
     {
         return Resources.Load<Sprite>("Rewards/CardIcon");
@@ -14,6 +22,7 @@ public class CardReward : Reward
 
     public override void Execute()
     {
-        
+        if (cards.Count <= 0) return;
+        RewardCardController.Inst.ShowCards(cards);
     }
 }

@@ -2,11 +2,11 @@
 
 public class GoldReward : Reward
 {
-    public int gold;
+    public int count;
     
-    public GoldReward(int gold)
+    public GoldReward(int count)
     {
-        this.gold = gold;
+        this.count = count;
     }
 
     public override Sprite GetSprite()
@@ -16,11 +16,11 @@ public class GoldReward : Reward
 
     public override string GetLabel()
     {
-        return $"{gold} 골드";
+        return $"{count} 골드";
     }
 
     public override void Execute()
     {
-        DataManager.Inst.playerData.gold += gold;
+        DataManager.Inst.playerData.gold += count;
     }
 }

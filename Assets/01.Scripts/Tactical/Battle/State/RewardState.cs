@@ -49,9 +49,27 @@ public class RewardState : BattleState
         
         if (Random.value <= 0.15f)
             rewards.Add(new RelicReward(Resources.LoadAll<RelicSO>("Relics").Random()));
-        
-        if (Random.value <= 0.40f)
-            rewards.Add(new CardReward());
+
+        var cards = Resources.LoadAll<CardSO>("Cards");
+        var selectCards = new List<CardSO>();
+        for (var i = 0; i < 2; i++)
+        {
+            var card = cards.Random();
+            while (DataManager.Inst.playerData.cards.Any(c => c.name == card.cardName) || selectCards.Any(c => c.name == card.cardName))
+            {
+                print("Loop");
+                card = cards.Random();
+            }
+            selectCards.Add(card);
+        }
+        rewards.Add(new CardReward(selectCards));
+
+        for (var i = 0; i < 3; i++)
+        {
+            if (Random.value <= 0.2f)
+                rewards.Add(new ItemReward(Resources.LoadAll<ItemSO>("Items").Random()));
+        }
+
 
         var count = Enumerable.Range(0, 5).Count(_ => Random.value <= 0.75f);
         if (count > 0)
