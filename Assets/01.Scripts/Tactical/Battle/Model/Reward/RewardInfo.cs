@@ -5,6 +5,7 @@ using OneLine;
 public class RewardInfo
 {
     public RewardType rewardType;
+    
     [OneLineWithHeader]
     public IntMinMax count;
     

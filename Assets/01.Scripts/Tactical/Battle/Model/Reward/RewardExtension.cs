@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public static class RewardExtension
 {
@@ -15,20 +17,17 @@ public static class RewardExtension
             _ => throw new ArgumentOutOfRangeException(nameof(rewardType), rewardType, null)
         };
     }
-    
-    /*public static List<Behaviour> CreateRewards(this List<RewardInfo> rewardInfos)
+    public static List<CardSO> SelectRandomCards(int count)
     {
-        var rewards = new List<Reward>();
-        foreach (var rewardInfo in rewardInfos)
+        var selectedCards = new List<CardSO>();
+        var cards = Resources.LoadAll<CardSO>("Cards");
+        for (var i = 0; i < count; i++)
         {
-            var reward = (Reward)Activator.CreateInstance(rewardInfo.rewardType.GetRewardClass());
-            if (reward is CardReward cardReward)
-            {
-                statusEffectBehaviour.statusEffectSO = behaviourInfo.statusEffectSO;
-            }
-            behaviours.Add(behaviour);
+            var card = cards.Where(c =>
+                DataManager.Inst.playerData.cards.All(card => card.name != c.cardName) &&
+                selectedCards.All(card => card.cardName != c.cardName)).ToList().Random();
+            selectedCards.Add(card);
         }
-        
-        return behaviours;
-    }*/
+        return selectedCards;
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -71,7 +72,18 @@ public class ItemPanel : MonoBehaviour
         
         foreach (var rewardInfo in rewardInfos)
         {
-            
+            switch (rewardInfo.rewardType)
+            {
+                case RewardType.Card:
+                    var rewardCards = new List<CardSO>();
+                    if (rewardInfo.isRandom)
+                    {
+                        rewardCards.AddRange(RewardExtension.SelectRandomCards(rewardInfo.count.GetValue()));
+                    }
+                    else
+                        rewardCards.Add(rewardInfo.cardSO);
+                    break;
+            }
         }
     }
 }

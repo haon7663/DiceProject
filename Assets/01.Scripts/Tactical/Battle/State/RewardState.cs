@@ -54,13 +54,13 @@ public class RewardState : BattleState
         var selectCards = new List<CardSO>();
         for (var i = 0; i < 2; i++)
         {
-            var card = cards.Random();
-            while (DataManager.Inst.playerData.cards.Any(c => c.name == card.cardName) || selectCards.Any(c => c.name == card.cardName))
-            {
-                print("Loop");
-                card = cards.Random();
-            }
-            selectCards.Add(card);
+            var card = cards.Where(c =>
+                DataManager.Inst.playerData.cards.All(card => card.name != c.cardName) &&
+                selectCards.All(card => card.cardName != c.cardName)).ToList().Random();
+            print($"PlayerData In Card?: {DataManager.Inst.playerData.cards.Any(c => c.name == card.cardName)}, SelectCards In Card?: {selectCards.Any(c => c.cardName == card.cardName)}");
+            
+            if (card)
+                selectCards.Add(card);
         }
         rewards.Add(new CardReward(selectCards));
 
