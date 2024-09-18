@@ -44,6 +44,28 @@ namespace Map
 
             SetNodeColor();
             SetLineColor();
+
+            SetHighlight();
+        }
+
+        private void SetHighlight()
+        {
+            foreach (var mapNode in _mapNodes)
+            {                
+                if (Map.path.Count == 0)
+                {
+                    if (mapNode.Node.point.Y == 0)
+                        mapNode.SetHighlight();
+                }
+                else
+                {
+                    var currentPoint = Map.path[^1];
+                    var currentNode = Map.GetNode(currentPoint);
+
+                    if (currentNode != null && currentNode.outgoing.Any(point => point.Equals(mapNode.Node.point)))
+                        mapNode.SetHighlight();
+                }
+            }
         }
 
         private void ClearMap()
@@ -101,6 +123,7 @@ namespace Map
             List<Vector2> list = new List<Vector2>();
             for (int i = 0; i < linePointCount; i++)
             {
+                if (i is < 2 or > 7) continue;
                 list.Add(Vector3.Lerp(Vector3.zero, toPoint - fromPoint +
                                                     2 * (fromRT.anchoredPosition - toRT.anchoredPosition).normalized *
                                                     offsetFromNodes, (float) i / (linePointCount - 1)));

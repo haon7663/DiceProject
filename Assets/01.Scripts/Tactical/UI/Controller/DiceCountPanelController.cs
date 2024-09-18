@@ -15,7 +15,7 @@ public class DiceCountPanelController : MonoBehaviour
 
     public void UpdateCount()
     {
-        foreach (var dice in DataManager.Inst.playerData.dices)
+        foreach (var dice in DataManager.Inst.playerData.Dices)
         {
             if (dice.Key == DiceType.Four)
                 continue;

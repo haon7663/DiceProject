@@ -20,11 +20,13 @@ public class InteractionCardController : MonoBehaviour
     private List<InteractionCard> _interactionCards;
     private InteractionCard _current;
 
-    public void InitDeck(List<CardSO> cards)
+    public void InitDeck()
     {
+        _interactionCards?.ForEach(c => Destroy(c.gameObject));
+
         _interactionCards = new List<InteractionCard>();
 
-        foreach (var data in cards)
+        foreach (var data in DataManager.Inst.playerData.Cards.ToCard())
         {
             var card = Instantiate(cardPrefab, contentRect.transform);
             card.Init(data);

@@ -21,6 +21,6 @@ public class GoldReward : Reward
 
     public override void Execute()
     {
-        DataManager.Inst.playerData.gold += count;
+        DataManager.Inst.playerData.Gold += count;
     }
 }

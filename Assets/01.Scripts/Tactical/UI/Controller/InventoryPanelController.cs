@@ -29,9 +29,9 @@ public class InventoryPanelController : MonoBehaviour
     {
         for (var i = 0; i < 8; i++)
         {
-            var itemName = DataManager.Inst.playerData.items[i];
-            var item = itemName != "" ? itemName.ToItem() : null;
-            if (!item) return;
+            var itemName = DataManager.Inst.playerData.Items[i];
+            var item = itemName?.ToItem();
+            if (!item) continue;
             _inventoryFrames[i].Initialize(item);
             
             var index = i;
@@ -44,7 +44,7 @@ public class InventoryPanelController : MonoBehaviour
         if (_inventoryFrames[index])
         {
             _inventoryFrames[index].Remove();
-            DataManager.Inst.playerData.items[index] = "";
+            DataManager.Inst.playerData.Items[index] = "";
         }
     }
 

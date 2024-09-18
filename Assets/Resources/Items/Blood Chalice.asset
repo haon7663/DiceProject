@@ -51,3 +51,4 @@ MonoBehaviour:
       value: 0
     onSelf: 0
     specialBehaviourType: 0
+  gameActions: []

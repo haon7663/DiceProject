@@ -24,7 +24,7 @@ public static class RewardExtension
         for (var i = 0; i < count; i++)
         {
             var card = cards.Where(c =>
-                DataManager.Inst.playerData.cards.All(card => card.name != c.cardName) &&
+                DataManager.Inst.playerData.Cards.All(card => card.name != c.cardName) &&
                 selectedCards.All(card => card.cardName != c.cardName)).ToList().Random();
             selectedCards.Add(card);
         }

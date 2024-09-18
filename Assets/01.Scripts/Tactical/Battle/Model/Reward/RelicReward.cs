@@ -21,6 +21,6 @@ public class RelicReward : Reward
 
     public override void Execute()
     {
-        DataManager.Inst.playerData.relics.Add(relicSO.ToJson());
+        DataManager.Inst.playerData.Relics.Add(relicSO.ToJson());
     }
 }

@@ -9,7 +9,7 @@ namespace Map
         private static MapConfig _config;
 
         private static readonly List<NodeType> RandomNodes = new List<NodeType>
-        {NodeType.Mystery, NodeType.Store, NodeType.Treasure, NodeType.MinorEnemy, NodeType.RestSite};
+        {NodeType.Mystery, NodeType.Store, NodeType.MinorEnemy, NodeType.RestSite};
 
         private static List<float> _layerDistances;
         

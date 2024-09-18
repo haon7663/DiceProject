@@ -28,11 +28,11 @@ MonoBehaviour:
     onSelf: 1
     specialBehaviourType: 0
   rewardInfos:
-  - rewardType: 1
+  - rewardType: 0
     count:
       min: 0
       max: 0
-    isRandom: 1
+    isRandom: 0
     cardSO: {fileID: 0}
     diceType: 0
     itemSO: {fileID: 0}

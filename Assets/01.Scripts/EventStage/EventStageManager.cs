@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 public class EventStageManager : Singleton<EventStageManager>
 {
-    [FormerlySerializedAs("eventStageSO")] [SerializeField] private EventSO eventSO;
+    /*[FormerlySerializedAs("eventStageSO")] [SerializeField] private EventSO eventSO;
     
     [Header("버튼")]
     [SerializeField] private EventOptionButton eventOptionButtonPrefab;
@@ -104,7 +104,7 @@ public class EventStageManager : Singleton<EventStageManager>
         {
             yield return null;
             /*yield return StartCoroutine(DiceManager.Inst.RollTheDices(eventOption.diceTypes, 0,
-                value => diceValue = value));*/
+                value => diceValue = value));#1#
         }
         foreach (var eventEffect in eventOption.eventEffects)
         {
@@ -122,7 +122,7 @@ public class EventStageManager : Singleton<EventStageManager>
                     /*if(eventEffect.value > 0)
                         GameManager.Inst.player.OnRecovery(eventEffect.value);
                     else
-                        GameManager.Inst.player.OnDamage(-eventEffect.value);*/
+                        GameManager.Inst.player.OnDamage(-eventEffect.value);#1#
                     break;
                 case EventEffectType.Dice:
                     DataManager.Inst.playerData.dices[eventEffect.diceType] += eventEffect.isAdd ? 1 : -1;
@@ -152,5 +152,5 @@ public class EventStageManager : Singleton<EventStageManager>
                     throw new ArgumentOutOfRangeException();
             }
         }
-    }
+    }*/
 }

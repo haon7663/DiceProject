@@ -19,27 +19,35 @@ MonoBehaviour:
   - description: "[\uC5F4\uC1E0\uB97C \uC0AC\uC6A9\uD55C\uB2E4] <color=#B5B5B5>\uC5F4\uC1E0 
       \uC18C\uBAA8</color>\r\n<color=green>\uB79C\uB364 \uC720\uBB3C \uD68D\uB4DD"
     useCondition: 0
-    compareDiceTypes: 
+    diceTypes: 
     eventEffects:
-    - compareType: 0
-      compareValue: 0
-      eventEffectType: 3
+    - eventLog: "*\uCCA0\uCEE5\r\n\uC0C1\uC790\uAC00 \uC5F4\uB838\uB2E4\n\uC720\uBB3C 
+        <color=yellow>OOOO</color> \uD68D\uB4DD"
+      compareInfo:
+        compareType: 0
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 0
+      eventEffectType: 1
       value: 0
       diceType: 0
       isAdd: 0
       cardSO: {fileID: 0}
       cardEventType: 0
       relicSO: {fileID: 11400000, guid: a66dc1fe3b13a4843a0ddcb17f68e626, type: 2}
-      eventLog: "*\uCCA0\uCEE5\r\n\uC0C1\uC790\uAC00 \uC5F4\uB838\uB2E4\n\uC720\uBB3C 
-        <color=yellow>OOOO</color> \uD68D\uB4DD"
   - description: "[\uB77D\uD53D\uC744 \uC0AC\uC6A9\uD55C\uB2E4] <color=#B5B5B5><sprite=0>
       x 1 \uC18C\uBAA8\r\n<color=green>3 \uC774\uC0C1\uC77C \uB54C \uB79C\uB364 \uC720\uBB3C
       \uD68D\uB4DD"
     useCondition: 1
-    compareDiceTypes: 00000000
+    diceTypes: 
     eventEffects:
-    - compareType: 0
-      compareValue: 3
+    - eventLog: "*\uCCA0\uCEE5\r\n\uC0C1\uC790\uAC00 \uC5F4\uB838\uB2E4.\n\uC720\uBB3C 
+        <color=yellow>\uAC80\uC220\uAD50\uBCF8</color> \uD68D\uB4DD"
+      compareInfo:
+        compareType: 0
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 0
       eventEffectType: 3
       value: 0
       diceType: 0
@@ -47,10 +55,12 @@ MonoBehaviour:
       cardSO: {fileID: 0}
       cardEventType: 0
       relicSO: {fileID: 11400000, guid: a66dc1fe3b13a4843a0ddcb17f68e626, type: 2}
-      eventLog: "*\uCCA0\uCEE5\r\n\uC0C1\uC790\uAC00 \uC5F4\uB838\uB2E4.\n\uC720\uBB3C 
-        <color=yellow>\uAC80\uC220\uAD50\uBCF8</color> \uD68D\uB4DD"
-    - compareType: 1
-      compareValue: 2
+    - eventLog: "\"\uCE89!\r\n\uB77D\uD53D\uC774 \uBD80\uB7EC\uC84C\uB2E4.\r"
+      compareInfo:
+        compareType: 0
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 0
       eventEffectType: 4
       value: 0
       diceType: 0
@@ -58,14 +68,18 @@ MonoBehaviour:
       cardSO: {fileID: 0}
       cardEventType: 0
       relicSO: {fileID: 0}
-      eventLog: "\"\uCE89!\r\n\uB77D\uD53D\uC774 \uBD80\uB7EC\uC84C\uB2E4.\r"
   - description: "[\uBD80\uC21C\uB2E4] <color=#B5B5B5><sprite=2> x 1 \uC18C\uBAA8\r\n<color=green>6
       \uC774\uC0C1\uC77C \uB54C \uB79C\uB364 \uC720\uBB3C \uD68D\uB4DD"
     useCondition: 1
-    compareDiceTypes: 02000000
+    diceTypes: 
     eventEffects:
-    - compareType: 0
-      compareValue: 6
+    - eventLog: "*\uCF70\uC9C1!\r\n\uC548\uC5D0 \uC720\uBB3C\uC774 \uBCF4\uC778\uB2E4.\r\n\uC720\uBB3C
+        <color=yellow>OOOO</color> \uD68D\uB4DD"
+      compareInfo:
+        compareType: 0
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 0
       eventEffectType: 3
       value: 0
       diceType: 0
@@ -73,10 +87,12 @@ MonoBehaviour:
       cardSO: {fileID: 0}
       cardEventType: 0
       relicSO: {fileID: 11400000, guid: a66dc1fe3b13a4843a0ddcb17f68e626, type: 2}
-      eventLog: "*\uCF70\uC9C1!\r\n\uC548\uC5D0 \uC720\uBB3C\uC774 \uBCF4\uC778\uB2E4.\r\n\uC720\uBB3C
-        <color=yellow>OOOO</color> \uD68D\uB4DD"
-    - compareType: 1
-      compareValue: 5
+    - eventLog: "*\uCF85!!\r\n\uD798\uC870\uC808\uC5D0 \uC2E4\uD328\uD588\uB2E4."
+      compareInfo:
+        compareType: 0
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 0
       eventEffectType: 4
       value: 0
       diceType: 0
@@ -84,4 +100,3 @@ MonoBehaviour:
       cardSO: {fileID: 0}
       cardEventType: 0
       relicSO: {fileID: 11400000, guid: a66dc1fe3b13a4843a0ddcb17f68e626, type: 2}
-      eventLog: "*\uCF85!!\r\n\uD798\uC870\uC808\uC5D0 \uC2E4\uD328\uD588\uB2E4."

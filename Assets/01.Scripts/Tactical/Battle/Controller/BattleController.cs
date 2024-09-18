@@ -1,11 +1,23 @@
+using System;
 using System.Collections;
 using System.Linq;
 using Map;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class BattleController : StateMachine
 {
+    public static BattleController Inst;
+
+    private void Awake()
+    {
+        Inst = this;
+    }
+
+    
+    [Header("- SO -")]
+    public UnitSO enemyData;
+    public EventData eventData;
+
     [Header("- Units -")]
     public Unit player;
     public Unit enemy;
@@ -29,14 +41,14 @@ public class BattleController : StateMachine
     public HudController hudController;
     public RewardPanelController rewardPanelController;
     public DiceCountPanelController diceCountPanelController;
-    public ItemPanelController itemPanelController;
+    public GoldPanelController goldPanelController;
     
     [Header("- Battle UI -")]
     public TurnOrderController turnOrderController;
     public DiceResultPanelController diceResultPanelController;
     
     [Header("- Event UI -")]
-    public EventOptionController eventOptionController;
+    public EventChoicesController eventChoicesController;
     
     public PlayerData PlayerData { get; private set; }
     public Turn Turn { get; private set; }

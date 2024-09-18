@@ -12,5 +12,13 @@ public class ItemSO : ScriptableObject
     
     [Header("효과")]
     public List<BehaviourInfo> behaviourInfos;
-    public List<RewardInfo> rewardInfos;
+    public List<GameAction> actions;
+    
+    public void ExecuteActions()
+    {
+        foreach (var action in actions)
+        {
+            action.Execute();
+        }
+    }
 }

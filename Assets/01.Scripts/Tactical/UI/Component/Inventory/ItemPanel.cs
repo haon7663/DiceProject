@@ -68,22 +68,6 @@ public class ItemPanel : MonoBehaviour
             }
         }
 
-        var rewardInfos = Data.rewardInfos;
-        
-        foreach (var rewardInfo in rewardInfos)
-        {
-            switch (rewardInfo.rewardType)
-            {
-                case RewardType.Card:
-                    var rewardCards = new List<CardSO>();
-                    if (rewardInfo.isRandom)
-                    {
-                        rewardCards.AddRange(RewardExtension.SelectRandomCards(rewardInfo.count.GetValue()));
-                    }
-                    else
-                        rewardCards.Add(rewardInfo.cardSO);
-                    break;
-            }
-        }
+        Data.ExecuteActions();
     }
 }

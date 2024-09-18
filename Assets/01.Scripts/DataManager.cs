@@ -10,49 +10,94 @@ using File = System.IO.File;
 [Serializable]
 public class PlayerData
 {
-    [Header("기본 정보")]
     public string name;
+    private int _health;
+    private int _gold;
+    private SerializableDictionary<DiceType, int> _dices;
+    private List<CardJson> _cards;
+    private string[] _items;
+    private List<RelicJson> _relics;
     
-    [Header("체력")]
-    public int maxHp;
-    public int curHp;
+    public event Action<string, object> OnValueChanged;
 
-    [Header("자원")]
-    public int gold;
-    public SerializableDictionary<DiceType, int> dices;
+    public int Health
+    {
+        get => _health;
+        set
+        {
+            if (_health == value) return;
+            _health = value;
+            OnValueChanged?.Invoke("Health", _health);
+        }
+    }
     
-    [Header("카드")]
-    public List<CardJson> cards;
+    public int Gold
+    {
+        get => _gold;
+        set
+        {
+            if (_gold == value) return;
+            _gold = value;
+            OnValueChanged?.Invoke("Gold", _gold);
+        }
+    }
+    public SerializableDictionary<DiceType, int> Dices
+    {
+        get => _dices;
+        set
+        {
+            if (_dices == value) return;
+            _dices = value;
+            OnValueChanged?.Invoke("Dices", _dices);
+        }
+    }
 
-    [Header("아이템")]
-    public string[] items;
+    public List<CardJson> Cards
+    {
+        get => _cards;
+        set
+        {
+            if (_cards == value) return;
+            _cards = value;
+            OnValueChanged?.Invoke("Cards", _cards);
+        }
+    }
 
-    [Header("유물")]
-    public List<RelicJson> relics;
+    public string[] Items
+    {
+        get => _items;
+        set
+        {
+            if (_items == value) return;
+            _items = value;
+            OnValueChanged?.Invoke("Items", _items);
+        }
+    }
 
-    public PlayerData(string creatureName, int maxHp, List<CardJson> cards, string[] items, List<RelicJson> relics)
+    public List<RelicJson> Relics
+    {
+        get => _relics;
+        set
+        {
+            if (_relics == value) return;
+            _relics = value;
+            OnValueChanged?.Invoke("Relics", _relics);
+        }
+    }
+    
+
+    public PlayerData(string creatureName, int hp, SerializableDictionary<DiceType, int> dices, List<CardJson> cards, string[] items, List<RelicJson> relics)
     {
         name = creatureName;
-        
-        dices = new SerializableDictionary<DiceType, int>()
-        {
-            { DiceType.Four, 9999999 },
-            { DiceType.Six, 12 },
-            { DiceType.Eight, 6 },
-            { DiceType.Twelve, 24 },
-            { DiceType.Twenty, 1 },
-        };
-
-        this.maxHp = maxHp;
-        curHp = maxHp;
-        
-        this.cards = cards;
-        this.items = items;
-        this.relics = relics;
+        _health = hp;
+        _dices = dices;
+        _cards = cards;
+        _items = items;
+        _relics = relics;
     }
 }
 
-public class DataManager : SingletonDontDestroyOnLoad<DataManager>
+public class  DataManager : SingletonDontDestroyOnLoad<DataManager>
 {
     public PlayerData playerData;
 
@@ -75,11 +120,37 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
         {
             Generate("아리엘".ToPlayer());
         }
+
+        playerData.OnValueChanged += HandleValueChanged;
+    }
+
+    private void HandleValueChanged(string key, object value)
+    {
+        switch (key)
+        {
+            case "Gold":
+                BattleController.Inst.goldPanelController.UpdateGold();
+                break;
+            case "Dices":
+                BattleController.Inst.diceCountPanelController.UpdateCount();
+                break;
+            case "Cards":
+                BattleController.Inst.interactionCardController.InitDeck();
+                break;
+        }
     }
 
     public void Generate(UnitSO unitSO)
     {
-        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, unitSO.cards.ToJson(), new string[8], new List<RelicJson>());
+        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, new SerializableDictionary<DiceType, int>()
+        {
+            { DiceType.Four, 9999999 },
+            { DiceType.Six, 12 },
+            { DiceType.Eight, 6 },
+            { DiceType.Twelve, 24 },
+            { DiceType.Twenty, 1 },
+        }, unitSO.cards.ToJson(), new string[8], new List<RelicJson>());
+        
         this.playerData = playerData;
     }
     

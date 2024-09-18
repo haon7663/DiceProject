@@ -43,7 +43,7 @@ public class DiceRollingState : BattleState
         unit.behaviourValues = new Dictionary<BehaviourInfo, int>();
 
         var index = 0;
-        var maxIndex = behaviourInfos.SelectMany(behaviourInfo => behaviourInfo.diceTypes).Count(diceType => owner.PlayerData.dices[diceType] > 0);
+        var maxIndex = behaviourInfos.SelectMany(behaviourInfo => behaviourInfo.diceTypes).Count(diceType => owner.PlayerData.Dices[diceType] > 0);
 
         var displayTotalValue = 0;
         foreach (var behaviourInfo in behaviourInfos)
@@ -55,7 +55,7 @@ public class DiceRollingState : BattleState
             {
                 if (unit.type == UnitType.Player)
                 {
-                    if (owner.PlayerData.dices[diceType] <= 0) continue;
+                    if (owner.PlayerData.Dices[diceType] <= 0) continue;
                     
                     var pos = CalculateDicePosition(index++, maxIndex);
                     totalValue += RollingDice(diceType, pos);
@@ -84,7 +84,7 @@ public class DiceRollingState : BattleState
 
     private int RollingDice(DiceType diceType, Vector3 pos)
     {
-        DataManager.Inst.playerData.dices[diceType]--;
+        DataManager.Inst.playerData.Dices[diceType]--;
         owner.diceCountPanelController.UpdateCount();
         
         var dice = DiceFactory.Create(diceType);

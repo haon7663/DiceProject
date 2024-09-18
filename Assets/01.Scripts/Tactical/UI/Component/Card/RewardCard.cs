@@ -21,7 +21,7 @@ public class RewardCard : Card, IPointerEnterHandler, IPointerExitHandler, IPoin
     
     public void OnPointerClick(PointerEventData eventData)
     {
-        DataManager.Inst.playerData.cards.Add(Data.ToJson());
+        DataManager.Inst.playerData.Cards.Add(Data.ToJson());
         OnClick?.Invoke();
     }
 }

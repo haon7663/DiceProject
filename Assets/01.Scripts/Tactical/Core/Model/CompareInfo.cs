@@ -14,4 +14,18 @@ public class CompareInfo
     [DrawIf("compareType", CompareType.None, true)]
     [DrawIf("compareTargetType", CompareTargetType.ConstValue)]
     public int value;
+    
+    public bool IsSatisfied(int compareValue)
+    {
+        return compareType.IsSatisfied(compareValue, value);
+    }
+    public bool IsSatisfied(int fromValue, int toValue)
+    {
+        return compareTargetType switch
+        {
+            CompareTargetType.ConstValue => compareType.IsSatisfied(fromValue, value),
+            CompareTargetType.EachOther => compareType.IsSatisfied(fromValue, toValue),
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+    }
 }

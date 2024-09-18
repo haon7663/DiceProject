@@ -16,7 +16,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 10b2dec9518a7bf4fa9ed0b88b4b8b3d, type: 2}
   - {fileID: 11400000, guid: f64b460bffa14a342bf8456174c78415, type: 2}
   - {fileID: 11400000, guid: 82f1c8a81f1be7b448c37ce7dbb2a004, type: 2}
-  - {fileID: 11400000, guid: d1027902983613e448d4b6871ace0027, type: 2}
   - {fileID: 11400000, guid: be75491aa0199b04bb95028b68d8f21c, type: 2}
   - {fileID: 11400000, guid: fd3c3680cb32cdc4390c97bb390c5b77, type: 2}
   - {fileID: 11400000, guid: c2bb9093a937b914299221d3f94de70f, type: 2}
@@ -30,23 +29,23 @@ MonoBehaviour:
   layers:
   - nodeType: 0
     randomizeNodes: 0
-  - nodeType: 0
-    randomizeNodes: 0.482
-  - nodeType: 0
-    randomizeNodes: 0.515
-  - nodeType: 1
-    randomizeNodes: 0.164
-  - nodeType: 2
-    randomizeNodes: 0.252
-  - nodeType: 0
-    randomizeNodes: 0
-  - nodeType: 3
-    randomizeNodes: 0.403
-  - nodeType: 4
-    randomizeNodes: 0.361
-  - nodeType: 1
-    randomizeNodes: 0.824
-  - nodeType: 2
-    randomizeNodes: 0.397
   - nodeType: 5
+    randomizeNodes: 0.617
+  - nodeType: 0
+    randomizeNodes: 0.299
+  - nodeType: 2
+    randomizeNodes: 0.284
+  - nodeType: 1
+    randomizeNodes: 0.182
+  - nodeType: 0
+    randomizeNodes: 0.473
+  - nodeType: 5
+    randomizeNodes: 0.75
+  - nodeType: 3
+    randomizeNodes: 0.678
+  - nodeType: 1
+    randomizeNodes: 0.515
+  - nodeType: 0
+    randomizeNodes: 0.361
+  - nodeType: 2
     randomizeNodes: 0

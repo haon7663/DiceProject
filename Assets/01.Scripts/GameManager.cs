@@ -1,12 +1,11 @@
 using System.Collections.Generic;
+using Map;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum GameMode { Battle, Event, Chest, Shop, Boss }
-
 public class GameManager : SingletonDontDestroyOnLoad<GameManager>
 {
-    public GameMode currentGameMode;
+    [FormerlySerializedAs("nodeType")] public NodeType currentNodeType;
 
     public float battleSpeed = 1;
 

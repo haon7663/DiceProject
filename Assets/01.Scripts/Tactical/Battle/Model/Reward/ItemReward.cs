@@ -23,8 +23,8 @@ public class ItemReward : Reward
     {
         for (var i = 0; i < 8; i++)
         {
-            if (DataManager.Inst.playerData.items[i] != "") continue;
-            DataManager.Inst.playerData.items[i] = _itemSO.ToJson();
+            if (DataManager.Inst.playerData.Items[i] != null) continue;
+            DataManager.Inst.playerData.Items[i] = _itemSO.ToJson();
             break;
         }
     }
