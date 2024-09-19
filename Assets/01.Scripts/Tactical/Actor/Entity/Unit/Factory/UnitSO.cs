@@ -7,8 +7,9 @@ public enum UnitType { Player, Enemy }
 public class UnitSO : ScriptableObject
 {
     public new string name;
-    
+
     [Header("스프라이트")]
+    public Sprite standingSprite;
     public Sprite idleSprite;
     public List<AnimationData> attacks;
     public List<AnimationData> hits;

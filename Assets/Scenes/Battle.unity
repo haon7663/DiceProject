@@ -3864,7 +3864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentNodeType: 0
-  battleSpeed: 6
+  battleSpeed: 1
 --- !u!4 &536465747
 Transform:
   m_ObjectHideFlags: 0
@@ -6861,7 +6861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  unitSO: {fileID: 11400000, guid: 6b9c13116553c9b4ab87952f68aca4ab, type: 2}
+  unitSO: {fileID: 11400000, guid: 17ad5ac0cbc77ee44bef742f7a86a6ba, type: 2}
   cardSO: {fileID: 0}
 --- !u!114 &1029982721
 MonoBehaviour:

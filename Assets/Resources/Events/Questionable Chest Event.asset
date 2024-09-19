@@ -10,21 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7432f9223f5dafe41bc796e3e50f55cb, type: 3}
-  m_Name: EventData
+  m_Name: Questionable Chest Event
   m_EditorClassIdentifier: 
   eventTitle: "\uC218\uC0C1\uD55C \uC0C1\uC790"
+  eventSprite: {fileID: 0}
   eventDescription: "\uC55E\uC5D0 \uC57D\uAC04 \uB0A1\uC740 \uC0C1\uC790\uAC00 \uC788\uB2E4.\r\n\uC5B4\uB5BB\uAC8C
     \uD560\uAE4C?"
   choices:
   - title: "[\uC5F4\uC1E0\uB97C \uC0AC\uC6A9\uD55C\uB2E4]"
     description: "<color=#B5B5B5>\uC5F4\uC1E0  \uC18C\uBAA8</color> <color=green>\uB79C\uB364
       \uC720\uBB3C \uD68D\uB4DD"
-    actions: []
+    diceTypes: 01000000
+    actions:
+    - compareInfo:
+        compareType: 0
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 0
+      action: {fileID: 11400000, guid: 113feb4b9caa73449b5a0bc51e6bb196, type: 2}
   - title: 
     description: 
+    diceTypes: 
     actions:
-    - diceTypes: 
-      compareInfo:
+    - compareInfo:
         compareType: 0
         specialCompareType: 0
         compareTargetType: 0
@@ -32,9 +40,9 @@ MonoBehaviour:
       action: {fileID: 0}
   - title: 
     description: 
+    diceTypes: 
     actions:
-    - diceTypes: 
-      compareInfo:
+    - compareInfo:
         compareType: 0
         specialCompareType: 0
         compareTargetType: 0

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c944726bee7341839bba56f1b561d9c4, type: 3}
-  m_Name: AddRandomCardAction
+  m_Script: {fileID: 11500000, guid: a816ca805b7e4daa8a525b3f1cc8c5cf, type: 3}
+  m_Name: AddRandomRelicAction
   m_EditorClassIdentifier: 
   count:
     min: 1
