@@ -1223,7 +1223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1250, y: 0}
+  m_AnchoredPosition: {x: 1500, y: 0}
   m_SizeDelta: {x: 1453.5, y: 3072}
   m_Pivot: {x: 0.34475663, y: 0.7064953}
 --- !u!114 &1401392632
@@ -1646,9 +1646,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 1992802216}
   characters:
-  - {fileID: 115630430}
-  - {fileID: 1401392634}
-  interval: 1500
+  - {fileID: 11400000, guid: 6b9c13116553c9b4ab87952f68aca4ab, type: 2}
+  - {fileID: 11400000, guid: 17ad5ac0cbc77ee44bef742f7a86a6ba, type: 2}
+  interval: -1500
+  nameLabel: {fileID: 798188918}
+  description: {fileID: 1044328581}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

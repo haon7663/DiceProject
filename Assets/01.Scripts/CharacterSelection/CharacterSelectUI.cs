@@ -1,50 +1,46 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class CharacterSelectUI : MonoBehaviour
 {
     [SerializeField] private RectTransform rect;
-    [SerializeField] private List<CharacterStanding> characters;
-
+    [SerializeField] private List<UnitSO> characters;
     [SerializeField] private float interval;
 
+    [SerializeField] private TMP_Text nameLabel;
+    [SerializeField] private TMP_Text description;
+
     private int _index;
-    private int _saveIndex;
     
     public void Left()
     {
+        if (_index <= 0) return;
+        
         _index--;
         UpdatePosition();
+        UpdateInfo(characters[_index]);
     }
 
     public void Right()
     {
+        if (_index >= characters.Count - 1) return;
+        
         _index++;
         UpdatePosition();
+        UpdateInfo(characters[_index]);
     }
-
+    
     private void UpdatePosition()
     {
         DOTween.Kill(this);
-
-        int count = characters.Count;
-
-        for (int i = 0; i < count; i++)
-        {
-            print($"{characters[i].name} / {(_index + i) % count}");
-            if ((_index + i) % count == 0)
-                characters[i].rect.anchoredPosition = new Vector2(_index - _saveIndex > 0 ? -interval : interval, 0);
-            
-            
-            characters[i].rect.DOAnchorPosX((_index + i) % count * interval, 0.5f);
-        }
-
-        _saveIndex = _index;
+        rect.DOAnchorPosX(_index * interval, 0.5f);
     }
 
+    private void UpdateInfo(UnitSO unitSO)
+    {
+        nameLabel.text = unitSO.name;
+        description.text = unitSO.description;
+    }
 }
