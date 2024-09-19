@@ -10,20 +10,21 @@ public class EventSelectionState : BattleState
     public override void Enter()
     {
         base.Enter();
+        _diceObjects = new List<DiceObject>();
         owner.eventChoicesController.ShowEventChoices(owner.eventData);
         owner.eventChoicesController.OnExecute += Execute;
+        
+        owner.dialogController.GenerateDialog(owner.eventData.eventDescription);
     }
 
     public override void Exit()
     {
         base.Exit();
-        _diceObjects.ForEach(dice => Destroy(dice.gameObject));
-        _diceObjects.Clear();
     }
 
     private void Execute(EventChoice eventChoice)
     {
-        if (eventChoice.needDices.Count > 0)
+        if (eventChoice.eventConditionType == EventConditionType.Dice)
         {
             StartCoroutine(RollDices(eventChoice));
         }
@@ -37,6 +38,7 @@ public class EventSelectionState : BattleState
     {
         owner.interactionPanelController.Hide();
         owner.topPanelController.Hide();
+        owner.diceResultPanelController.ShowTop();
         
         yield return YieldInstructionCache.WaitForSeconds(1f);
         
@@ -44,8 +46,6 @@ public class EventSelectionState : BattleState
         var maxIndex = eventChoice.needDices.Count(diceType => owner.PlayerData.Dices[diceType] > 0);
 
         var totalValue = 0;
-        
-        _diceObjects = new List<DiceObject>();
         
         foreach (var diceType in eventChoice.needDices)
         {
@@ -65,16 +65,33 @@ public class EventSelectionState : BattleState
         
         owner.diceResultPanelController.SetTopValue(totalValue);
 
-        yield return YieldInstructionCache.WaitForSeconds(1);
+        yield return YieldInstructionCache.WaitForSeconds(3);
+        
+        if (_diceObjects.Count > 0)
+        {
+            _diceObjects.ForEach(dice => Destroy(dice.gameObject));
+            _diceObjects.Clear();
+        }
         
         owner.interactionPanelController.Show();
         owner.topPanelController.Show();
+        owner.diceResultPanelController.HideTop();
+        
+        yield return YieldInstructionCache.WaitForSeconds(1.5f);
 
         GetReward(eventChoice, totalValue);
     }
 
     private void GetReward(EventChoice eventChoice, int value)
     {
+        foreach (var action in eventChoice.actions)
+        {
+            if (action.compareInfo.IsSatisfied(value))
+            {
+                if (action.description == "") continue;
+                owner.dialogController.GenerateDialog(action.description);
+            }
+        }
         eventChoice.ExecuteActions(value);
         EndEvent();
     }

@@ -19,9 +19,10 @@ public class DialogController : MonoBehaviour
     private bool _isShown;
     
     [ContextMenu("GenerateDialog")]
-    public void GenerateDialog()
+    public void GenerateDialog(string log)
     {
         var dialog = Instantiate(dialogPrefab, contentRect.transform);
+        dialog.Initialize(log);
         _dialogs.Add(dialog);
         
         SetParentPosition(dialog);
@@ -30,7 +31,7 @@ public class DialogController : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            GenerateDialog();
+            GenerateDialog("TestLog");
     }
 
     public void UpdateDialogTransparency()
@@ -41,8 +42,8 @@ public class DialogController : MonoBehaviour
 
             var alpha = dialogPos.y switch
             {
-                < -65f => Mathf.Clamp01(1 - (Mathf.Abs(dialogPos.y) - 65f) / 50f),
-                > 35f => Mathf.Clamp01(1 - (dialogPos.y - 35f) / 50f),
+                < 0 => Mathf.Clamp01(1 - (Mathf.Abs(dialogPos.y)) / 50f),
+                > 100 => Mathf.Clamp01(1 - (dialogPos.y - 100) / 50f),
                 _ => 1f
             };
 
@@ -77,6 +78,6 @@ public class DialogController : MonoBehaviour
         Vector2 dialogPos = scrollRect.transform.InverseTransformPoint(dialog.transform.position);
         Vector2 offset = contentPos - dialogPos;
         
-        contentRect.DOAnchorPosY(offset.y - 160f, 0.25f);
+        contentRect.DOAnchorPosY(offset.y - 30, 0.25f);
     }
 }

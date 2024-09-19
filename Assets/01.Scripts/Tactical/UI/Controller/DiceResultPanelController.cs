@@ -43,6 +43,7 @@ public class DiceResultPanelController : MonoBehaviour
 
     public void ShowTop()
     {
+        topPanel.gameObject.SetActive(true);
         topPanel.GetComponent<Panel>().SetPosition(PanelStates.Show, true, 1);
     }
 

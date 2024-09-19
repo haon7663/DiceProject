@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7432f9223f5dafe41bc796e3e50f55cb, type: 3}
+  m_Name: Rest Event
+  m_EditorClassIdentifier: 
+  eventTitle: Rest
+  eventSprite: {fileID: 0}
+  eventDescription: "\uD734\uC2DD\uC744 \uCDE8\uD558\uC790."
+  choices:
+  - title: "[\uD734\uC2DD\uC744 \uCDE8\uD55C\uB2E4.]"
+    description: "<color=green>\uCCB4\uB825 20 \uD68C\uBCF5"
+    eventConditionType: 0
+    needDices: 
+    needItem: {fileID: 0}
+    needGold: 0
+    actions:
+    - description: 
+      compareInfo:
+        compareType: 0
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 0
+      action: {fileID: 11400000, guid: b7db8167d5013b7438b3e7d3673c76df, type: 2}
+  - title: "[\uC8FC\uC704\uB97C \uD0D0\uC0C9\uD55C\uB2E4.]"
+    description: "<color=green>\uB79C\uB364\uD55C \uC8FC\uC0AC\uC704 6\uAC1C \uD68D\uB4DD"
+    eventConditionType: 0
+    needDices: 
+    needItem: {fileID: 0}
+    needGold: 0
+    actions:
+    - description: 
+      compareInfo:
+        compareType: 0
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 0
+      action: {fileID: 11400000, guid: d042ea143cb3f95469d2b7529d28c397, type: 2}

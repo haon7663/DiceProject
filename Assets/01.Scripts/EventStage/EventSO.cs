@@ -31,10 +31,10 @@ public class EventChoice
 
     public EventConditionType eventConditionType;
     
-    [DrawIf("eventConditionType", EventConditionType.Item)]
-    public ItemSO needItem;
     [DrawIf("eventConditionType", EventConditionType.Dice)]
     public List<DiceType> needDices;
+    [DrawIf("eventConditionType", EventConditionType.Item)]
+    public ItemSO needItem;
     [DrawIf("eventConditionType", EventConditionType.Gold)]
     public int needGold;
     

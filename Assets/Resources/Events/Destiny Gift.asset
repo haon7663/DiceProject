@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7432f9223f5dafe41bc796e3e50f55cb, type: 3}
+  m_Name: Destiny Gift
+  m_EditorClassIdentifier: 
+  eventTitle: "\uC6B4\uBA85\uC758 \uC120\uBB3C"
+  eventSprite: {fileID: 0}
+  eventDescription: "\uB2F9\uC2E0\uC740 \uAFC8\uC778\uC9C0 \uD604\uC2E4\uC778\uC9C0
+    \uBD84\uAC08\uD560 \uC218 \uC5C6\uC5C8\uB2E4.\r\n\uB2F9\uC2E0\uC758 \uB208\uC55E\uC5D0
+    \uC655\uC88C\uAC00 \uB193\uC5EC\uC788\uACE0,\r\n\uC911\uC559\uC5D0 \uD750\uB9BF\uD574\uBCF4\uC774\uB294
+    \uBB3C\uCCB4\uAC00 \uB193\uC5EC\uC788\uB2E4.\r\n<color=red>'\uC774\uAC74 \uB2F9\uC2E0\uC744
+    \uC704\uD55C \uC120\uBB3C\uC774\uB2E4'</color>"
+  choices:
+  - title: "[\uC120\uBB3C\uC744 \uBC1B\uB294\uB2E4.]"
+    description: "<color=#B5B5B5><sprite=3> \uC18C\uBAA8</color> <color=green>1 \uC774\uC0C1\uC77C
+      \uB54C \uB79C\uB364 \uC720\uBB3C \uD68D\uB4DD"
+    eventConditionType: 2
+    needDices: 03000000
+    needItem: {fileID: 0}
+    needGold: 0
+    actions:
+    - description: "'\uC88B\uC740 \uD310\uB2E8\uC774\uC57C \uCE5C\uAD6C'"
+      compareInfo:
+        compareType: 2
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 1
+      action: {fileID: 11400000, guid: 79d079cd6f9db1649a694f910ffbbccc, type: 2}
+  - title: "[\uC880 \uB354 \uACE0\uBBFC\uD574\uBCF8\uB2E4.]"
+    description: "<color=green>\uB79C\uB364 \uCE74\uB4DC \uD68D\uB4DD\r"
+    eventConditionType: 0
+    needDices: 
+    needItem: {fileID: 0}
+    needGold: 25
+    actions:
+    - description: "'\uC2E0\uC911\uD55C \uC131\uACA9\uC740 \uC7AC\uBBF8\uC5C6\uAD70..'"
+      compareInfo:
+        compareType: 0
+        specialCompareType: 0
+        compareTargetType: 0
+        value: 0
+      action: {fileID: 11400000, guid: 2d64fa8db232d984e931e9b4d519bb2b, type: 2}

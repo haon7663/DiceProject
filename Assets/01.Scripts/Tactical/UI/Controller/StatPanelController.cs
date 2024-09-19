@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StatPanelController : MonoBehaviour
 {
-    [SerializeField] private StatPanel primaryPanel;
-    [SerializeField] private StatPanel secondaryPanel;
+    public StatPanel primaryPanel;
+    public StatPanel secondaryPanel;
 
     public void ConnectPanel(Unit unit)
     {

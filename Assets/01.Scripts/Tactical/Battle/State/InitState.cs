@@ -20,7 +20,8 @@ public class InitState : BattleState
         owner.player.unitSO = Resources.LoadAll<UnitSO>("Units/Player").FirstOrDefault(unit => unit.name == owner.PlayerData.name);
         if (owner.player.TryGetComponent<Health>(out var playerHealth))
         {
-            playerHealth.maxHp = playerHealth.curHp = owner.PlayerData.Health;
+            playerHealth.maxHp = owner.PlayerData.MaxHealth;
+            playerHealth.curHp = owner.PlayerData.Health;
             playerHealth.OnDeath += owner.DefeatEventHandler;
         }
         if (owner.player.TryGetComponent<Relic>(out var relic))
@@ -38,12 +39,26 @@ public class InitState : BattleState
                 owner.ChangeState<PrepareBattleState>();
                 break;
             case NodeType.EliteEnemy:
+                owner.diceResultPanelController.ConnectPanel(owner.player);
+                InitEliteEnemy();
+                yield return null;
+                owner.ChangeState<PrepareBattleState>();
                 break;
             case NodeType.RestSite:
+                InitRest();
+                yield return null;
+                owner.ChangeState<EventSelectionState>();
                 break;
             case NodeType.Store:
+                InitEvent();
+                yield return null;
+                owner.ChangeState<EventSelectionState>();
                 break;
             case NodeType.Boss:
+                owner.diceResultPanelController.ConnectPanel(owner.player);
+                InitEliteEnemy();
+                yield return null;
+                owner.ChangeState<PrepareBattleState>();
                 break;
             case NodeType.Mystery:
                 InitEvent();
@@ -58,6 +73,15 @@ public class InitState : BattleState
                 throw new ArgumentOutOfRangeException();
         }
     }
+    
+    private void InitRest()
+    {
+        owner.eventData = Resources.Load<EventData>("Events_Rest/Rest Event");
+        
+        owner.eventObject.gameObject.SetActive(true);
+        owner.eventObject.SetSprite(owner.eventData.eventSprite);
+    }
+
 
     private void InitEvent()
     {
@@ -65,6 +89,21 @@ public class InitState : BattleState
         
         owner.eventObject.gameObject.SetActive(true);
         owner.eventObject.SetSprite(owner.eventData.eventSprite);
+    }
+    
+    private void InitEliteEnemy()
+    {
+        owner.enemyData = Resources.LoadAll<UnitSO>("Units/EliteEnemy").Random();
+        
+        owner.enemy.gameObject.SetActive(true);
+        owner.enemy.unitSO = owner.enemyData;
+        if (owner.enemy.TryGetComponent<Health>(out var enemyHealth))
+        {
+            enemyHealth.maxHp = enemyHealth.curHp = owner.enemy.unitSO.maxHp;
+            enemyHealth.OnDeath += owner.VictoryEventHandler;
+        }
+        owner.statPanelController.ConnectPanel(owner.enemy);
+        owner.diceResultPanelController.ConnectPanel(owner.enemy);
     }
 
     private void InitEnemy()

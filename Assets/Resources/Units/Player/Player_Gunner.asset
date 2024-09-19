@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb523e5f96c424e4ea6dce3522df5b2e, type: 3}
   m_Name: Player_Gunner
   m_EditorClassIdentifier: 
-  name: Gunner
+  name: "\uC9C0\uD0AC"
+  description: 
   standingSprite: {fileID: 21300000, guid: 8a129bbd1bcab72468e900f50ca41e7d, type: 3}
   idleSprite: {fileID: 21300000, guid: fb527f35c4f2369438b89db3c7b3b050, type: 3}
   attacks:
@@ -34,9 +35,8 @@ MonoBehaviour:
     startOffset: {x: 0, y: 0}
     endOffset: {x: -0.2, y: 0}
   cards:
-  - {fileID: 11400000, guid: 8cf7ad694acc87f4fb6e4b07a47ddc41, type: 2}
-  - {fileID: 11400000, guid: 3ac81be69b1745a43801780a3bbd1893, type: 2}
   - {fileID: 11400000, guid: d5f58dae1c6b8d040b1e21be849c21cb, type: 2}
-  - {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
+  - {fileID: 11400000, guid: 70c68504fbe4c81459f3b9597ba7620d, type: 2}
+  - {fileID: 11400000, guid: 142ca7cf580fb2d4d889a722cc8b13ce, type: 2}
   - {fileID: 11400000, guid: 7cb4d578abde75a49a752bb9975a86c4, type: 2}
   maxHp: 40

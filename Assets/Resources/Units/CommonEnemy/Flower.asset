@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb523e5f96c424e4ea6dce3522df5b2e, type: 3}
   m_Name: Flower
   m_EditorClassIdentifier: 
-  name: "\uAF43"
+  name: "\uB3CC\uC5F0\uBCC0\uC774 \uAF43"
+  description: 
+  standingSprite: {fileID: 0}
   idleSprite: {fileID: 21300000, guid: 24eac3cfc263c0546a6720f0f4f33eda, type: 3}
   attacks:
   - name: Default
@@ -33,7 +35,8 @@ MonoBehaviour:
     startOffset: {x: 0, y: 0}
     endOffset: {x: -0.2, y: 0}
   cards:
-  - {fileID: 11400000, guid: 8cf7ad694acc87f4fb6e4b07a47ddc41, type: 2}
-  - {fileID: 11400000, guid: 3ac81be69b1745a43801780a3bbd1893, type: 2}
+  - {fileID: 11400000, guid: c4e050490fca1f143b8ca2907e94607e, type: 2}
+  - {fileID: 11400000, guid: 002180ae120da6c438d31f8bdff90bf4, type: 2}
   - {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
-  maxHp: 25
+  - {fileID: 11400000, guid: 142ca7cf580fb2d4d889a722cc8b13ce, type: 2}
+  maxHp: 32

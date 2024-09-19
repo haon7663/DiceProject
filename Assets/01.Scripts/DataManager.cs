@@ -11,6 +11,7 @@ using File = System.IO.File;
 public class PlayerData
 {
     public string name;
+    private int _maxHealth;
     private int _health;
     private int _gold;
     private SerializableDictionary<DiceType, int> _dices;
@@ -20,6 +21,16 @@ public class PlayerData
     
     public event Action<string, object> OnValueChanged;
 
+    public int MaxHealth
+    {
+        get => _maxHealth;
+        set
+        {
+            if (_maxHealth == value) return;
+            _maxHealth = value;
+            OnValueChanged?.Invoke("Health", _maxHealth);
+        }
+    }
     public int Health
     {
         get => _health;
@@ -47,6 +58,7 @@ public class PlayerData
         set
         {
             if (_dices == value) return;
+            Debug.Log(value);
             _dices = value;
             OnValueChanged?.Invoke("Dices", _dices);
         }
@@ -85,11 +97,10 @@ public class PlayerData
         }
     }
     
-
     public PlayerData(string creatureName, int hp, SerializableDictionary<DiceType, int> dices, List<CardJson> cards, string[] items, List<RelicJson> relics)
     {
         name = creatureName;
-        _health = hp;
+        _maxHealth = _health = hp;
         _dices = dices;
         _cards = cards;
         _items = items;
@@ -116,12 +127,16 @@ public class  DataManager : SingletonDontDestroyOnLoad<DataManager>
 
             this.playerData = playerData;
         }
-        else
-        {
-            Generate("아리엘".ToPlayer());
-        }
+    }
 
+    private void OnEnable()
+    {
         playerData.OnValueChanged += HandleValueChanged;
+    }
+    
+    private void OnDisable()
+    {
+        playerData.OnValueChanged -= HandleValueChanged;
     }
 
     private void HandleValueChanged(string key, object value)
@@ -136,6 +151,9 @@ public class  DataManager : SingletonDontDestroyOnLoad<DataManager>
                 break;
             case "Cards":
                 BattleController.Inst.interactionCardController.InitDeck();
+                break;
+            case "Health":
+                BattleController.Inst.statPanelController.primaryPanel.HpChange(0);
                 break;
         }
     }

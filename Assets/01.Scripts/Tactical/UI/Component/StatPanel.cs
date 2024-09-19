@@ -36,7 +36,7 @@ public class StatPanel : MonoBehaviour
         }
     }
 
-    private void HpChange(int value)
+    public void HpChange(int value)
     {
         if (!_unit.TryGetComponent<Health>(out var health))
             return;
