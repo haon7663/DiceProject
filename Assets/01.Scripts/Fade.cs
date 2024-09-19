@@ -16,20 +16,24 @@ public class Fade : Singleton<Fade>
     }
     private void FadeIn()
     {
-        DOTween.Complete(this);
+        DOTween.Kill(this);
         _fadeImage.enabled = true;
         _fadeImage.DOFade(0, 0.5f).SetUpdate(true);
     }
     public void FadeOut()
     {
-        DOTween.Complete(this);
+        DOTween.Kill(this);
         _fadeImage.DOFade(1, 0.5f).SetUpdate(true);
     }
     public void FadeOut(string sceneName)
     {
-        DOTween.Complete(this);
+        DOTween.Kill(this);
         var sequence = DOTween.Sequence();
         sequence.Append(_fadeImage.DOFade(1, 0.5f).SetUpdate(true));
-        sequence.AppendCallback(() => { SceneManager.LoadScene(sceneName); });
+        sequence.AppendCallback(() =>
+        {
+            DOTween.KillAll();
+            SceneManager.LoadScene(sceneName);
+        });
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class EventChoicesController : MonoBehaviour
 {
-    public event Action OnExecute;
+    public event Action<EventChoice> OnExecute;
 
     [SerializeField] private Panel panel;
     [SerializeField] private EventChoiceButton eventChoiceButtonPrefab;
@@ -25,10 +25,9 @@ public class EventChoicesController : MonoBehaviour
         }
     }
 
-    private void Execute()
+    private void Execute(EventChoice eventChoice)
     {
         panel.SetPosition(PanelStates.Hide, true, 0.5f);
-        
-        OnExecute?.Invoke();
+        OnExecute?.Invoke(eventChoice);
     }
 }

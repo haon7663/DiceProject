@@ -22,4 +22,26 @@ public static class DiceFactory
 
         return instance;
     }
+
+    public static DiceObject RollingDice(this DiceType diceType, Vector3 pos)
+    {
+        DataManager.Inst.playerData.Dices[diceType]--;
+        
+        var dice = Create(diceType);
+        dice.transform.position = pos;
+        dice.transform.rotation = Quaternion.Euler(0, Random.Range(-15f, 15f), 0);
+
+        var value = diceType.GetDiceValue();
+        var diceObject = dice.GetComponent<DiceObject>();
+        diceObject.Initialize(value);
+
+        return diceObject;
+    }
+    
+    public static Vector3 CalculateDicePosition(int index, int maxIndex)
+    {
+        var defaultPos = new Vector3(2.5f * (index - (float)(maxIndex - 1) / 2) - 10, 0);
+        var randPos = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * 0.4f;
+        return defaultPos + randPos;
+    }
 }

@@ -35,4 +35,19 @@ public class DiceResultPanelController : MonoBehaviour
         primaryPanel.GetComponent<Panel>().SetPosition(PanelStates.Hide, true, 0.5f);
         secondaryPanel.GetComponent<Panel>().SetPosition(PanelStates.Hide, true, 0.5f);
     }
+
+    public void SetTopValue(int value)
+    {
+        topPanel.SetValue(value);
+    }
+
+    public void ShowTop()
+    {
+        topPanel.GetComponent<Panel>().SetPosition(PanelStates.Show, true, 1);
+    }
+
+    public void HideTop()
+    {
+        topPanel.GetComponent<Panel>().SetPosition(PanelStates.Hide, true, 0.5f);
+    }
 }

@@ -14,21 +14,37 @@ public class EventData : ScriptableObject
     public List<EventChoice> choices;
 }
 
+public enum EventConditionType
+{
+    None,
+    Item,
+    Dice,
+    Gold
+}
+
 [Serializable]
 public class EventChoice
 {
     public string title;
     [TextArea]
     public string description;
+
+    public EventConditionType eventConditionType;
     
-    public List<DiceType> diceTypes;
+    [DrawIf("eventConditionType", EventConditionType.Item)]
+    public ItemSO needItem;
+    [DrawIf("eventConditionType", EventConditionType.Dice)]
+    public List<DiceType> needDices;
+    [DrawIf("eventConditionType", EventConditionType.Gold)]
+    public int needGold;
+    
     public List<GameActionWithCompare> actions;
     
-    public void ExecuteActions()
+    public void ExecuteActions(int value)
     {
         foreach (var action in actions)
         {
-            if (action.compareInfo.IsSatisfied(diceTypes.Sum(d => d.GetDiceValue())))
+            if (action.compareInfo.IsSatisfied(value))
             {
                 action.Value.Execute();
             }

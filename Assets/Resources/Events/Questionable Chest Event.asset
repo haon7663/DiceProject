@@ -20,17 +20,23 @@ MonoBehaviour:
   - title: "[\uC5F4\uC1E0\uB97C \uC0AC\uC6A9\uD55C\uB2E4]"
     description: "<color=#B5B5B5>\uC5F4\uC1E0  \uC18C\uBAA8</color> <color=green>\uB79C\uB364
       \uC720\uBB3C \uD68D\uB4DD"
-    diceTypes: 01000000
+    eventConditionType: 0
+    needItem: {fileID: 0}
+    needDices: 
+    needGold: 0
     actions:
     - compareInfo:
         compareType: 0
         specialCompareType: 0
         compareTargetType: 0
         value: 0
-      action: {fileID: 11400000, guid: 113feb4b9caa73449b5a0bc51e6bb196, type: 2}
+      action: {fileID: 11400000, guid: c15a011bd749e3343b86c692ca95509e, type: 2}
   - title: 
     description: 
-    diceTypes: 
+    eventConditionType: 0
+    needItem: {fileID: 0}
+    needDices: 
+    needGold: 0
     actions:
     - compareInfo:
         compareType: 0
@@ -40,7 +46,10 @@ MonoBehaviour:
       action: {fileID: 0}
   - title: 
     description: 
-    diceTypes: 
+    eventConditionType: 0
+    needItem: {fileID: 0}
+    needDices: 
+    needGold: 0
     actions:
     - compareInfo:
         compareType: 0

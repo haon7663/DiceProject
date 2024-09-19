@@ -50,6 +50,10 @@ public class InitState : BattleState
                 yield return null;
                 owner.ChangeState<EventSelectionState>();
                 break;
+            case NodeType.None:
+                yield return null;
+                owner.ChangeState<MapSelectionState>();
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }

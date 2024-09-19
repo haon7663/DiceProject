@@ -31,7 +31,7 @@ namespace Map
                     PlayWarningThatNodeCannotBeAccessed();
             }
         }
-
+        
         private void SendPlayerToNode(MapNode mapNode)
         {
             mapController.CurrentMap.path.Add(mapNode.Node.point);

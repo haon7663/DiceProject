@@ -11,7 +11,8 @@ namespace Map
         RestSite,
         Store,
         Boss,
-        Mystery
+        Mystery,
+        None
     }
 }
 

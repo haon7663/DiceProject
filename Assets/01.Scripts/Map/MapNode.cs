@@ -40,7 +40,6 @@ public class MapNode : MonoBehaviour, IPointerClickHandler
     
     public void OnPointerClick(PointerEventData eventData)
     {
-        print("ClickNode");
         MapPlayerTracker.Inst.SelectNode(this);
     }
 }

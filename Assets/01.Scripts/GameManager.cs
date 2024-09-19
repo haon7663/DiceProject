@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class GameManager : SingletonDontDestroyOnLoad<GameManager>
 {
-    [FormerlySerializedAs("nodeType")] public NodeType currentNodeType;
+    public NodeType currentNodeType;
 
     public float battleSpeed = 1;
 

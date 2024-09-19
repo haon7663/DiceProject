@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EventChoiceButton : MonoBehaviour
 {
-    public event Action OnExecute;
+    public event Action<EventChoice> OnExecute;
 
     [SerializeField] private TMP_Text title;
     [SerializeField] private TMP_Text description;
@@ -21,7 +21,6 @@ public class EventChoiceButton : MonoBehaviour
 
     public void Execute()
     {
-        _eventChoice.ExecuteActions();
-        OnExecute?.Invoke();
+        OnExecute?.Invoke(_eventChoice);
     }
 }
