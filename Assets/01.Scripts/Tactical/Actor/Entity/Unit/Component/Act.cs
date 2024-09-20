@@ -85,4 +85,9 @@ public class Act : MonoBehaviour
         effectSpriteRenderer.sortingOrder = 2;
         effectSpriteRenderer.DOFade(0, 1f).SetEase(Ease.InCirc).OnComplete(() => Destroy(effect));
     }
+
+    public void OnDamage()
+    {
+        _spriteRenderer.DOColor(Color.white, 0.5f).From(Color.red).SetEase(Ease.OutExpo);
+    }
 }

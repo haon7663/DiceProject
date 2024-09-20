@@ -16,7 +16,7 @@ public class MapNode : MonoBehaviour, IPointerClickHandler
         Node = node;
         
         image.sprite = blueprint.sprite;
-        image.rectTransform.anchoredPosition = pos * 200 - new Vector2(1000, 200);
+        image.rectTransform.anchoredPosition = pos * 200 - new Vector2(0, 200);
     }
 
     public void SetColor(Color color)

@@ -11,7 +11,14 @@ public class Health : MonoBehaviour
     
     public int maxHp;
     public int curHp;
-    
+
+    private Act _act;
+
+    private void Awake()
+    {
+        _act = GetComponent<Act>();
+    }
+
     public void OnDamage(int value)
     {
         curHp -= value;
@@ -19,9 +26,9 @@ public class Health : MonoBehaviour
         {
             curHp = 0;
             OnDeath?.Invoke();
-            if (TryGetComponent<Act>(out var act))
-                act.DeathAction(GetComponent<Unit>().unitSO.hits.Random());
+            _act.DeathAction(GetComponent<Unit>().unitSO.hits.Random());
         }
+        _act.OnDamage();
         OnHpChanged?.Invoke(value);
     }
     public void OnRecovery(int value)

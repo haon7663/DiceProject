@@ -144,15 +144,19 @@ public class  DataManager : SingletonDontDestroyOnLoad<DataManager>
         switch (key)
         {
             case "Gold":
+                print("Gold");
                 BattleController.Inst.goldPanelController.UpdateGold();
                 break;
             case "Dices":
+                print("Dices");
                 BattleController.Inst.diceCountPanelController.UpdateCount();
                 break;
             case "Cards":
+                print("Cards");
                 BattleController.Inst.interactionCardController.InitDeck();
                 break;
             case "Health":
+                print("Health");
                 BattleController.Inst.statPanelController.primaryPanel.HpChange(0);
                 break;
         }

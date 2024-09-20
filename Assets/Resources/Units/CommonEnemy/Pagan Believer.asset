@@ -20,8 +20,8 @@ MonoBehaviour:
   - name: Default
     actionSprite: {fileID: 21300000, guid: ad6ba9cde229af44cb0092107af4d377, type: 3}
     effectSprite: {fileID: 0}
-    startOffset: {x: 0.3, y: 0}
-    endOffset: {x: 0.6, y: 0}
+    startOffset: {x: 0.5, y: 0}
+    endOffset: {x: 0.8, y: 0}
   hits:
   - name: Default
     actionSprite: {fileID: 21300000, guid: 75eceada6274a97409b88cb8558488b4, type: 3}

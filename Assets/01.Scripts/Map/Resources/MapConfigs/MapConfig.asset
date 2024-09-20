@@ -38,14 +38,14 @@ MonoBehaviour:
   - nodeType: 1
     randomizeNodes: 0.182
   - nodeType: 0
-    randomizeNodes: 0.473
+    randomizeNodes: 0.198
   - nodeType: 5
-    randomizeNodes: 0.75
+    randomizeNodes: 0.733
   - nodeType: 3
-    randomizeNodes: 0.678
+    randomizeNodes: 0.693
   - nodeType: 1
     randomizeNodes: 0.515
-  - nodeType: 0
-    randomizeNodes: 0.361
   - nodeType: 2
+    randomizeNodes: 0
+  - nodeType: 4
     randomizeNodes: 0

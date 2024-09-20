@@ -19,13 +19,23 @@ public class DialogController : MonoBehaviour
     private bool _isShown;
     
     [ContextMenu("GenerateDialog")]
-    public void GenerateDialog(string log)
+    public void GenerateDialog(string text)
     {
-        var dialog = Instantiate(dialogPrefab, contentRect.transform);
-        dialog.Initialize(log);
-        _dialogs.Add(dialog);
-        
-        SetParentPosition(dialog);
+        var logs = text.Split('\n');
+
+        DOTween.Kill(this);
+        var sequence = DOTween.Sequence();
+        foreach (var log in logs)
+        {
+            sequence.AppendCallback(() =>
+            {
+                var dialog = Instantiate(dialogPrefab, contentRect.transform);
+                dialog.Initialize(log);
+                _dialogs.Add(dialog);
+                SetParentPosition(dialog);
+            });
+            sequence.AppendInterval(1f);
+        }
     }
 
     private void Update()
