@@ -28,6 +28,8 @@ public class InitState : BattleState
         {
             relic.relics = owner.PlayerData.Relics.ToRelic();
         }
+        if (owner.player.TryGetComponent<Act>(out var playerAct))
+            playerAct.Init();
         owner.statPanelController.ConnectPanel(owner.player);
 
         switch (GameManager.Inst.currentNodeType)

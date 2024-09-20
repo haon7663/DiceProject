@@ -4,5 +4,6 @@
     Six, 
     Eight, 
     Twelve, 
-    Twenty
+    Twenty,
+    Count
 }

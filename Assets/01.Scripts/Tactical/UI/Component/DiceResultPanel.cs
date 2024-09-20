@@ -22,6 +22,6 @@ public class DiceResultPanel : MonoBehaviour
     public void SetValue(int value)
     {
         DOTween.Complete(this);
-        DOTween.To(() => _resultValue, x => _resultValue = x, value, 0.75f).OnUpdate(() => resultLabel.text = _resultValue.ToString());
+        DOTween.To(() => _resultValue, x => _resultValue = x, value, 0.75f).From(0).OnUpdate(() => resultLabel.text = _resultValue.ToString());
     }
 }

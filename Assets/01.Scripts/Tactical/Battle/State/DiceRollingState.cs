@@ -55,8 +55,6 @@ public class DiceRollingState : BattleState
             {
                 if (unit.type == UnitType.Player)
                 {
-                    if (owner.PlayerData.Dices[diceType] <= 0) continue;
-                    
                     var pos = DiceFactory.CalculateDicePosition(index++, maxIndex);
                     var diceObject = diceType.RollingDice(pos);
                     _diceObjects.Add(diceObject);

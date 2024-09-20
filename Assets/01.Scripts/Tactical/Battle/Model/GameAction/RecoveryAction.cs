@@ -9,6 +9,6 @@ public class RecoveryAction : GameAction
     
     public override void Execute()
     {
-        DataManager.Inst.playerData.Health += count.GetValue();
+        DataManager.Inst.AddHealth(count.GetValue());
     }
 }

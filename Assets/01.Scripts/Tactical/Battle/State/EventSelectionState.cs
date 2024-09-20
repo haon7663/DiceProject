@@ -26,6 +26,13 @@ public class EventSelectionState : BattleState
     {
         if (eventChoice.eventConditionType == EventConditionType.Dice)
         {
+            for (var i = 0; i < (int)DiceType.Count; i++)
+            {
+                var diceType = (DiceType)i;
+                var count = eventChoice.needDices.Count(d => d == diceType);
+                if (count > 0)
+                    DataManager.Inst.AddDices(diceType, -count);
+            }
             StartCoroutine(RollDices(eventChoice));
         }
         else
@@ -39,18 +46,15 @@ public class EventSelectionState : BattleState
         owner.interactionPanelController.Hide();
         owner.topPanelController.Hide();
         owner.diceResultPanelController.ShowTop();
-        
+
         yield return YieldInstructionCache.WaitForSeconds(1f);
-        
-        var index = 0;
-        var maxIndex = eventChoice.needDices.Count(diceType => owner.PlayerData.Dices[diceType] > 0);
 
         var totalValue = 0;
+        var index = 0;
+        var maxIndex = eventChoice.needDices.Count(diceType => owner.PlayerData.Dices[diceType] > 0);
         
         foreach (var diceType in eventChoice.needDices)
         {
-            if (owner.PlayerData.Dices[diceType] <= 0) continue;
-                    
             var pos = DiceFactory.CalculateDicePosition(index++, maxIndex);
             var diceObject = diceType.RollingDice(pos);
             _diceObjects.Add(diceObject);
@@ -93,11 +97,13 @@ public class EventSelectionState : BattleState
             }
         }
         eventChoice.ExecuteActions(value);
-        EndEvent();
+        StartCoroutine(EndEvent());
     }
 
-    private void EndEvent()
+    private IEnumerator EndEvent()
     {
+        yield return null;
+        print("ChangeToMap");
         owner.ChangeState<MapSelectionState>();
     }
 }

@@ -25,8 +25,6 @@ public static class DiceFactory
 
     public static DiceObject RollingDice(this DiceType diceType, Vector3 pos)
     {
-        DataManager.Inst.playerData.Dices[diceType]--;
-        
         var dice = Create(diceType);
         dice.transform.position = pos;
         dice.transform.rotation = Quaternion.Euler(0, Random.Range(-15f, 15f), 0);

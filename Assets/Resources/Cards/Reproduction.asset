@@ -15,7 +15,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 0f8f5785f9532cc4dbeddacc6b6437c6, type: 3}
   cardName: "\uC7AC\uC0DD"
   description: "<sprite=0> \uB9CC\uD07C \uC7AC\uC0DD\uC744 \uC5BB\uC2B5\uB2C8\uB2E4."
-  type: 2
+  type: 1
   behaviourInfos:
   - behaviourType: 4
     statusEffectSO: {fileID: 11400000, guid: a3d5e9823bb4e0f45a0058c3d3844f24, type: 2}
@@ -27,4 +27,4 @@ MonoBehaviour:
       compareTargetType: 0
       value: 0
     onSelf: 1
-    chargeInDice: 1
+    specialBehaviourType: 0

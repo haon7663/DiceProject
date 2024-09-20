@@ -22,11 +22,6 @@ public class Act : MonoBehaviour
         _animator = _spriteTransform.GetComponent<Animator>();
     }
 
-    private void Start()
-    {
-        _spriteRenderer.sprite = _unit.unitSO.idleSprite;
-    }
-
     public void Init()
     {
         _spriteRenderer.sprite = _unit.unitSO.idleSprite;

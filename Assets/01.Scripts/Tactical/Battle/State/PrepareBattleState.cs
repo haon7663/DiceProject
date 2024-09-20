@@ -10,8 +10,6 @@ public class PrepareBattleState : BattleState
 
     private IEnumerator PrepareBattle()
     {
-        if (owner.player.TryGetComponent<Act>(out var playerAct))
-            playerAct.Init();
         if (owner.enemy.TryGetComponent<Act>(out var enemyAct))
             enemyAct.Init();
 

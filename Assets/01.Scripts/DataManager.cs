@@ -34,12 +34,7 @@ public class PlayerData
     public int Health
     {
         get => _health;
-        set
-        {
-            if (_health == value) return;
-            _health = value;
-            OnValueChanged?.Invoke("Health", _health);
-        }
+        set => _health = value;
     }
     
     public int Gold
@@ -55,13 +50,7 @@ public class PlayerData
     public SerializableDictionary<DiceType, int> Dices
     {
         get => _dices;
-        set
-        {
-            if (_dices == value) return;
-            Debug.Log(value);
-            _dices = value;
-            OnValueChanged?.Invoke("Dices", _dices);
-        }
+        set => _dices = value;
     }
 
     public List<CardJson> Cards
@@ -157,9 +146,29 @@ public class  DataManager : SingletonDontDestroyOnLoad<DataManager>
                 break;
             case "Health":
                 print("Health");
-                BattleController.Inst.statPanelController.primaryPanel.HpChange(0);
+                if ((int)value > 0)
+                    BattleController.Inst.player.GetComponent<Health>().OnDamage((int)value);
+                else
+                    BattleController.Inst.player.GetComponent<Health>().OnRecovery(-(int)value);
                 break;
         }
+    }
+
+    public void AddHealth(int value)
+    { 
+        playerData.Health += value;
+        playerData.Health = Mathf.Clamp(playerData.Health, 0, playerData.MaxHealth);
+        
+        if (value > 0)
+            BattleController.Inst.player.GetComponent<Health>().OnRecovery(value);
+        else
+            BattleController.Inst.player.GetComponent<Health>().OnDamage(-value);
+    }
+    
+    public void AddDices(DiceType diceType, int addValue)
+    {
+        playerData.Dices[diceType] += addValue;
+        BattleController.Inst.diceCountPanelController.AddCount(diceType, addValue);
     }
 
     public void Generate(UnitSO unitSO)

@@ -26,6 +26,8 @@ public class StatPanel : MonoBehaviour
 
         if (_unit.TryGetComponent<Health>(out var health))
         {
+            if (_unit.type == UnitType.Player)
+                health.OnHpChanged += UpdatePlayerDataHealth;
             health.OnHpChanged += HpChange;
             HpChange(0);
         }
@@ -34,6 +36,14 @@ public class StatPanel : MonoBehaviour
             status.OnStatusChanged += StatusChange;
             StatusChange();
         }
+    }
+
+    private void UpdatePlayerDataHealth(int value)
+    {
+        if (!_unit.TryGetComponent<Health>(out var health))
+            return;
+        
+        DataManager.Inst.playerData.Health = health.curHp;
     }
 
     public void HpChange(int value)

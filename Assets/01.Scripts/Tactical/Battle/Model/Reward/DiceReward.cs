@@ -33,6 +33,6 @@ public class DiceReward : Reward
 
     public override void Execute()
     {
-        DataManager.Inst.playerData.Dices[diceType] += count;
+        DataManager.Inst.AddDices(diceType, count);
     }
 }

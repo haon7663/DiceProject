@@ -7016,7 +7016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  unitSO: {fileID: 11400000, guid: 17ad5ac0cbc77ee44bef742f7a86a6ba, type: 2}
+  unitSO: {fileID: 0}
   cardSO: {fileID: 0}
 --- !u!114 &1029982721
 MonoBehaviour:
@@ -8473,7 +8473,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241671053}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -13047,7 +13047,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d20254bb2da11f649aae64c61d4aa82b, type: 2}
   m_sharedMaterial: {fileID: 4243554913112156562, guid: d20254bb2da11f649aae64c61d4aa82b, type: 2}
@@ -14999,6 +14999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6621b94fec7f3c41be8c110e3425d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countChangePrefab: {fileID: 7923761687728839205, guid: 6a1af3a2af034264aa01b3bc1497a675, type: 3}
   dicePanels:
     m_IsSerializable: 1
     m_SerializedLength: 5

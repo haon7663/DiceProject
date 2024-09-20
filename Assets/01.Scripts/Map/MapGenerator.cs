@@ -59,7 +59,6 @@ namespace Map
                 {
                     position = new Vector2(-offset + i * 2, layerIndex)
                 };
-                Debug.Log(new Vector2(-offset + i * 2, layerIndex));
                 nodesOnThisLayer.Add(node);
             }
 

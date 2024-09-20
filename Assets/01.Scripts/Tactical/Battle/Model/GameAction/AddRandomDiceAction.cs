@@ -12,7 +12,7 @@ public class AddRandomDiceAction : GameAction
         for (var i = 0; i < count.GetValue(); i++)
         {
             var diceType = (DiceType)Random.Range(1, 4);
-            DataManager.Inst.playerData.Dices[diceType]++;
+            DataManager.Inst.AddDices(diceType, 1);
         }
     }
 }
