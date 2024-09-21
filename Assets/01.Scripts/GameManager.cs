@@ -12,6 +12,7 @@ public class GameManager : SingletonDontDestroyOnLoad<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        Application.targetFrameRate = 60;
         Time.timeScale = battleSpeed;
     }
 }

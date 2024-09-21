@@ -21,6 +21,11 @@ public class TickDamageStatusEffectSO : StatusEffectSO
         }
         base.UpdateEffect(unit);
     }
+    
+    public override string GetDialogString(Unit unit)
+    {
+        return $"{unit.unitSO.name}은(는) {name}으로(로) {GetCurrentValue()}의 피해를 입었다!";
+    }
 
     public override int GetCurrentValue()
     {

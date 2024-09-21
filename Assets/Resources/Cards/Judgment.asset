@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 172f7da34944ac0428d84cdde48c6ee5, type: 3}
   cardName: "\uC2EC\uD310"
-  description: "30 - <sprite=3> \uB9CC\uD07C \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
+  description: "<sprite=3> + 12 \uB9CC\uD07C \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
   type: 0
   behaviourInfos:
   - behaviourType: 0
     statusEffectSO: {fileID: 0}
-    basicValue: 30
+    basicValue: 12
     diceTypes: 03000000
     compareInfo:
       compareType: 0

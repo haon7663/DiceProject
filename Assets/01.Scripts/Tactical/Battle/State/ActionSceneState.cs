@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class ActionSceneState : BattleState
@@ -95,13 +96,13 @@ public class ActionSceneState : BattleState
 
     private void TakeDamage(Unit from, Unit to)
     {
-        var fromTotalDamage = CalculateDamage(from, to);
-        var toTotalDamage = CalculateDamage(to, from);
-
-        fromTotalDamage = from.Stats[StatType.GetDamage].GetValue(fromTotalDamage);
+        var fromDefaultDamage = CalculateDamage(from, to);
+        var toDefaultDamage = CalculateDamage(to, from);
+ 
+        var fromTotalDamage = from.Stats[StatType.GetDamage].GetValue(fromDefaultDamage);
         fromTotalDamage = to.Stats[StatType.TakeDamage].GetValue(fromTotalDamage);
         
-        toTotalDamage = to.Stats[StatType.GetDamage].GetValue(toTotalDamage);
+        var toTotalDamage = to.Stats[StatType.GetDamage].GetValue(toDefaultDamage);
         toTotalDamage = from.Stats[StatType.TakeDamage].GetValue(toTotalDamage);
         
         fromTotalDamage = fromTotalDamage > 1 ? fromTotalDamage : 1;
@@ -112,15 +113,33 @@ public class ActionSceneState : BattleState
             if (BehaviourType.Avoid.IsSatisfiedBehaviours(from, to))
             {
                 owner.hudController.PopAvoid(to.transform.position);
+                owner.dialogController.GenerateDialog($"{to.unitSO.name}은(는) {from.cardSO.cardName}을(를) 회피했다.".ConvertKoreaStringJongSung());
             }
             else
             {
                 if (to.TryGetComponent<Health>(out var toHealth))
                 {
+                    var defenceValue = BehaviourType.Defence.GetSatisfiedBehavioursSum(from, to);
+                    
                     toHealth.OnDamage(fromTotalDamage);
                     owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
                     if (BehaviourType.Defence.IsSatisfiedBehaviours(from, to))
-                        owner.hudController.PopDefence(to.transform.position, BehaviourType.Defence.GetSatisfiedBehavioursSum(from, to));
+                        owner.hudController.PopDefence(to.transform.position, defenceValue);
+
+                    var dialog = $"{to.unitSO.name}은(는) {from.cardSO.cardName}으로(로) {fromTotalDamage}의 피해를 입었다. ";
+                    
+                    var defenceDialog = defenceValue > 0 ? $"({defenceValue} 방어함)" : "";
+
+                    var changedValue = fromTotalDamage - fromDefaultDamage;
+                    var changedValueDialog = changedValue > 0 ? $"({changedValue} 증가됨)" : (changedValue < 0 ? $"({-changedValue} 감소됨)" : "");
+
+                    var stringBuilder = new StringBuilder();
+                    stringBuilder.Append(dialog);
+                    stringBuilder.Append(defenceDialog);
+                    stringBuilder.Append(changedValueDialog);
+
+                    var convertedString = stringBuilder.ToString().ConvertKoreaStringJongSung();
+                    owner.dialogController.GenerateDialog(convertedString);
                 }
             }
         }

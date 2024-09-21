@@ -25,9 +25,9 @@ public class DisplayCardController : MonoBehaviour
         var card = Instantiate(cardPrefab, parent);
         card.Init(data);
         card.MoveTransform(new Vector2(0, 1600));
-        card.SetAnim("Show");
+        card.ChangeScale(new Vector2(2, 1.8f));
+        card.ChangeScale(Vector2.one * 1.3f, true);
         card.panel.SetPosition(PanelStates.Show, true);
-        
         card.transform.SetAsLastSibling();
 
         if (isPlayer)
@@ -66,10 +66,12 @@ public class DisplayCardController : MonoBehaviour
             }
         }
 
+        card.originPos = new Vector3(isPlayer ? -420 : 420, 1275);
+        card.originScale = new Vector3(0.5f, 0.5f);
+
         var sequence = DOTween.Sequence();
-        sequence.Append(card.transform.DOScale(new Vector3(0.5f, 0.5f), 0.25f));
-        sequence.AppendCallback(() => card.MoveTransform(new Vector3(isPlayer ? -304 : 304, 1350), true));
-        sequence.AppendInterval(0.25f);
+        sequence.AppendCallback(() => card.ChangeScale(card.originScale, true)).AppendInterval(0.25f);
+        sequence.AppendCallback(() => card.MoveTransform(card.originPos, true)).AppendInterval(0.25f);
         sequence.AppendCallback(() => CardPrepareEvent?.Invoke(this, card.Data));
     }
 

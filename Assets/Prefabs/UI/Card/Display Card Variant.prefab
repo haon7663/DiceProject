@@ -58,15 +58,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 916578312733824008, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 916578312733824008, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 916578312733824008, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 916578312733824008, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 916578312733824008, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2
+      value: 277.5
       objectReference: {fileID: 0}
     - target: {fileID: 916578312733824008, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -96,6 +96,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Display Card Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4267454313217334521, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4267454313217334521, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4267454313217334521, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4267454313217334521, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4267454313217334521, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4267454313217334521, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -103,9 +127,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3792817050722164850, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8158785049946819287}
-    - targetCorrespondingSourceObject: {fileID: 3792817050722164850, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3678780881087603915}
     - targetCorrespondingSourceObject: {fileID: 2432361692871517011, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}
       insertIndex: -1
       addedObject: {fileID: 759257036497710732}
@@ -175,27 +196,8 @@ MonoBehaviour:
   typeIcon: {fileID: 6897391962595189042}
   nameLabel: {fileID: 8244613990280780043}
   descriptionLabel: {fileID: 7394622070795857149}
---- !u!95 &3678780881087603915
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1517129020290040579}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7d0f144d0bce69a45aef6e51094dcfc0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  originPos: {x: 0, y: 0}
+  originScale: {x: 0, y: 0}
 --- !u!114 &2188142067390956618 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4608009597664929595, guid: cb52c8d04738b0f49b25a3590dabd594, type: 3}

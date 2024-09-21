@@ -64,8 +64,6 @@ public class InteractionCardController : MonoBehaviour
         
         SetCardsActive(isAttackTurn);
         
-        yield return YieldInstructionCache.WaitForSeconds(0.15f);
-        
         yield return ShowCards(isAttackTurn);
     }
 

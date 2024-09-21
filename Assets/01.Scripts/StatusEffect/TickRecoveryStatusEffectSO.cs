@@ -22,6 +22,12 @@ public class TickRecoveryStatusEffectSO : StatusEffectSO
         base.UpdateEffect(unit);
     }
     
+    public override string GetDialogString(Unit unit)
+    {
+        return $"{unit.unitSO.name}은(는) {name}으로(로) {GetCurrentValue()} 회복했다!";
+    }
+
+    
     public override int GetCurrentValue()
     {
         return useStack ? GetCurrentStack() * multiplierValue : value;

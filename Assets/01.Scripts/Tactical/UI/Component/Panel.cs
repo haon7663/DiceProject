@@ -77,8 +77,8 @@ public class Panel : MonoBehaviour
 
     public void SetPosition(Position p, bool useDotween = false, float dotweenTime = 0.2f)
     {
-        DOTween.Kill(_canvasGroup);
-        DOTween.Kill(_rect);
+        DOTween.Complete(_canvasGroup);
+        DOTween.Complete(_rect);
         
         CurrentPosition = p;
         if (useDotween)

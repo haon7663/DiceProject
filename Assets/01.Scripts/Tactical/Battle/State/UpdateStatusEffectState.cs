@@ -30,6 +30,7 @@ public class UpdateStatusEffectState : BattleState
             
             var effect = statusEffect.enabledEffects[i];
             owner.hudController.PopStatusEffect(unit.transform.position, effect.GetCurrentValue(), effect.sprite);
+            
             statusEffect.UpdateEffect(effect);
 
             yield return new WaitForSeconds(0.75f);

@@ -52,6 +52,11 @@ public abstract class StatusEffectSO : ScriptableObject
         }
     }
 
+    public virtual string GetDialogString(Unit unit)
+    {
+        return "";
+    }
+
     public void UpdateStack(Unit unit)
     {
         switch (statusEffectStackDecreaseType)

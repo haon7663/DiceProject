@@ -28,7 +28,7 @@ public class CommandSelectionState : BattleState
         var card = cards[Random.Range(0, cards.Count)];
         owner.displayCardController.CopyCard(card, false);
 
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        yield return YieldInstructionCache.WaitForSeconds(0.75f);
         
         owner.displayCardController.PrepareCard(false);
     }
