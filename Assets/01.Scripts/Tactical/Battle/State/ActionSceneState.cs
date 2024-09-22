@@ -21,13 +21,20 @@ public class ActionSceneState : BattleState
 
         // 행동 실행
         ExecuteAction(from, to);
-        
-        // 카메라 설정 및 연출
-        PerformCameraProduction(from, to);
-        
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
         
+        if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to) &&
+            !BehaviourType.Avoid.IsSatisfiedBehaviours(from, to) &&
+            BehaviourType.Counter.IsSatisfiedBehaviours(from, to))
+        {
+            TakeCounter(from, to);
+            ExecuteUnitActions(to, from);
+            PerformCameraProduction(to, from);
+            yield return YieldInstructionCache.WaitForSeconds(1.2f);
+        }
+        
         // 카메라 리셋 및 UI 업데이트
+        ResetUnitActions(from, to);
         ResetCameraProduction();
 
         yield return null;
@@ -41,6 +48,7 @@ public class ActionSceneState : BattleState
         TakeDamage(from, to);
         TakeStatusEffect(from, to);
         ExecuteUnitActions(from, to);
+        PerformCameraProduction(from, to);
     }
 
     // 행동 리스트 생성
@@ -60,6 +68,14 @@ public class ActionSceneState : BattleState
             behaviours.Add(behaviour);
         }
 
+        behaviours.AddRange(CreateRelicBehaviour(unit));
+        
+        return behaviours;
+    }
+    
+    private List<Behaviour> CreateRelicBehaviour(Unit unit)
+    {
+        var behaviours = new List<Behaviour>();
         if (unit.TryGetComponent<Relic>(out var relic))
         {
             foreach (var relicSO in relic.relics)
@@ -76,7 +92,6 @@ public class ActionSceneState : BattleState
                 behaviours.Add(behaviour);
             }
         }
-        
         return behaviours;
     }
 
@@ -149,6 +164,7 @@ public class ActionSceneState : BattleState
             if (BehaviourType.Avoid.IsSatisfiedBehaviours(to, from))
             {
                 owner.hudController.PopAvoid(from.transform.position);
+                owner.dialogController.GenerateDialog($"{from.unitSO.name}은(는) {to.cardSO.cardName}을(를) 회피했다.".ConvertKoreaStringJongSung());
             }
             else
             {
@@ -163,17 +179,23 @@ public class ActionSceneState : BattleState
         }
     }
     
-    private List<Behaviour> GetStatusEffectBehaviours(Unit from, Unit to)
+    private List<(Behaviour value, bool onSelf)> GetStatusEffectBehaviours(Unit from, Unit to)
     {
         var fromBehaviours = CreateBehaviours(from);
         var toBehaviours = CreateBehaviours(to);
-        
+
         var fromStatusEffectBehaviours = fromBehaviours.Where(b => b is StatusEffectBehaviour);
         var toStatusEffectBehaviours = toBehaviours.Where(b => b is StatusEffectBehaviour);
+
+        var behaviours = new List<(Behaviour behaviour, bool isOnSelf)>();
         
-        var behaviours = new List<Behaviour>();
-        behaviours.AddRange(fromStatusEffectBehaviours.Where(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)));
-        behaviours.AddRange(toStatusEffectBehaviours.Where(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues)));
+        behaviours.AddRange(fromStatusEffectBehaviours
+            .Where(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues))
+            .Select(b => (b, false)));
+        
+        behaviours.AddRange(toStatusEffectBehaviours
+            .Where(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues))
+            .Select(b => (b, true)));
 
         return behaviours;
     }
@@ -195,13 +217,21 @@ public class ActionSceneState : BattleState
                         if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to))
                             effect.UpdateStack(to);
                         break;
+                    case StatusEffectStackType.AfterAction:
+                        effect.UpdateStack(to);
+                        break;
                 }
             }
             foreach (var behaviour in GetStatusEffectBehaviours(from, to))
             {
-                if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
+                if (behaviour.value is StatusEffectBehaviour statusEffectBehaviour)
                 {
                     toStatusEffect.AddEffect(statusEffectBehaviour.statusEffectSO, statusEffectBehaviour.value);
+
+                    var takeCardName = behaviour.onSelf ? to.cardSO.cardName : from.cardSO.cardName;
+                    var giveOrTake = behaviour.onSelf ? "얻었다" : "입었다";
+                    var dialog = $"{to.unitSO.name}은(는) {takeCardName}으로(로) {statusEffectBehaviour.statusEffectSO.label}({statusEffectBehaviour.value}) 상태를 {giveOrTake}.";
+                    owner.dialogController.GenerateDialog(dialog.ConvertKoreaStringJongSung());
                 }
             }
         }
@@ -221,13 +251,83 @@ public class ActionSceneState : BattleState
                         if (BehaviourType.Attack.IsSatisfiedBehaviours(to, from))
                             effect.UpdateStack(from);
                         break;
+                    case StatusEffectStackType.AfterAction:
+                        effect.UpdateStack(from);
+                        break;
                 }
             }
             foreach (var behaviour in GetStatusEffectBehaviours(to, from))
             {
-                if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
+                if (behaviour.value is StatusEffectBehaviour statusEffectBehaviour)
                 {
                     fromStatusEffect.AddEffect(statusEffectBehaviour.statusEffectSO, statusEffectBehaviour.value);
+                    
+                    var takeCardName = behaviour.onSelf ? from.cardSO.cardName : to.cardSO.cardName;
+                    var giveOrTake = behaviour.onSelf ? "얻었다" : "입혔다";
+                    var dialog = $"{from.unitSO.name}은(는) {takeCardName}으로(로) {statusEffectBehaviour.statusEffectSO.label}({statusEffectBehaviour.value}) 상태를 {giveOrTake}.";
+                    owner.dialogController.GenerateDialog(dialog.ConvertKoreaStringJongSung());
+                }
+            }
+        }
+    }
+    
+    private List<Behaviour> GetCounterEffectBehaviours(Unit from, Unit to)
+    {
+        var fromBehaviours = CreateBehaviours(from);
+        var toBehaviours = CreateBehaviours(to);
+
+        var fromCounterBehaviours = fromBehaviours.Where(b => b is CounterBehaviour);
+        var toCounterBehaviours = toBehaviours.Where(b => b is CounterBehaviour);
+
+        var behaviours = new List<Behaviour>();
+        
+        behaviours.AddRange(fromCounterBehaviours
+            .Where(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)));
+        
+        behaviours.AddRange(toCounterBehaviours
+            .Where(b => b.onSelf && b.IsSatisfied(to.behaviourValues, from.behaviourValues)));
+
+        return behaviours;
+    }
+
+
+    private void TakeCounter(Unit from, Unit to)
+    {
+        if (from.TryGetComponent<Health>(out var fromHealth))
+        {
+            foreach (var behaviour in GetCounterEffectBehaviours(from, to))
+            {
+                if (behaviour is CounterBehaviour counterBehaviour)
+                {
+                    var defenceValue = BehaviourType.Defence.GetSatisfiedBehavioursSum(to, from);
+
+                    var defaultDamage = counterBehaviour.value - defenceValue;
+        
+                    
+                    var totalDamage = to.Stats[StatType.GetDamage].GetValue(defaultDamage);
+                    totalDamage = from.Stats[StatType.TakeDamage].GetValue(totalDamage);
+                    totalDamage = totalDamage > 1 ? totalDamage : 1;
+                        
+                        
+                    fromHealth.OnDamage(totalDamage);
+                    owner.hudController.PopDamage(from.transform.position, totalDamage);
+                    if (BehaviourType.Defence.IsSatisfiedBehaviours(to, from))
+                        owner.hudController.PopDefence(from.transform.position, defenceValue);
+
+                    var dialog = $"{to.unitSO.name}은(는) {totalDamage}의 피해로 반격했다.";
+                    
+                    var defenceDialog = defenceValue > 0 ? $"({defenceValue} 방어함)" : "";
+
+                    var changedValue = totalDamage - defaultDamage;
+                    var changedValueDialog = changedValue > 0 ? $"({changedValue} 증가됨)" : (changedValue < 0 ? $"({-changedValue} 감소됨)" : "");
+
+                    var stringBuilder = new StringBuilder();
+                    stringBuilder.Append(dialog);
+                    stringBuilder.Append(defenceDialog);
+                    stringBuilder.Append(changedValueDialog);
+
+                    var convertedString = stringBuilder.ToString().ConvertKoreaStringJongSung();
+                    owner.dialogController.GenerateDialog(convertedString);
                 }
             }
         }
@@ -274,6 +374,14 @@ public class ActionSceneState : BattleState
         owner.highlightCameraMovement.ProductionAtTime(new Vector3(0.2f * orderMultiplier, 0.35f, -10), -intensity * orderMultiplier, 4f);
     }
 
+    private void ResetUnitActions(Unit from, Unit to)
+    {
+        if (!from.TryGetComponent<Act>(out var fromAct) || !to.TryGetComponent<Act>(out var toAct)) return;
+            
+        fromAct.ResetAction();
+        toAct.ResetAction();
+    }
+    
     // 카메라와 UI 초기화
     private void ResetCameraProduction()
     {

@@ -15,7 +15,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: bc786fd93f535ce498a94c8178ccde92, type: 3}
   cardName: "\uC2B5\uACA9"
   description: "<sprite=0> <sprite=2> \uB9CC\uD07C \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4.\n\uC8FC\uC0AC\uC704
-    \uAC12\uC774 10 \uC774\uC0C1\uC774\uBA74,\n7 \uD53C\uD574\uB97C \uCD94\uAC00\uB85C
+    \uAC12\uC774 10 \uC774\uC0C1\uC774\uBA74,\n10 \uD53C\uD574\uB97C \uCD94\uAC00\uB85C
     \uC90D\uB2C8\uB2E4."
   type: 0
   behaviourInfos:
@@ -32,7 +32,7 @@ MonoBehaviour:
     specialBehaviourType: 0
   - behaviourType: 0
     statusEffectSO: {fileID: 0}
-    basicValue: 7
+    basicValue: 10
     diceTypes: 
     compareInfo:
       compareType: 2

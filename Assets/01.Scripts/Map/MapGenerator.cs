@@ -9,7 +9,7 @@ namespace Map
         private static MapConfig _config;
 
         private static readonly List<NodeType> RandomNodes = new List<NodeType>
-        {NodeType.Mystery, NodeType.Store, NodeType.MinorEnemy, NodeType.RestSite};
+        {NodeType.Mystery, NodeType.MinorEnemy};
 
         private static List<float> _layerDistances;
         
@@ -48,7 +48,9 @@ namespace Map
             MapLayer layer = _config.layers[layerIndex];
             List<Node> nodesOnThisLayer = new List<Node>();
             
-            float offset = 2 * _config.GridWidth / 2f;
+            var isBoss = layerIndex == _config.layers.Count - 1;
+            
+            float offset = 1 * _config.GridWidth / 2f;
             Debug.LogWarning(_config.GridWidth);
 
             for (int i = 0; i < _config.GridWidth; i++)
@@ -57,7 +59,7 @@ namespace Map
                 var blueprint = _config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random();
                 Node node = new Node(nodeType, blueprint.name, new MapVector(i, layerIndex))
                 {
-                    position = new Vector2(-offset + i * 2, layerIndex)
+                    position = new Vector2(isBoss ? 0 : -offset + i + 0.5f, isBoss ? layerIndex + 0.5f : layerIndex)
                 };
                 nodesOnThisLayer.Add(node);
             }

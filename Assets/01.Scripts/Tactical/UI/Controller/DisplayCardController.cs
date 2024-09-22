@@ -24,9 +24,11 @@ public class DisplayCardController : MonoBehaviour
     {
         var card = Instantiate(cardPrefab, parent);
         card.Init(data);
-        card.MoveTransform(new Vector2(0, 1600));
+        card.originPos = new Vector2(0, 1600);
+        card.originScale = Vector2.one * 1.3f;
+        card.MoveTransform(card.originPos);
         card.ChangeScale(new Vector2(2, 1.8f));
-        card.ChangeScale(Vector2.one * 1.3f, true);
+        card.ChangeScale(card.originScale, true);
         card.panel.SetPosition(PanelStates.Show, true);
         card.transform.SetAsLastSibling();
 

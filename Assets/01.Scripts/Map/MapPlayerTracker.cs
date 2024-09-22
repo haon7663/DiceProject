@@ -34,6 +34,7 @@ namespace Map
         
         private void SendPlayerToNode(MapNode mapNode)
         {
+            mapNode.OnSelect();
             mapController.CurrentMap.path.Add(mapNode.Node.point);
             mapController.Save();
             view.SetNodeColor();

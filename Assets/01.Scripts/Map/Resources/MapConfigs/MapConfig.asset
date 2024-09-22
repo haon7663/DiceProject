@@ -20,31 +20,31 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fd3c3680cb32cdc4390c97bb390c5b77, type: 2}
   - {fileID: 11400000, guid: c2bb9093a937b914299221d3f94de70f, type: 2}
   numOfPreBossNodes:
-    min: 3
-    max: 3
+    min: 4
+    max: 4
   numOfStartingNodes:
-    min: 1
-    max: 1
-  extraPaths: -1
+    min: 2
+    max: 3
+  extraPaths: 0
   layers:
   - nodeType: 0
     randomizeNodes: 0
   - nodeType: 5
-    randomizeNodes: 0.617
-  - nodeType: 0
-    randomizeNodes: 0.299
-  - nodeType: 2
-    randomizeNodes: 0.284
-  - nodeType: 1
-    randomizeNodes: 0.182
-  - nodeType: 0
-    randomizeNodes: 0.198
-  - nodeType: 5
-    randomizeNodes: 0.733
+    randomizeNodes: 0.795
   - nodeType: 3
-    randomizeNodes: 0.693
+    randomizeNodes: 0.913
+  - nodeType: 2
+    randomizeNodes: 0.25
   - nodeType: 1
-    randomizeNodes: 0.515
+    randomizeNodes: 0.799
+  - nodeType: 2
+    randomizeNodes: 0.814
+  - nodeType: 3
+    randomizeNodes: 0.837
+  - nodeType: 3
+    randomizeNodes: 0.235
+  - nodeType: 1
+    randomizeNodes: 0.39
   - nodeType: 2
     randomizeNodes: 0
   - nodeType: 4

@@ -185,7 +185,7 @@ namespace Map
         private Vector2 GetNodePosition(Node node)
         {
             float length = padding + Map.DistanceBetweenFirstAndLastLayers();
-            return new Vector2((padding - length) / 2 + node.point.Y, node.point.X);
+            return new Vector2((padding - length) / 2 + node.position.y, node.position.x);
         }
         private MapConfig GetConfig(string configName)
         {

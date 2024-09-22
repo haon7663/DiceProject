@@ -12,7 +12,6 @@ public class DialogController : MonoBehaviour
     
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private RectTransform contentRect;
-    [SerializeField] private Image underMark;
 
     private List<Dialog> _dialogs = new List<Dialog>();
 
@@ -52,33 +51,15 @@ public class DialogController : MonoBehaviour
 
             var alpha = dialogPos.y switch
             {
-                < 0 => Mathf.Clamp01(1 - (Mathf.Abs(dialogPos.y)) / 50f),
+                < 0 => Mathf.Clamp01(1 - Mathf.Abs(dialogPos.y + 30) / 50f),
                 > 100 => Mathf.Clamp01(1 - (dialogPos.y - 100) / 50f),
                 _ => 1f
             };
 
-            dialog.SetTrasnparency(alpha);
+            dialog.SetTransparency(alpha);
         }
     }
-
-    public void SetUnderMark()
-    {
-        if (_dialogs.Count < 2) return;
-        
-        if (scrollRect.transform.InverseTransformPoint(_dialogs.Last().transform.position).y < -65f && !_isShown)
-        {
-            DOTween.Kill(underMark);
-            _isShown = true;
-            underMark.DOFade(1, 0.25f);
-        }
-        else if (scrollRect.transform.InverseTransformPoint(_dialogs.Last().transform.position).y >= -65f && _isShown)
-        {
-            DOTween.Kill(underMark);
-            _isShown = false;
-            underMark.DOFade(0, 0.25f);
-        }
-    }
-
+    
     private void SetParentPosition(Dialog dialog)
     {
         DOTween.Kill(contentRect);

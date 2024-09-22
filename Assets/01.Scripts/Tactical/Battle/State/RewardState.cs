@@ -50,7 +50,7 @@ public class RewardState : BattleState
         if (Random.value <= 0.15f)
             rewards.Add(new RelicReward(Resources.LoadAll<RelicSO>("Relics").Random()));
 
-        var cards = Resources.LoadAll<CardSO>("Cards");
+        var cards = Resources.LoadAll<CardSO>("Cards/Player");
         var selectCards = new List<CardSO>();
         for (var i = 0; i < 2; i++)
         {

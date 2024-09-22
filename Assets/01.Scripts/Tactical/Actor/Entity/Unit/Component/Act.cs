@@ -48,6 +48,8 @@ public class Act : MonoBehaviour
 
     public void PerformAction(AnimationData animationData)
     {
+        DOTween.Kill(this);
+        
         var unitData = _unit.unitSO;
         
         _spriteRenderer.sprite = animationData.actionSprite;
@@ -57,8 +59,15 @@ public class Act : MonoBehaviour
 
         var sequence = DOTween.Sequence();
         sequence.Append(_spriteTransform.DOLocalMove(animationData.endOffset, 1.2f))
-            .JoinCallback(() => CreateEffect(animationData.effectSprite))
-            .Append(_spriteTransform.DOLocalMove(Vector3.zero, 0.15f).SetEase(Ease.OutSine))
+            .JoinCallback(() => CreateEffect(animationData.effectSprite));
+    }
+
+    public void ResetAction()
+    {
+        var unitData = _unit.unitSO;
+        
+        var sequence = DOTween.Sequence();
+        sequence.Append(_spriteTransform.DOLocalMove(Vector3.zero, 0.15f).SetEase(Ease.OutSine))
             .AppendCallback(() =>
             {
                 _spriteRenderer.sprite = unitData.idleSprite;

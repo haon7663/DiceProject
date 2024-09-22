@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f178922012c4fcd4fba3f57c8c2f668f, type: 3}
+  m_Name: Tutorial MapConfig
+  m_EditorClassIdentifier: 
+  nodeBlueprints:
+  - {fileID: 11400000, guid: 10b2dec9518a7bf4fa9ed0b88b4b8b3d, type: 2}
+  - {fileID: 11400000, guid: f64b460bffa14a342bf8456174c78415, type: 2}
+  - {fileID: 11400000, guid: 82f1c8a81f1be7b448c37ce7dbb2a004, type: 2}
+  - {fileID: 11400000, guid: be75491aa0199b04bb95028b68d8f21c, type: 2}
+  - {fileID: 11400000, guid: fd3c3680cb32cdc4390c97bb390c5b77, type: 2}
+  - {fileID: 11400000, guid: c2bb9093a937b914299221d3f94de70f, type: 2}
+  numOfPreBossNodes:
+    min: 1
+    max: 1
+  numOfStartingNodes:
+    min: 1
+    max: 1
+  extraPaths: 0
+  layers:
+  - nodeType: 0
+    randomizeNodes: 0
+  - nodeType: 0
+    randomizeNodes: 0
+  - nodeType: 2
+    randomizeNodes: 0
+  - nodeType: 4
+    randomizeNodes: 0

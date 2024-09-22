@@ -10,7 +10,7 @@ public class AddRandomCardAction : GameAction
     
     public override void Execute()
     {
-        var cards = Resources.LoadAll<CardSO>("Cards");
+        var cards = Resources.LoadAll<CardSO>("Cards/Player");
         for (var i = 0; i < count.GetValue(); i++)
         {
             var card = cards.Where(c =>

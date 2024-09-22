@@ -22,7 +22,7 @@ MonoBehaviour:
     description: "<color=#B5B5B5><sprite=1> \uC18C\uBAA8</color> <color=green>3 \uC774\uC0C1\uC77C
       \uB54C \uB79C\uB364 \uCE74\uB4DC \uD68D\uB4DD"
     eventConditionType: 2
-    needDices: 00000000
+    needDices: 01000000
     needItem: {fileID: 0}
     needGold: 0
     actions:

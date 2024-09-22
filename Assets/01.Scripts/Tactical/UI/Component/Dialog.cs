@@ -9,7 +9,7 @@ public class Dialog : MonoBehaviour
     {
         description.text = log;
     }
-    public void SetTrasnparency(float value)
+    public void SetTransparency(float value)
     {
         description.color = new Color(description.color.r, description.color.g, description.color.b, value);
     }

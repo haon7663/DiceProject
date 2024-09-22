@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum StatusEffectStackType { Duration = 100, AfterAttack = 200, AfterHit = 300 }
+public enum StatusEffectStackType { Duration = 100, AfterAttack = 200, AfterHit = 300, AfterAction = 400 }
 public enum StatusEffectStackDecreaseType { Minus = 100, Extinction = 200, None = 300 }
 public enum StatusEffectCalculateType { Accumulate = 100, Initialize = 200, Each = 300 }
 
