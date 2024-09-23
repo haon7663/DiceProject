@@ -11,8 +11,10 @@ public class DiceCountPanelController : MonoBehaviour
     [SerializeField] private TMP_Text countChangePrefab;
     [SerializeField] private SerializableDictionary<DiceType, DiceCountPanel> dicePanels;
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => DataManager.Inst.playerData != null);
+        
         UpdateCount();
     }
 

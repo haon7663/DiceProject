@@ -9,12 +9,16 @@ public class PanelChangeButton : MonoBehaviour
     [SerializeField] private Image background;
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text label;
+
+    [SerializeField] private Sprite selectSprite;
+    [SerializeField] private Sprite defaultSprite;
     
     public void Active()
     {
         background.color = Color.white;
         icon.color = Color.white;
         label.color = Color.white;
+        background.sprite = selectSprite;
     }
 
     public void DeActive()
@@ -22,5 +26,6 @@ public class PanelChangeButton : MonoBehaviour
         background.color = Color.gray;
         icon.color = Color.gray;
         label.color = Color.gray;
+        background.sprite = defaultSprite;
     }
 }

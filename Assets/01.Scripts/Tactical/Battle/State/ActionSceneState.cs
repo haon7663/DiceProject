@@ -201,7 +201,7 @@ public class ActionSceneState : BattleState
 
     private void TakeStatusEffect(Unit from, Unit to)
     {
-        if (to.TryGetComponent<StatusEffect>(out var toStatusEffect) && !BehaviourType.Avoid.IsSatisfiedBehaviours(from, to))
+        if (to.TryGetComponent<StatusEffect>(out var toStatusEffect))
         {
             for (var i = toStatusEffect.enabledEffects.Count - 1; i >= 0; i--)
             {
@@ -221,21 +221,25 @@ public class ActionSceneState : BattleState
                         break;
                 }
             }
-            foreach (var behaviour in GetStatusEffectBehaviours(from, to))
-            {
-                if (behaviour.value is StatusEffectBehaviour statusEffectBehaviour)
-                {
-                    toStatusEffect.AddEffect(statusEffectBehaviour.statusEffectSO, statusEffectBehaviour.value);
 
-                    var takeCardName = behaviour.onSelf ? to.cardSO.cardName : from.cardSO.cardName;
-                    var giveOrTake = behaviour.onSelf ? "얻었다" : "입었다";
-                    var dialog = $"{to.unitSO.name}은(는) {takeCardName}으로(로) {statusEffectBehaviour.statusEffectSO.label}({statusEffectBehaviour.value}) 상태를 {giveOrTake}.";
-                    owner.dialogController.GenerateDialog(dialog.ConvertKoreaStringJongSung());
+            if (!BehaviourType.Avoid.IsSatisfiedBehaviours(from, to))
+            {
+                foreach (var behaviour in GetStatusEffectBehaviours(from, to))
+                {
+                    if (behaviour.value is StatusEffectBehaviour statusEffectBehaviour)
+                    {
+                        toStatusEffect.AddEffect(statusEffectBehaviour.statusEffectSO, statusEffectBehaviour.value);
+
+                        var takeCardName = behaviour.onSelf ? to.cardSO.cardName : from.cardSO.cardName;
+                        var giveOrTake = behaviour.onSelf ? "얻었다" : "입었다";
+                        var dialog = $"{to.unitSO.name}은(는) {takeCardName}으로(로) {statusEffectBehaviour.statusEffectSO.label}({statusEffectBehaviour.value}) 상태를 {giveOrTake}.";
+                        owner.dialogController.GenerateDialog(dialog.ConvertKoreaStringJongSung());
+                    }
                 }
             }
         }
         
-        if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect) && !BehaviourType.Avoid.IsSatisfiedBehaviours(to, from))
+        if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect))
         {
             for (var i = fromStatusEffect.enabledEffects.Count - 1; i >= 0; i--)
             {
@@ -255,16 +259,20 @@ public class ActionSceneState : BattleState
                         break;
                 }
             }
-            foreach (var behaviour in GetStatusEffectBehaviours(to, from))
+
+            if (!BehaviourType.Avoid.IsSatisfiedBehaviours(to, from))
             {
-                if (behaviour.value is StatusEffectBehaviour statusEffectBehaviour)
+                foreach (var behaviour in GetStatusEffectBehaviours(to, from))
                 {
-                    fromStatusEffect.AddEffect(statusEffectBehaviour.statusEffectSO, statusEffectBehaviour.value);
+                    if (behaviour.value is StatusEffectBehaviour statusEffectBehaviour)
+                    {
+                        fromStatusEffect.AddEffect(statusEffectBehaviour.statusEffectSO, statusEffectBehaviour.value);
                     
-                    var takeCardName = behaviour.onSelf ? from.cardSO.cardName : to.cardSO.cardName;
-                    var giveOrTake = behaviour.onSelf ? "얻었다" : "입혔다";
-                    var dialog = $"{from.unitSO.name}은(는) {takeCardName}으로(로) {statusEffectBehaviour.statusEffectSO.label}({statusEffectBehaviour.value}) 상태를 {giveOrTake}.";
-                    owner.dialogController.GenerateDialog(dialog.ConvertKoreaStringJongSung());
+                        var takeCardName = behaviour.onSelf ? from.cardSO.cardName : to.cardSO.cardName;
+                        var giveOrTake = behaviour.onSelf ? "얻었다" : "입혔다";
+                        var dialog = $"{from.unitSO.name}은(는) {takeCardName}으로(로) {statusEffectBehaviour.statusEffectSO.label}({statusEffectBehaviour.value}) 상태를 {giveOrTake}.";
+                        owner.dialogController.GenerateDialog(dialog.ConvertKoreaStringJongSung());
+                    }
                 }
             }
         }

@@ -10,8 +10,10 @@ public class InventoryPanelController : MonoBehaviour
     [SerializeField] private Transform parent;
     private InventoryFrame[] _inventoryFrames = new InventoryFrame[8];
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => DataManager.Inst.playerData != null);
+        
         SetInventoryFrames();
         UpdateInventory();
     }
@@ -30,7 +32,8 @@ public class InventoryPanelController : MonoBehaviour
         for (var i = 0; i < 8; i++)
         {
             var itemName = DataManager.Inst.playerData.Items[i];
-            var item = itemName?.ToItem();
+            if (itemName == "") continue;
+            var item = itemName.ToItem();
             if (!item) continue;
             _inventoryFrames[i].Initialize(item);
             

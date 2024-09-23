@@ -68,7 +68,7 @@ public class DisplayCardController : MonoBehaviour
             }
         }
 
-        card.originPos = new Vector3(isPlayer ? -420 : 420, 1275);
+        card.originPos = new Vector3(isPlayer ? -420 : 420, 1300);
         card.originScale = new Vector3(0.5f, 0.5f);
 
         var sequence = DOTween.Sequence();

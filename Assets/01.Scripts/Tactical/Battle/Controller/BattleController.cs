@@ -23,9 +23,6 @@ public class BattleController : StateMachine
     public Unit enemy;
     public EventObject eventObject;
 
-    [Header("- Management -")]
-    public DataManager dataManager;
-
     [Header("- Camera -")]
     public CameraMovement mainCameraMovement;
     public CameraMovement highlightCameraMovement;
@@ -51,14 +48,19 @@ public class BattleController : StateMachine
     [Header("- Event UI -")]
     public EventChoicesController eventChoicesController;
     
+    [Header("- Store UI -")]
+    public StorePanelController storePanelController;
+    
     public PlayerData PlayerData { get; private set; }
     public Turn Turn { get; private set; }
     public Unit CurrentUnit { get; set; }
     public VictorType Victor { get; private set; }
     
-    private void Start()
+    private IEnumerator Start()
     {
-        PlayerData = dataManager.playerData;
+        yield return new WaitUntil(() => DataManager.Inst.playerData != null);
+        
+        PlayerData = DataManager.Inst.playerData;
         Turn = new Turn();
 
         ChangeState<InitState>();

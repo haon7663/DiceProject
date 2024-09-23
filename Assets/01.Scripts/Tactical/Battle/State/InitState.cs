@@ -26,7 +26,10 @@ public class InitState : BattleState
         }
         if (owner.player.TryGetComponent<Relic>(out var relic))
         {
-            relic.relics = owner.PlayerData.Relics.ToRelic();
+            if (owner.PlayerData.Relics.Count > 0)
+            {
+                relic.relics = owner.PlayerData.Relics.ToRelic();
+            }
         }
         if (owner.player.TryGetComponent<Act>(out var playerAct))
             playerAct.Init();
@@ -54,7 +57,7 @@ public class InitState : BattleState
             case NodeType.Store:
                 InitEvent();
                 yield return null;
-                owner.ChangeState<EventSelectionState>();
+                owner.ChangeState<StoreState>();
                 break;
             case NodeType.Boss:
                 owner.diceResultPanelController.ConnectPanel(owner.player);

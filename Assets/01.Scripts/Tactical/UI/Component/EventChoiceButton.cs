@@ -11,9 +11,15 @@ public class EventChoiceButton : MonoBehaviour
     [SerializeField] private TMP_Text title;
     [SerializeField] private TMP_Text description;
     [SerializeField] private GameObject activeScreen;
-    
+
+    private Button _button;
     private EventChoice _eventChoice;
-    
+
+    private void Awake()
+    {
+        _button = GetComponent<Button>();
+    }
+
     public void Initialize(EventChoice eventChoice)
     {
         _eventChoice = eventChoice;
@@ -50,6 +56,8 @@ public class EventChoiceButton : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        _button.interactable = !activeScreen.activeSelf;
     }
 
     public void Execute()

@@ -13,8 +13,9 @@ public class AddRandomRelicAction : GameAction
         var relics = Resources.LoadAll<RelicSO>("Relics");
         for (var i = 0; i < count.GetValue(); i++)
         {
-            var relic = relics.Where(relic =>
-                DataManager.Inst.playerData.Relics.All(relicJson => relicJson.name != relic.name)).ToList().Random();
+            relics = relics.Where(relic => DataManager.Inst.playerData.Relics.All(relicJson => relicJson.name != relic.name)).ToArray();
+            if (relics.Length < 1) continue;
+            var relic = relics.Random();
             DataManager.Inst.playerData.Relics.Add(relic.ToJson());
         }
     }

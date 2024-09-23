@@ -38,8 +38,7 @@ MonoBehaviour:
     startOffset: {x: 0, y: 0}
     endOffset: {x: -0.2, y: 0}
   cards:
-  - {fileID: 11400000, guid: c4e050490fca1f143b8ca2907e94607e, type: 2}
-  - {fileID: 11400000, guid: 002180ae120da6c438d31f8bdff90bf4, type: 2}
-  - {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
-  - {fileID: 11400000, guid: 142ca7cf580fb2d4d889a722cc8b13ce, type: 2}
-  maxHp: 32
+  - {fileID: 11400000, guid: e23c104dcf14d0a43b5ef65a8ed80181, type: 2}
+  - {fileID: 11400000, guid: bd9042fe4302bc74a9bbfa370e727d7c, type: 2}
+  - {fileID: 11400000, guid: 90bb82a11d4b98744859a56b391f77a3, type: 2}
+  maxHp: 45

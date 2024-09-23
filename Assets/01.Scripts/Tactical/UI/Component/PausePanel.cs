@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Map;
 using UnityEngine;
 
 public class PausePanel : MonoBehaviour
@@ -19,6 +20,13 @@ public class PausePanel : MonoBehaviour
     {
         panel.SetPosition(PanelStates.Hide, true, 0.25f);
         contentPanel.SetPosition(PanelStates.Hide, true, 0.25f);
+    }
+    
+    public void GiveUp()
+    {
+        GameManager.Inst.currentNodeType = NodeType.None;
+        DataManager.Inst.Delete();
+        Fade.Inst.FadeOut("CharacterSelection");
     }
 
     public void Quit()

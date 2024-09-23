@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Serialization;
 using File = System.IO.File;
+using Map;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class PlayerData
@@ -85,15 +87,20 @@ public class PlayerData
             OnValueChanged?.Invoke("Relics", _relics);
         }
     }
+
+    public Map.Map map;
     
-    public PlayerData(string creatureName, int hp, SerializableDictionary<DiceType, int> dices, List<CardJson> cards, string[] items, List<RelicJson> relics)
+    public PlayerData(string creatureName, int hp, int gold, SerializableDictionary<DiceType, int> dices, List<CardJson> cards, string[] items, List<RelicJson> relics, Map.Map map)
     {
         name = creatureName;
         _maxHealth = _health = hp;
+        _gold = gold;
         _dices = dices;
         _cards = cards;
         _items = items;
         _relics = relics;
+
+        this.map = map;
     }
 }
 
@@ -115,6 +122,9 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
             var playerData = JsonConvert.DeserializeObject<PlayerData>(playerDataJson);
 
             this.playerData = playerData;
+
+            if (SceneManager.GetActiveScene().name == "CharacterSelection")
+                SceneManager.LoadScene("Battle");
         }
     }
 
@@ -173,14 +183,19 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
 
     public void Generate(UnitSO unitSO)
     {
-        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, new SerializableDictionary<DiceType, int>()
+        var item = new string[8]
+        {
+            "회복 물약", "회복 물약", "", "", "", "", "", ""
+        };
+        
+        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, 100, new SerializableDictionary<DiceType, int>()
         {
             { DiceType.Four, 9999999 },
-            { DiceType.Six, 12 },
-            { DiceType.Eight, 6 },
-            { DiceType.Twelve, 24 },
-            { DiceType.Twenty, 1 },
-        }, unitSO.cards.ToJson(), new string[8], new List<RelicJson>());
+            { DiceType.Six, 10 },
+            { DiceType.Eight, 7 },
+            { DiceType.Twelve, 1 },
+            { DiceType.Twenty, 0 },
+        }, unitSO.cards.ToJson(), item, new List<RelicJson>(), MapGenerator.GetMap(Resources.Load<MapConfig>("MapConfigs/MapConfig")));
         
         this.playerData = playerData;
     }
@@ -193,6 +208,11 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
             new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
         
         File.WriteAllText(_playerDataFilePath, json);
+    }
+
+    public void Delete()
+    {
+        File.Delete(_playerDataFilePath);
     }
 
     private void OnApplicationQuit()
