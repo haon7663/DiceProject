@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -13,20 +15,11 @@ namespace Map
         
         public Map CurrentMap { get; private set; }
 
-        private static string _mapFileString;
-
-        private void Start()
+        private IEnumerator Start()
         {
-            _mapFileString = Path.Combine(Application.persistentDataPath, "map.json");
+            yield return new WaitUntil(() => DataManager.Inst.playerData != null);
             
-            if (File.Exists(_mapFileString))
-            {
-                Load();
-            }
-            else
-            {
-                GenerateNewMap();
-            }
+            GenerateNewMap(DataManager.Inst.playerData.map);
         }
 
         public void Show()
@@ -39,33 +32,10 @@ namespace Map
             panel.SetPosition(PanelStates.Hide, true);
         }
 
-        public void GenerateNewMap()
+        public void GenerateNewMap(Map map)
         {
-            var map = MapGenerator.GetMap(config);
             CurrentMap = map;
             view.ShowMap(map);
-        }
-
-        private void Load()
-        {
-            var mapJson = File.ReadAllText(_mapFileString);
-            CurrentMap = JsonConvert.DeserializeObject<Map>(mapJson);
-            view.ShowMap(CurrentMap);
-        }
-        
-        public void Save()
-        {
-            if (CurrentMap == null) return;
-
-            string json = JsonConvert.SerializeObject(CurrentMap, Formatting.Indented,
-                new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
-            
-            File.WriteAllText(_mapFileString, json);
-        }
-
-        private void OnApplicationQuit()
-        {
-            Save();
         }
     }
 }

@@ -51,7 +51,6 @@ namespace Map
             var isBoss = layerIndex == _config.layers.Count - 1;
             
             float offset = 1 * _config.GridWidth / 2f;
-            Debug.LogWarning(_config.GridWidth);
 
             for (int i = 0; i < _config.GridWidth; i++)
             {

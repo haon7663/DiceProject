@@ -36,7 +36,6 @@ namespace Map
         {
             mapNode.OnSelect();
             mapController.CurrentMap.path.Add(mapNode.Node.point);
-            mapController.Save();
             view.SetNodeColor();
             view.SetLineColor();
             //mapNode.ShowSwirlAnimation();*/
