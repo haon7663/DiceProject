@@ -20,18 +20,21 @@ MonoBehaviour:
   idleSprite: {fileID: 21300000, guid: b57a556947292db4ea78261b040b1981, type: 3}
   attacks:
   - name: Default
+    order: 1
     actionSprite: {fileID: 21300000, guid: 44e797065334a0c48a956edc5d9404d5, type: 3}
     effectSprite: {fileID: 21300000, guid: 7bad32a8a768f4d47addeda772dace1d, type: 3}
     startOffset: {x: 0.8, y: 0}
     endOffset: {x: 1.1, y: 0}
   hits:
   - name: Default
+    order: 0
     actionSprite: {fileID: 21300000, guid: 5e01ec33c29a13149adb5790c631131c, type: 3}
     effectSprite: {fileID: 21300000, guid: aa39b43d40a6b4044b4eb0bd47d288f8, type: 3}
     startOffset: {x: 0, y: 0}
     endOffset: {x: -0.2, y: 0}
   avoids:
   - name: Default
+    order: 0
     actionSprite: {fileID: 21300000, guid: 5e01ec33c29a13149adb5790c631131c, type: 3}
     effectSprite: {fileID: 0}
     startOffset: {x: 0, y: 0}

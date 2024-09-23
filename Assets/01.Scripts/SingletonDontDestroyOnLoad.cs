@@ -3,6 +3,9 @@ using UnityEngine;
 public class SingletonDontDestroyOnLoad<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _inst;
+    public static bool HasInstance => _inst != null;
+    public static T TryGetInstance() => HasInstance ? _inst : null;
+    public static T Current => _inst;
     
     public static T Inst
     {
@@ -20,9 +23,17 @@ public class SingletonDontDestroyOnLoad<T> : MonoBehaviour where T : MonoBehavio
             return _inst;
         }
     }
-
+    
     protected virtual void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        var obj = FindObjectsOfType<SingletonDontDestroyOnLoad<T>>();
+        if (obj.Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

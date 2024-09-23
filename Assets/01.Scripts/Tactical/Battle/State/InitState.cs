@@ -31,7 +31,7 @@ public class InitState : BattleState
         if (owner.player.TryGetComponent<Act>(out var playerAct))
             playerAct.Init();
         owner.statPanelController.ConnectPanel(owner.player);
-
+        
         switch (GameManager.Inst.currentNodeType)
         {
             case NodeType.MinorEnemy:
@@ -68,6 +68,7 @@ public class InitState : BattleState
                 owner.ChangeState<EventSelectionState>();
                 break;
             case NodeType.None:
+                print("None");
                 yield return null;
                 owner.ChangeState<MapSelectionState>();
                 break;

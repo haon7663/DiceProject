@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb523e5f96c424e4ea6dce3522df5b2e, type: 3}
+  m_Name: Performer
+  m_EditorClassIdentifier: 
+  name: "\uC218\uD589\uC790"
+  description: 
+  standingSprite: {fileID: 0}
+  idleSprite: {fileID: 21300000, guid: 75eceada6274a97409b88cb8558488b4, type: 3}
+  attacks:
+  - name: Default
+    order: 1
+    actionSprite: {fileID: 21300000, guid: ad6ba9cde229af44cb0092107af4d377, type: 3}
+    effectSprite: {fileID: 0}
+    startOffset: {x: 0.5, y: 0}
+    endOffset: {x: 0.8, y: 0}
+  hits:
+  - name: Default
+    order: 0
+    actionSprite: {fileID: 21300000, guid: 75eceada6274a97409b88cb8558488b4, type: 3}
+    effectSprite: {fileID: 0}
+    startOffset: {x: 0, y: 0}
+    endOffset: {x: -0.2, y: 0}
+  avoids:
+  - name: Default
+    order: 0
+    actionSprite: {fileID: 21300000, guid: 75eceada6274a97409b88cb8558488b4, type: 3}
+    effectSprite: {fileID: 0}
+    startOffset: {x: 0, y: 0}
+    endOffset: {x: -0.2, y: 0}
+  cards:
+  - {fileID: 11400000, guid: d5f58dae1c6b8d040b1e21be849c21cb, type: 2}
+  - {fileID: 11400000, guid: 8cf7ad694acc87f4fb6e4b07a47ddc41, type: 2}
+  - {fileID: 11400000, guid: e67728e4f42bdda4681fbf0adbc0f79c, type: 2}
+  - {fileID: 11400000, guid: 92053e05b40c9fd4f83c6c89f45eeceb, type: 2}
+  maxHp: 25

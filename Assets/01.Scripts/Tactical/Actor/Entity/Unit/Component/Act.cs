@@ -50,9 +50,8 @@ public class Act : MonoBehaviour
     {
         DOTween.Kill(this);
         
-        var unitData = _unit.unitSO;
-        
         _spriteRenderer.sprite = animationData.actionSprite;
+        _spriteRenderer.sortingOrder = animationData.order;
         _spriteTransform.gameObject.layer = 7;
         _spriteTransform.localPosition = animationData.startOffset;
         _animator.SetBool(Idle, false);
@@ -86,6 +85,7 @@ public class Act : MonoBehaviour
 
         var effectSpriteRenderer = effect.AddComponent<SpriteRenderer>();
         effectSpriteRenderer.sprite = effectSprite;
+        effectSpriteRenderer.sortingLayerName = "Effect";
         effectSpriteRenderer.sortingOrder = 2;
         effectSpriteRenderer.DOFade(0, 1f).SetEase(Ease.InCirc).OnComplete(() => Destroy(effect));
     }

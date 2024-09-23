@@ -97,7 +97,7 @@ public class PlayerData
     }
 }
 
-public class  DataManager : SingletonDontDestroyOnLoad<DataManager>
+public class DataManager : SingletonDontDestroyOnLoad<DataManager>
 {
     public PlayerData playerData;
 

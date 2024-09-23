@@ -27,7 +27,6 @@ public class EventChoicesController : MonoBehaviour
 
     private void Execute(EventChoice eventChoice)
     {
-        panel.SetPosition(PanelStates.Hide, true, 0.5f);
         OnExecute?.Invoke(eventChoice);
     }
 }

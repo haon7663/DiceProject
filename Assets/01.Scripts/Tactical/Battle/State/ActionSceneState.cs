@@ -24,7 +24,6 @@ public class ActionSceneState : BattleState
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
         
         if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to) &&
-            !BehaviourType.Avoid.IsSatisfiedBehaviours(from, to) &&
             BehaviourType.Counter.IsSatisfiedBehaviours(from, to))
         {
             TakeCounter(from, to);

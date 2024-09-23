@@ -18,6 +18,8 @@ public class TickDamageStatusEffectSO : StatusEffectSO
         if (unit.TryGetComponent<Health>(out var health))
         {
             health.OnDamage(GetCurrentValue());
+            var log = $"{label}으로(로) {unit.unitSO.name}의 체력이 {GetCurrentValue()} 감소되었다!";
+            BattleController.Inst.dialogController.GenerateDialog(log.ConvertKoreaStringJongSung());
         }
         base.UpdateEffect(unit);
     }
