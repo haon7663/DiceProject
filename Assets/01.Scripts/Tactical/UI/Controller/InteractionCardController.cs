@@ -16,6 +16,7 @@ public class InteractionCardController : MonoBehaviour
     [Header("트랜스폼")] 
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private RectTransform contentRect;
+    [SerializeField] private CanvasGroup canvasGroup;
     
     private List<InteractionCard> _interactionCards;
     private InteractionCard _current;
@@ -36,6 +37,16 @@ public class InteractionCardController : MonoBehaviour
             card.Copy += CancelCards;
             card.Copy += displayCardController.CopyCard;
             card.Prepare += displayCardController.PrepareCard;
+            card.Prepare += Prepare;
+        }
+    }
+
+    private void Prepare(bool isPlayer)
+    {
+        canvasGroup.interactable = false;
+        foreach (var card in _interactionCards)
+        {
+            card.interactable = false;
         }
     }
 
@@ -65,6 +76,12 @@ public class InteractionCardController : MonoBehaviour
         SetCardsActive(isAttackTurn);
         
         yield return ShowCards(isAttackTurn);
+
+        canvasGroup.interactable = true;
+        foreach (var card in _interactionCards)
+        {
+            card.interactable = true;
+        }
     }
 
     private IEnumerator HideCards(bool isAttackTurn)

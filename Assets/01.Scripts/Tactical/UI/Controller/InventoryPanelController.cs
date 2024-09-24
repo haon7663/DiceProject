@@ -10,6 +10,8 @@ public class InventoryPanelController : MonoBehaviour
     [SerializeField] private Transform parent;
     private InventoryFrame[] _inventoryFrames = new InventoryFrame[8];
 
+    private int _currentIndex;
+
     private IEnumerator Start()
     {
         yield return new WaitUntil(() => DataManager.Inst.playerData != null);
@@ -53,6 +55,13 @@ public class InventoryPanelController : MonoBehaviour
 
     public void SelectItem(ItemSO itemSO, int index)
     {
+        if (_currentIndex == index)
+        {
+            itemPanelController.Hide();
+            _currentIndex = -1;
+            return;
+        }
         itemPanelController.Show(itemSO, index);
+        _currentIndex = index;
     }
 }

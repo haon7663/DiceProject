@@ -5,12 +5,12 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class OptionDataContainer : MonoBehaviour
+public class OptionDataContainer : Singleton<OptionDataContainer>
 {
     public SoundSettingsData soundSettingsData = new SoundSettingsData(0.6f, 0.6f);
     private static string _soundSettingsFilePath;
 
-    private void Awake()
+    private void Start()
     {
         _soundSettingsFilePath = Path.Combine(Application.persistentDataPath, "settings-sound.json");
         Load();

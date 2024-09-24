@@ -17,10 +17,11 @@ public class MapNode : MonoBehaviour, IPointerClickHandler
     {
         Node = node;
         
+        defaultScale = node.blueprintName == "Boss" ? 1.5f : 1;
+        
         image.sprite = blueprint.sprite;
         image.rectTransform.anchoredPosition = pos * new Vector2(200, 175f);
-
-        defaultScale = node.blueprintName == "Boss" ? 1.5f : 1;
+        image.rectTransform.sizeDelta = new Vector2(150, 150) * defaultScale;
     }
 
     public void SetColor(Color color)
