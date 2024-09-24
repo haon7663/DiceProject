@@ -23,10 +23,6 @@ public class OptionDataContainer : Singleton<OptionDataContainer>
             var text = File.ReadAllText(_soundSettingsFilePath);
             soundSettingsData = JsonConvert.DeserializeObject<SoundSettingsData>(text);
         }
-        else
-        {
-            Save();
-        }
     }
 
     public void Save()

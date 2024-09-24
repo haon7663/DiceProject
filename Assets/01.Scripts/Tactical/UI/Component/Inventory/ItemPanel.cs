@@ -16,9 +16,6 @@ public class ItemPanel : MonoBehaviour
     [SerializeField] private TMP_Text nameLabel;
     [SerializeField] private TMP_Text description;
 
-    [SerializeField] private Unit player;
-    [SerializeField] private Unit enemy;
-
     private int _index;
     
     public void Initialize(ItemSO itemSO, int index)
@@ -42,15 +39,12 @@ public class ItemPanel : MonoBehaviour
 
         foreach (var behaviour in behaviours)
         {
-            var target = behaviour.onSelf ? player : enemy;
-            
-            print(target.name);
+            var target = behaviour.onSelf ? BattleController.Inst.player : BattleController.Inst.enemy;
             
             if (behaviour.GetType() == BehaviourType.Attack.GetBehaviourClass())
             {
                 if (target.TryGetComponent<Health>(out var health))
                 {
-                    print(target.name);
                     health.OnDamage(behaviour.value);
                 }
             }
@@ -61,7 +55,6 @@ public class ItemPanel : MonoBehaviour
                 {
                     if (target.TryGetComponent<StatusEffect>(out var statusEffect))
                     {
-                        print(target.name);
                         statusEffect.AddEffect(statusEffectBehaviour.statusEffectSO, behaviour.value);
                     }
                 }

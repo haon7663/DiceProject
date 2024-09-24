@@ -10,6 +10,6 @@ public class TurnOrderController : MonoBehaviour
     public IEnumerator Show(bool isAttack)
     {
         turnOrderPanel.gameObject.SetActive(true);
-        yield return StartCoroutine(turnOrderPanel.Show(isAttack ? "공격 턴" : "방어 턴"));
+        yield return StartCoroutine(turnOrderPanel.Show(isAttack ? "공격 턴" : "수비 턴"));
     }
 }

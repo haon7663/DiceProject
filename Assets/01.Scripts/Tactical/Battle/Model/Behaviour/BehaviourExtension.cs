@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public static class BehaviourExtension
 {
@@ -13,6 +14,7 @@ public static class BehaviourExtension
             BehaviourType.Avoid => typeof(AvoidBehaviour),
             BehaviourType.Counter => typeof(CounterBehaviour),
             BehaviourType.StatusEffect => typeof(StatusEffectBehaviour),
+            BehaviourType.Recovery => typeof(RecoveryBehaviour),
             _ => throw new ArgumentOutOfRangeException(nameof(behaviourType), behaviourType, null)
         };
     }
@@ -36,28 +38,60 @@ public static class BehaviourExtension
         return behaviours;
     }
     
-    public static List<Behaviour> CreateBehaviours(Unit unit)
+    public static List<Behaviour> CreateBehaviours(Unit from, Unit to)
     {
         var behaviours = new List<Behaviour>();
-        foreach (var (behaviourInfo, value) in unit.behaviourValues)
+        
+        behaviours.AddRange(CreateUnitBehaviours(from));
+
+        behaviours.AddRange(CreateRelicBehaviour(from, to));
+        
+        return behaviours;
+    }
+    
+    private static List<Behaviour> CreateUnitBehaviours(Unit from)
+    {
+        var behaviours = new List<Behaviour>();
+        foreach (var (behaviourInfo, value) in from.behaviourValues)
         {
             var behaviour = (Behaviour)Activator.CreateInstance(behaviourInfo.behaviourType.GetBehaviourClass());
             behaviour.compareInfo = behaviourInfo.compareInfo;
             behaviour.onSelf = behaviourInfo.onSelf;
-            behaviour.value = value + behaviourInfo.basicValue;
+            behaviour.value = behaviourInfo.basicValue + value;
             if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
             {
                 statusEffectBehaviour.statusEffectSO = behaviourInfo.statusEffectSO;
             }
             behaviours.Add(behaviour);
         }
-
-        if (unit.TryGetComponent<Relic>(out var relic))
+        
+        return behaviours;
+    }
+    
+    private static List<Behaviour> CreateRelicBehaviour(Unit from, Unit to)
+    {
+        var behaviours = new List<Behaviour>();
+        if (from.TryGetComponent<Relic>(out var relic))
         {
-            foreach (var relicSO in relic.relics)
+            var behaviourInfos = new List<BehaviourInfo>();
+            
+            behaviourInfos.AddRange(relic.GetInfosAndExecute(RelicActiveType.AfterAction));
+            if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to))
             {
-                var behaviourInfo = relicSO.behaviourInfo;
-                var behaviour = (Behaviour)Activator.CreateInstance(relicSO.behaviourInfo.behaviourType.GetBehaviourClass());
+                behaviourInfos.AddRange(relic.GetInfosAndExecute(RelicActiveType.AfterAttack));
+            }
+            if (BehaviourType.Attack.IsSatisfiedBehaviours(to, from))
+            {
+                behaviourInfos.AddRange(relic.GetInfosAndExecute(RelicActiveType.AfterHit));
+            }
+            if (BehaviourType.StatusEffect.IsSatisfiedBehaviours(to, from))
+            {
+                behaviourInfos.AddRange(relic.GetInfosAndExecute(RelicActiveType.AfterGetStatusEffect));
+            }
+            
+            foreach (var behaviourInfo in behaviourInfos)
+            {
+                var behaviour = (Behaviour)Activator.CreateInstance(behaviourInfo.behaviourType.GetBehaviourClass());
                 behaviour.compareInfo = behaviourInfo.compareInfo;
                 behaviour.onSelf = behaviourInfo.onSelf;
                 behaviour.value = behaviourInfo.basicValue;
@@ -68,14 +102,13 @@ public static class BehaviourExtension
                 behaviours.Add(behaviour);
             }
         }
-        
         return behaviours;
     }
     
     public static bool IsSatisfiedBehaviours(this BehaviourType behaviourType, Unit from, Unit to)
     {
-        var fromBehaviours = CreateBehaviours(from);
-        var toBehaviours = CreateBehaviours(to);
+        var fromBehaviours = CreateUnitBehaviours(from);
+        var toBehaviours = CreateUnitBehaviours(to);
         
         return fromBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
                    .Any(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)) ||
@@ -85,8 +118,8 @@ public static class BehaviourExtension
     
     public static int GetSatisfiedBehavioursSum(this BehaviourType behaviourType, Unit from, Unit to)
     {
-        var fromBehaviours = CreateBehaviours(from);
-        var toBehaviours = CreateBehaviours(to);
+        var fromBehaviours = CreateUnitBehaviours(from);
+        var toBehaviours = CreateUnitBehaviours(to);
         
         return fromBehaviours.Where(b => b.GetType() == behaviourType.GetBehaviourClass())
                    .Where(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues)).Sum(b => b.value) +

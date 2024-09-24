@@ -49,56 +49,12 @@ public class ActionSceneState : BattleState
         ExecuteUnitActions(from, to);
         PerformCameraProduction(from, to);
     }
-
-    // 행동 리스트 생성
-    private List<Behaviour> CreateBehaviours(Unit unit)
-    {
-        var behaviours = new List<Behaviour>();
-        foreach (var (behaviourInfo, value) in unit.behaviourValues)
-        {
-            var behaviour = (Behaviour)Activator.CreateInstance(behaviourInfo.behaviourType.GetBehaviourClass());
-            behaviour.compareInfo = behaviourInfo.compareInfo;
-            behaviour.onSelf = behaviourInfo.onSelf;
-            behaviour.value = value + behaviourInfo.basicValue;
-            if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
-            {
-                statusEffectBehaviour.statusEffectSO = behaviourInfo.statusEffectSO;
-            }
-            behaviours.Add(behaviour);
-        }
-
-        behaviours.AddRange(CreateRelicBehaviour(unit));
-        
-        return behaviours;
-    }
     
-    private List<Behaviour> CreateRelicBehaviour(Unit unit)
-    {
-        var behaviours = new List<Behaviour>();
-        if (unit.TryGetComponent<Relic>(out var relic))
-        {
-            foreach (var relicSO in relic.relics)
-            {
-                var behaviourInfo = relicSO.behaviourInfo;
-                var behaviour = (Behaviour)Activator.CreateInstance(relicSO.behaviourInfo.behaviourType.GetBehaviourClass());
-                behaviour.compareInfo = behaviourInfo.compareInfo;
-                behaviour.onSelf = behaviourInfo.onSelf;
-                behaviour.value = behaviourInfo.basicValue;
-                if (behaviour is StatusEffectBehaviour statusEffectBehaviour)
-                {
-                    statusEffectBehaviour.statusEffectSO = behaviourInfo.statusEffectSO;
-                }
-                behaviours.Add(behaviour);
-            }
-        }
-        return behaviours;
-    }
-
     // 피해 계산
     private int CalculateDamage(Unit from, Unit to)
     {
-        var fromBehaviours = CreateBehaviours(from);
-        var toBehaviours = CreateBehaviours(to);
+        var fromBehaviours = BehaviourExtension.CreateBehaviours(from, to);
+        var toBehaviours = BehaviourExtension.CreateBehaviours(to, from);
         
         return fromBehaviours
                 .Where(b => !b.onSelf && b.IsSatisfied(from.behaviourValues, to.behaviourValues))
@@ -113,14 +69,14 @@ public class ActionSceneState : BattleState
         var fromDefaultDamage = CalculateDamage(from, to);
         var toDefaultDamage = CalculateDamage(to, from);
  
-        var fromTotalDamage = from.Stats[StatType.GetDamage].GetValue(fromDefaultDamage);
-        fromTotalDamage = to.Stats[StatType.TakeDamage].GetValue(fromTotalDamage);
+        var fromStatsDamage = from.Stats[StatType.GetDamage].GetValue(fromDefaultDamage);
+        fromStatsDamage = to.Stats[StatType.TakeDamage].GetValue(fromStatsDamage);
         
-        var toTotalDamage = to.Stats[StatType.GetDamage].GetValue(toDefaultDamage);
-        toTotalDamage = from.Stats[StatType.TakeDamage].GetValue(toTotalDamage);
+        var toStatsDamage = to.Stats[StatType.GetDamage].GetValue(toDefaultDamage);
+        toStatsDamage = from.Stats[StatType.TakeDamage].GetValue(toStatsDamage);
         
-        fromTotalDamage = fromTotalDamage > 1 ? fromTotalDamage : 1;
-        toTotalDamage = toTotalDamage > 1 ? toTotalDamage : 1;
+        var fromTotalDamage = fromStatsDamage > 1 ? fromStatsDamage : 1;
+        var toTotalDamage = toStatsDamage > 1 ? toStatsDamage : 1;
         
         if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to))
         {
@@ -144,7 +100,7 @@ public class ActionSceneState : BattleState
                     
                     var defenceDialog = defenceValue > 0 ? $"({defenceValue} 방어함)" : "";
 
-                    var changedValue = fromTotalDamage - fromDefaultDamage;
+                    var changedValue = fromStatsDamage - fromDefaultDamage;
                     var changedValueDialog = changedValue > 0 ? $"({changedValue} 증가됨)" : (changedValue < 0 ? $"({-changedValue} 감소됨)" : "");
 
                     var stringBuilder = new StringBuilder();
@@ -180,8 +136,8 @@ public class ActionSceneState : BattleState
     
     private List<(Behaviour value, bool onSelf)> GetStatusEffectBehaviours(Unit from, Unit to)
     {
-        var fromBehaviours = CreateBehaviours(from);
-        var toBehaviours = CreateBehaviours(to);
+        var fromBehaviours = BehaviourExtension.CreateBehaviours(from, to);
+        var toBehaviours = BehaviourExtension.CreateBehaviours(to, from);
 
         var fromStatusEffectBehaviours = fromBehaviours.Where(b => b is StatusEffectBehaviour);
         var toStatusEffectBehaviours = toBehaviours.Where(b => b is StatusEffectBehaviour);
@@ -237,6 +193,15 @@ public class ActionSceneState : BattleState
                     }
                 }
             }
+            else
+            {
+                if (!BehaviourType.Attack.IsSatisfiedBehaviours(from, to))
+                {
+                    owner.hudController.PopAvoid(to.transform.position);
+                    owner.dialogController.GenerateDialog($"{to.unitSO.name}은(는) {from.cardSO.cardName}을(를) 회피했다."
+                        .ConvertKoreaStringJongSung());
+                }
+            }
         }
         
         if (from.TryGetComponent<StatusEffect>(out var fromStatusEffect))
@@ -280,8 +245,8 @@ public class ActionSceneState : BattleState
     
     private List<Behaviour> GetCounterEffectBehaviours(Unit from, Unit to)
     {
-        var fromBehaviours = CreateBehaviours(from);
-        var toBehaviours = CreateBehaviours(to);
+        var fromBehaviours = BehaviourExtension.CreateBehaviours(from, to);
+        var toBehaviours = BehaviourExtension.CreateBehaviours(to, from);
 
         var fromCounterBehaviours = fromBehaviours.Where(b => b is CounterBehaviour);
         var toCounterBehaviours = toBehaviours.Where(b => b is CounterBehaviour);
@@ -321,7 +286,7 @@ public class ActionSceneState : BattleState
                     if (BehaviourType.Defence.IsSatisfiedBehaviours(to, from))
                         owner.hudController.PopDefence(from.transform.position, defenceValue);
 
-                    var dialog = $"{to.unitSO.name}은(는) {totalDamage}의 피해로 반격했다.";
+                    var dialog = $"{to.unitSO.name}은(는) {totalDamage}의 피해로 반격했다. ";
                     
                     var defenceDialog = defenceValue > 0 ? $"({defenceValue} 방어함)" : "";
 

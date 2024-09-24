@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public enum StatusEffectStackType { Duration = 100, AfterAttack = 200, AfterHit = 300, AfterAction = 400 }
-public enum StatusEffectStackDecreaseType { Minus = 100, Extinction = 200, None = 300 }
+public enum StatusEffectStackDecreaseType { Minus = 100, Extinction = 200, Value = 250, None = 300 }
 public enum StatusEffectCalculateType { Accumulate = 100, Initialize = 200, Each = 300 }
 
 public abstract class StatusEffectSO : ScriptableObject
@@ -57,7 +57,7 @@ public abstract class StatusEffectSO : ScriptableObject
         return "";
     }
 
-    public void UpdateStack(Unit unit)
+    public void UpdateStack(Unit unit, int value = -1)
     {
         switch (statusEffectStackDecreaseType)
         {
@@ -66,6 +66,9 @@ public abstract class StatusEffectSO : ScriptableObject
                 break;
             case StatusEffectStackDecreaseType.Extinction:
                 _stack = 0;
+                break;
+            case StatusEffectStackDecreaseType.Value:
+                _stack -= value;
                 break;
             case StatusEffectStackDecreaseType.None:
                 break;

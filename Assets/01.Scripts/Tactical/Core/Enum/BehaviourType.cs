@@ -5,4 +5,5 @@
     Avoid,
     Counter,
     StatusEffect,
+    Recovery,
 }

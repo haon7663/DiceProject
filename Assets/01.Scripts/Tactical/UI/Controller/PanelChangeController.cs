@@ -12,6 +12,8 @@ public class PanelChangeController : MonoBehaviour
     [SerializeField] private PanelChangeButton relicButton;
     [SerializeField] private Panel relicContentPanel;
 
+    private string _currentPanelName;
+
     private void Start()
     {
         Select("card");
@@ -19,6 +21,9 @@ public class PanelChangeController : MonoBehaviour
 
     public void Select(string panelName)
     {
+        if (_currentPanelName == panelName) return;
+        _currentPanelName = panelName;
+        
         cardButton.DeActive();
         inventoryButton.DeActive();
         relicButton.DeActive();
