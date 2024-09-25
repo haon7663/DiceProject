@@ -40,6 +40,7 @@ public class BattleController : StateMachine
     public DiceCountPanelController diceCountPanelController;
     public GoldPanelController goldPanelController;
     public DialogController dialogController;
+    public TutorialPanelController tutorialPanelController;
     
     [Header("- Battle UI -")]
     public TurnOrderController turnOrderController;

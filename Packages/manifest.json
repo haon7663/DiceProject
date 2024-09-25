@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.coffee.unmask": "https://github.com/mob-sakai/UnmaskForUGUI.git",
     "com.dotbunny.gdx": "https://github.com/dotBunny/GDX.git",
     "com.marijnzwemmer.unity-toolbar-extender": "https://github.com/marijnz/unity-toolbar-extender.git",
     "com.unity.collab-proxy": "2.5.1",
