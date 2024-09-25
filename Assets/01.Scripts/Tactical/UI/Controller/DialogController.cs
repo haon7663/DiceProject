@@ -13,6 +13,9 @@ public class DialogController : MonoBehaviour
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private RectTransform contentRect;
 
+    [SerializeField] private Vector2 battleOffset;
+    [SerializeField] private Vector2 eventOffset;
+
     private List<Dialog> _dialogs = new List<Dialog>();
 
     private bool _isShown;

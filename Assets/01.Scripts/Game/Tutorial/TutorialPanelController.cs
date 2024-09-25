@@ -17,6 +17,7 @@ public class Tutorial
     [DrawIf("skipOption", SkipOption.Button)]
     public Button skipButton;
 
+    public bool onTop;
     public bool onHideAtEnd = true;
 }
 
@@ -70,6 +71,7 @@ public class TutorialPanelController : MonoBehaviour
         panel.SetPosition(PanelStates.Show, true, 0.5f);
         tutorialPanel.MoveTransform(tutorial.source);
         tutorialPanel.SetLabel(tutorial.title, tutorial.description);
+        tutorialPanel.SetLabelRect(tutorial.source, tutorial.onTop);
 
         switch (tutorial.skipOption)
         {

@@ -51,16 +51,25 @@ public class TutorialPanel : MonoBehaviour
             highlight.anchoredPosition = anchoredPosition;
             highlight.sizeDelta = sizeDelta + sizeOffset;
         }
-
-        var bottom = source.anchorMin.y
-                     + source.anchoredPosition.y
-                     - source.sizeDelta.y * source.pivot.y;
-        labelRect.anchoredPosition = new Vector2(0, bottom);
     }
-
+    
     public void SetLabel(string title, string description)
     {
         titleLabel.text = title;
         descriptionLabel.text = description;
     }
+    
+    public void SetLabelRect(RectTransform source, bool onTop)
+    {
+        var bottom = source.anchorMin.y
+                     + source.anchoredPosition.y
+                     - source.sizeDelta.y * source.pivot.y;
+
+        var top = source.anchorMax.y
+                  + source.anchoredPosition.y
+                  + source.sizeDelta.y * (1 - source.pivot.y) + 150 + descriptionLabel.rectTransform.sizeDelta.y;
+        
+        labelRect.anchoredPosition = new Vector2(0, (onTop ? top : bottom));
+    }
+
 }

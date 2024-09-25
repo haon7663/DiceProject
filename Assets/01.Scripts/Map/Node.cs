@@ -17,6 +17,9 @@ namespace Map
         public readonly string blueprintName;
         public Vector2 position;
 
+        public UnitSO enemy;
+        public EventData eventData;
+
         public Node(NodeType nodeType, string blueprintName, MapVector point)
         {
             this.nodeType = nodeType;

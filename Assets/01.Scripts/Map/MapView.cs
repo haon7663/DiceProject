@@ -84,6 +84,8 @@ namespace Map
             {
                 _mapNodes.Add(CreateMapNode(node));
             }
+
+            contentRect.sizeDelta = new Vector2(padding + Map.DistanceBetweenFirstAndLastLayers() * 200, 0);
         }
         
         private MapNode CreateMapNode(Node node)

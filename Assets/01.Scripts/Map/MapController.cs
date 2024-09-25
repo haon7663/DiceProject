@@ -9,7 +9,6 @@ namespace Map
 {
     public class MapController : MonoBehaviour
     {
-        public MapConfig config;
         public MapView view;
         public Panel panel;
         
