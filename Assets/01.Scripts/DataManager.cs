@@ -195,7 +195,7 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
             { DiceType.Eight, 7 },
             { DiceType.Twelve, 1 },
             { DiceType.Twenty, 0 },
-        }, unitSO.cards.ToJson(), item, new List<RelicJson>(), MapGenerator.GetMap(Resources.Load<MapConfig>("MapConfigs/Tutorial MapConfig")));
+        }, unitSO.cards.ToJson(), item, new List<RelicJson>(), MapGenerator.GetMap(Resources.Load<MapConfig>("MapConfigs/MapConfig")));
         
         this.playerData = playerData;
     }

@@ -1562,16 +1562,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionList:
-  - state: 1
-    stateName: 
-    offset: {x: 0, y: 0}
-    alpha: 1
-    blockRay: 1
   - state: 0
     stateName: 
     offset: {x: 0, y: -50}
     alpha: 0
     blockRay: 0
+  - state: 1
+    stateName: 
+    offset: {x: 0, y: 0}
+    alpha: 1
+    blockRay: 1
 --- !u!225 &131951420
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1580,7 +1580,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131951415}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5486,9 +5486,9 @@ RectTransform:
   - {fileID: 1733574742}
   m_Father: {fileID: 958506303}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1150}
   m_SizeDelta: {x: 900, y: 1208.4434}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &595419174
@@ -5518,12 +5518,12 @@ MonoBehaviour:
   positionList:
   - state: 0
     stateName: 
-    offset: {x: 0, y: -150}
+    offset: {x: 0, y: 1000}
     alpha: 0
     blockRay: 0
   - state: 1
     stateName: 
-    offset: {x: 0, y: 0}
+    offset: {x: 0, y: 1150}
     alpha: 1
     blockRay: 1
 --- !u!114 &595419176
@@ -11977,8 +11977,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialData:
-    isPlayed: 0
-    tutorialIndex: 1
+    isPlayed: 1
+    tutorialIndex: 0
 --- !u!1 &1338827810
 GameObject:
   m_ObjectHideFlags: 0
@@ -12466,7 +12466,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAD11\uACE0 \uC2DC\uCCAD \uD6C4 \uBD80\uD65C"
+  m_text: "\uAD11\uACE0 \uC2DC\uCCAD \uD6C4 \uB2E4\uC2DC \uC804\uD22C\uD558\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6e6e6e4027a7de54ebf38c1879b7f473, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 2c73e37826625f646bf74b4e804e111f, type: 2}
@@ -16022,7 +16022,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0002666945, y: 0}
+  m_AnchoredPosition: {x: 0.00007647826, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1747831554
@@ -16147,6 +16147,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 149009221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1772573824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1772573825}
+  m_Layer: 0
+  m_Name: Source_Reward
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1772573825
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772573824}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1794508730}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1150}
+  m_SizeDelta: {x: 900, y: 1208.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1777754172
 GameObject:
   m_ObjectHideFlags: 0
@@ -16338,6 +16373,29 @@ MonoBehaviour:
     skipButton: {fileID: 0}
     onTop: 1
     onHideAtEnd: 1
+  - title: "\uC804\uB9AC\uD488"
+    description: "\uC804\uD22C \uC2B9\uB9AC \uC2DC, \uC804\uB9AC\uD488\uC744 \uBC1B\uC744
+      \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    source: {fileID: 1772573825}
+    skipOption: 0
+    skipButton: {fileID: 0}
+    onTop: 0
+    onHideAtEnd: 0
+  - title: "\uC804\uB9AC\uD488"
+    description: "\uC804\uB9AC\uD488\uC744 \uB9C8\uC6B0\uC2A4\uB85C \uD074\uB9AD\uD558\uBA74\n\uAC1C\uBCC4\uC801\uC73C\uB85C
+      \uD68D\uB4DD\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    source: {fileID: 1772573825}
+    skipOption: 0
+    skipButton: {fileID: 0}
+    onTop: 0
+    onHideAtEnd: 1
+  - title: "\uB9F5 \uC120\uD0DD"
+    description: 
+    source: {fileID: 1772573825}
+    skipOption: 0
+    skipButton: {fileID: 0}
+    onTop: 0
+    onHideAtEnd: 1
 --- !u!1 &1783685192
 GameObject:
   m_ObjectHideFlags: 0
@@ -16449,6 +16507,7 @@ RectTransform:
   - {fileID: 775933252}
   - {fileID: 1659320137}
   - {fileID: 899227536}
+  - {fileID: 1772573825}
   m_Father: {fileID: 1819400988}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

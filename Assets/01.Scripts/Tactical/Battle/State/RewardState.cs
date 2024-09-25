@@ -11,6 +11,7 @@ public class RewardState : BattleState
     {
         base.Enter();
         owner.rewardPanelController.Show(CalculateReward());
+        owner.tutorialPanelController.TryToShow("전리품");
     }
 
     public override void Exit()

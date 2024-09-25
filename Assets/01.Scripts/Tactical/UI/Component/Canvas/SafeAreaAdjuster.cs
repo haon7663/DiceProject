@@ -6,7 +6,7 @@ public class SafeAreaAdjuster : MonoBehaviour
 {
     private void Start()
     {
-        var safeArea = Screen.safeArea;
+        /*var safeArea = Screen.safeArea;
         var anchorMin = safeArea.position;
         var anchorMax = safeArea.position + safeArea.size;
 
@@ -18,6 +18,6 @@ public class SafeAreaAdjuster : MonoBehaviour
         var rect = GetComponent<RectTransform>();
 
         rect.anchorMin = anchorMin;
-        rect.anchorMax = anchorMax;
+        rect.anchorMax = anchorMax;*/
     }
 }
