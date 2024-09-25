@@ -217,6 +217,8 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
 
     private void OnApplicationQuit()
     {
-        Save();
+        #if UNITY_EDITOR
+        //Save();
+        #endif
     }
 }

@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -57,10 +58,14 @@ public class TutorialPanel : MonoBehaviour
     {
         titleLabel.text = title;
         descriptionLabel.text = description;
+        titleLabel.DOFade(1, 0.15f).From(0);
+        descriptionLabel.DOFade(1, 0.15f).From(0);
     }
     
-    public void SetLabelRect(RectTransform source, bool onTop)
+    public IEnumerator SetLabelRect(RectTransform source, bool onTop)
     {
+        yield return null;
+        
         var bottom = source.anchorMin.y
                      + source.anchoredPosition.y
                      - source.sizeDelta.y * source.pivot.y;

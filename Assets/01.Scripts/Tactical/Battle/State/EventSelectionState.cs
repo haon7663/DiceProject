@@ -11,6 +11,9 @@ public class EventSelectionState : BattleState
     {
         base.Enter();
         _diceObjects = new List<DiceObject>();
+        
+        owner.tutorialPanelController.TryToShow("이벤트 노드");
+        
         owner.eventChoicesController.ShowEventChoices(owner.eventData);
         owner.eventChoicesController.OnExecute += Execute;
         

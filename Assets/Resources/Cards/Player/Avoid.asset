@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 4b38b492c7017aa4bb4e9838dcc04d03, type: 3}
   cardName: "\uD68C\uD53C"
-  description: "\uC801\uC758 \uC8FC\uC0AC\uC704 \uAC12\uBCF4\uB2E4 \n<sprite=2> \uAC00
-    \uB192\uC73C\uBA74 \uD68C\uD53C\uD569\uB2C8\uB2E4."
+  description: "<sprite=2> \uAC00 \uC801\uC758 \uC8FC\uC0AC\uC704 \uAC12\n\uC774\uC0C1\uC77C
+    \uB54C \uD68C\uD53C\uD569\uB2C8\uB2E4."
   type: 1
   behaviourInfos:
   - behaviourType: 2
@@ -23,7 +23,7 @@ MonoBehaviour:
     basicValue: 2
     diceTypes: 02000000
     compareInfo:
-      compareType: 1
+      compareType: 2
       specialCompareType: 0
       compareTargetType: 1
       value: 0

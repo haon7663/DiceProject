@@ -10,7 +10,7 @@ public static class DiceFactory
         return obj;
     }
     
-    private static GameObject InstantiatePrefab (string name)
+    public static GameObject InstantiatePrefab (string name)
     {
         var prefab = Resources.Load<GameObject>(name);
         if (prefab == null) {
@@ -22,7 +22,7 @@ public static class DiceFactory
 
         return instance;
     }
-
+    
     public static DiceObject RollingDice(this DiceType diceType, Vector3 pos)
     {
         var dice = Create(diceType);
@@ -38,7 +38,7 @@ public static class DiceFactory
     
     public static Vector3 CalculateDicePosition(int index, int maxIndex)
     {
-        var defaultPos = new Vector3(2.5f * (index - (float)(maxIndex - 1) / 2) - 10, 0);
+        var defaultPos = new Vector3(2.5f * (index - (float)(maxIndex - 1) / 2), -2.5f);
         var randPos = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * 0.4f;
         return defaultPos + randPos;
     }

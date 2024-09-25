@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5544397313623214577}
   m_LocalRotation: {x: 0.17598781, y: 0.42461973, z: 0.8204808, w: 0.33990833}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00338}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00329}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -35.25, y: 45, z: 120}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00343, y: -0.00336}
+  m_AnchoredPosition: {x: -0.00347, y: -0.0034}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5022640226712531498
@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5e6a19eb39c95d94fb9bacd9b7216d37, type: 2}
+  - {fileID: 2100000, guid: ace2df3dbebf2b340bb56d9aeb89e2e2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -101,15 +101,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 3
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0e8a9138df455de49bfe8debb1aa133d, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 5e6a19eb39c95d94fb9bacd9b7216d37, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6e6e6e4027a7de54ebf38c1879b7f473, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ace2df3dbebf2b340bb56d9aeb89e2e2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4284940274
+  m_fontColor: {r: 0.95, g: 1, b: 0.4, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -198,7 +198,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4261838084542450525}
@@ -280,7 +280,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ec80d9c1c7219bc4aac2f89377b765b4, type: 2}
+  - {fileID: -2813467912831258332, guid: 3d5e2f13204db094cbb3bce7e445ea49, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

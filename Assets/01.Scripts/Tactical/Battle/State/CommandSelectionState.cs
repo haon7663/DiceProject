@@ -19,6 +19,7 @@ public class CommandSelectionState : BattleState
 
             owner.tutorialPanelController.TryToShow("공격 턴과 수비 턴");
             owner.tutorialPanelController.TryToShow("주사위");
+            owner.tutorialPanelController.TryToShow("아이템 패널 선택");
         }
     }
     

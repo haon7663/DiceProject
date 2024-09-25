@@ -6,7 +6,6 @@ using UnityEngine.Serialization;
 public class GameManager : SingletonDontDestroyOnLoad<GameManager>
 {
     public NodeType currentNodeType;
-
     public float battleSpeed = 1;
 
     protected override void Awake()

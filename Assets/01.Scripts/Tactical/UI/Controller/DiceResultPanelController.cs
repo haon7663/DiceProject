@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class DiceResultPanelController : MonoBehaviour
 {
-    [SerializeField] private DiceResultPanel primaryPanel;
-    [SerializeField] private DiceResultPanel secondaryPanel;
-    [SerializeField] private DiceResultPanel topPanel;
+    public DiceResultPanel primaryPanel;
+    public DiceResultPanel secondaryPanel;
+    public DiceResultPanel topPanel;
     
     public void ConnectPanel(Unit unit)
     {
@@ -17,11 +17,18 @@ public class DiceResultPanelController : MonoBehaviour
         panel.Initialize(unit);
     }
 
-    public void SetValue(Unit unit, int value)
+    public void SetValue(Unit unit, int value, bool useDotween = true)
     {
         var isPlayer = unit.type == UnitType.Player;
         var panel = isPlayer ? primaryPanel : secondaryPanel;
-        panel.SetValue(value);
+        panel.SetValue(value, useDotween);
+    }
+    
+    public void AddValue(Unit unit, int value)
+    {
+        var isPlayer = unit.type == UnitType.Player;
+        var panel = isPlayer ? primaryPanel : secondaryPanel;
+        panel.AddValue(value);
     }
 
     public void Show()
