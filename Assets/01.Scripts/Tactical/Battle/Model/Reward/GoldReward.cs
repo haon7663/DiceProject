@@ -11,7 +11,7 @@ public class GoldReward : Reward
 
     public override Sprite GetSprite()
     {
-        return Resources.Load<Sprite>("Rewards/GoldIcon");
+        return Resources.Load<Sprite>("Rewords/GoldIcon");
     }
 
     public override string GetLabel()

@@ -12,6 +12,7 @@ public class FocusActionState : BattleState
 
     private IEnumerator Focus()
     {
+        owner.dialogController.Hide();
         owner.interactionPanelController.Hide();
         owner.topPanelController.Hide();
         owner.displayCardController.Hide();

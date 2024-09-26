@@ -12,7 +12,7 @@ public class CardReward : Reward
     
     public override Sprite GetSprite()
     {
-        return Resources.Load<Sprite>("Rewards/CardIcon");
+        return Resources.Load<Sprite>("Rewords/CardIcon");
     }
 
     public override string GetLabel()

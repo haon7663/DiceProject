@@ -8,7 +8,6 @@ public class CharacterSelectButton : MonoBehaviour
     
     public void Select()
     {
-        
         DataManager.Inst.Generate(characterSelectUI.Current);
         Fade.Inst.FadeOut("Battle");
     }

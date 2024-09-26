@@ -29,10 +29,18 @@ public class UpdateStatusEffectState : BattleState
             if (!unit) continue;
             
             var effect = statusEffect.enabledEffects[i];
+            if (effect.GetCurrentValue() == 0) continue;
             owner.hudController.PopStatusEffect(unit.transform.position, effect.GetCurrentValue(), effect.sprite);
+
+            if (effect.effectSprite)
+            {
+                var vfxPrefab = Resources.Load<StatusEffectVFX>("Effects/StatusEffect VFX");
+                var vfxObject = Instantiate(vfxPrefab, unit.transform);
+                vfxObject.transform.localPosition = new Vector3(0, 1.2f);
+                vfxObject.Initialize(effect.effectSprite);
+            }
             
             statusEffect.UpdateEffect(effect);
-
             yield return new WaitForSeconds(0.75f);
         }
     }

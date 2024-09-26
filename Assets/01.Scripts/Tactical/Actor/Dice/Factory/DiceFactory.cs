@@ -39,7 +39,7 @@ public static class DiceFactory
     public static Vector3 CalculateDicePosition(int index, int maxIndex)
     {
         var defaultPos = new Vector3(2.5f * (index - (float)(maxIndex - 1) / 2), -2.5f);
-        var randPos = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * 0.4f;
+        var randPos = new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f)) * 0.4f;
         return defaultPos + randPos;
     }
 }

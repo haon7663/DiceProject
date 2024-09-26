@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a0b630bf6f00b4e80cfda016324817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diceModel: {fileID: 7527896578125590780}
   countLabel: {fileID: 8031400671173064387}
 --- !u!1 &8901864113941641217
 GameObject:
@@ -280,7 +281,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2813467912831258332, guid: 3d5e2f13204db094cbb3bce7e445ea49, type: 3}
+  - {fileID: 2100000, guid: e3fd9539b9767f7488edd6fe34770e77, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

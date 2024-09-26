@@ -19,6 +19,9 @@ public class UnitSO : ScriptableObject
     [Header("카드")] 
     public List<CardSO> cards;
 
+    [Header("시작 유물")]
+    public RelicSO startRelic;
+
     [Header("스탯")] 
     public int maxHp;
 }

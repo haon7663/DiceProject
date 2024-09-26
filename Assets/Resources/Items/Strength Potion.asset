@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59888d42ac7c04741a9a1342f4556eb2, type: 3}
   m_Name: Strength Potion
   m_EditorClassIdentifier: 
-  sprite: {fileID: -1392013555, guid: 54909e96ef7487f44a54a092bdb793c8, type: 3}
+  sprite: {fileID: -778899758, guid: 5134a8cd397a45045b46373bf7c6d6c3, type: 3}
   itemName: "\uD798\uC758 \uBB3C\uC57D"
   description: "\uD798 2\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
   behaviourInfos:
@@ -27,13 +27,4 @@ MonoBehaviour:
       value: 0
     onSelf: 1
     specialBehaviourType: 0
-  rewardInfos:
-  - rewardType: 0
-    count:
-      min: 0
-      max: 0
-    isRandom: 0
-    cardSO: {fileID: 0}
-    diceType: 0
-    itemSO: {fileID: 0}
-    relicSO: {fileID: 0}
+  actions: []

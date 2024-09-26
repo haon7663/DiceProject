@@ -17,6 +17,7 @@ public class RewardItem : MonoBehaviour
         
         icon.sprite = reward.GetSprite();
         label.text = reward.GetLabel();
+        icon.rectTransform.sizeDelta = reward.GetSizeDelta();
     }
 
     public void Execute()

@@ -16,12 +16,6 @@ public class DiceRollingState : BattleState
         _diceObjects = new List<DiceObject>();
         StartCoroutine(RollingDices());
     }
-    public override void Exit()
-    {
-        base.Exit();
-        //_diceObjects.ForEach(dice => Destroy(dice.gameObject));
-        //_diceObjects.Clear();
-    }
     
 
     private IEnumerator RollingDices()
@@ -32,11 +26,11 @@ public class DiceRollingState : BattleState
         
         yield return RollDicesForUnit(owner.enemy);
 
-        yield return YieldInstructionCache.WaitForSeconds(1.5f);
+        yield return YieldInstructionCache.WaitForSeconds(1.1f);
 
         StartCoroutine(DestroyDices());
         
-        yield return YieldInstructionCache.WaitForSeconds(2f);
+        yield return YieldInstructionCache.WaitForSeconds(1.6f);
 
         owner.ChangeState<ActionSceneState>();
     }
@@ -88,24 +82,28 @@ public class DiceRollingState : BattleState
     {
         foreach (var dice in _diceObjects)
         {
-            var diceCountObject = DiceFactory.InstantiatePrefab("Dices/Dice Count Movement");
-            diceCountObject.transform.position = dice.transform.position;
-            diceCountObject.GetComponent<DiceCountMovement>().Initialize(owner.diceResultPanelController.primaryPanel.transform.position);
-
-            StartCoroutine(AddCount(dice, diceCountObject));
-
+            StartCoroutine(AddCount(dice));
             yield return YieldInstructionCache.WaitForSeconds(0.25f);
         }
+        
+        yield return YieldInstructionCache.WaitForSeconds(0.5f);
         
         _diceObjects.ForEach(dice => Destroy(dice.gameObject));
         _diceObjects.Clear();
     }
 
-    private IEnumerator AddCount(DiceObject dice, GameObject particle)
+    private IEnumerator AddCount(DiceObject dice)
     {
+        dice.Dissolve();
+        
+        yield return YieldInstructionCache.WaitForSeconds(0.15f);
+        
+        var diceCountObject = DiceFactory.InstantiatePrefab("Dices/Dice Count Movement");
+        diceCountObject.transform.position = dice.transform.position;
+        diceCountObject.GetComponent<DiceCountMovement>().Initialize(owner.diceResultPanelController.primaryPanel.transform.position);
+        
         yield return YieldInstructionCache.WaitForSeconds(1f);
         
         owner.diceResultPanelController.AddValue(owner.player, dice.GetValue());
-        Destroy(particle);
     }
 }

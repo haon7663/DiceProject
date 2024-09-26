@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class DiceCountMovement : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private TrailRenderer trailRenderer;
+    [SerializeField] private ParticleSystem particle;
+    
     [SerializeField] private float setRadius;
     [SerializeField] private float getRadius;
 
@@ -27,5 +31,11 @@ public class DiceCountMovement : MonoBehaviour
             transform.position = BezierMath.GetPoint(_bezier, speedCurve.Evaluate(i));
             yield return null;
         }
+
+        spriteRenderer.enabled = false;
+        trailRenderer.emitting = false;
+        particle.Stop();
+        
+        Destroy(gameObject, 0.25f);
     }
 }

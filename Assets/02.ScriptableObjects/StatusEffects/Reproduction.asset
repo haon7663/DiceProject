@@ -15,6 +15,7 @@ MonoBehaviour:
   name: Reproduction
   description: 
   sprite: {fileID: -117338925, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
+  effectSprite: {fileID: 21300000, guid: 695f09b15afaa2b42ad8811765f4cdfc, type: 3}
   label: "\uC7AC\uC0DD"
   statusEffectStackType: 100
   statusEffectStackDecreaseType: 200

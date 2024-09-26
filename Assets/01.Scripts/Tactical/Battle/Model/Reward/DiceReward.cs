@@ -14,7 +14,7 @@ public class DiceReward : Reward
     
     public override Sprite GetSprite()
     {
-        return Resources.Load<Sprite>($"Rewards/Dices/{diceType}");
+        return Resources.Load<Sprite>($"Rewords/DiceIcon/{diceType}");
     }
 
     public override string GetLabel()

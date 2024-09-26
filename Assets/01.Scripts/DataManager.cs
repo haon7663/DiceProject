@@ -181,21 +181,21 @@ public class DataManager : SingletonDontDestroyOnLoad<DataManager>
         BattleController.Inst.diceCountPanelController.AddCount(diceType, addValue);
     }
 
-    public void Generate(UnitSO unitSO)
+    public void Generate(UnitSO unitData)
     {
         var item = new string[8]
         {
-            "회복 물약", "회복 물약", "", "", "", "", "", ""
+            "활력의 부적", "행운의 부적", "", "", "", "", "", ""
         };
         
-        var playerData = new PlayerData(unitSO.name, unitSO.maxHp, 100, new SerializableDictionary<DiceType, int>()
+        var playerData = new PlayerData(unitData.name, unitData.maxHp, 100, new SerializableDictionary<DiceType, int>()
         {
             { DiceType.Four, 9999999 },
-            { DiceType.Six, 10 },
-            { DiceType.Eight, 7 },
+            { DiceType.Six, 6 },
+            { DiceType.Eight, 4 },
             { DiceType.Twelve, 1 },
             { DiceType.Twenty, 0 },
-        }, unitSO.cards.ToJson(), item, new List<RelicJson>(), MapGenerator.GetMap(Resources.Load<MapConfig>("MapConfigs/MapConfig")));
+        }, unitData.cards.ToJson(), item, new List<RelicJson>() { unitData.startRelic.ToJson() }, MapGenerator.GetMap(Resources.Load<MapConfig>("MapConfigs/MapConfig")));
         
         this.playerData = playerData;
     }

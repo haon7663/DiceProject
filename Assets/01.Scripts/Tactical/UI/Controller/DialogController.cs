@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class DialogController : MonoBehaviour
 {
+    [SerializeField] private Panel panel;
     [SerializeField] private Dialog dialogPrefab;
     
     [SerializeField] private ScrollRect scrollRect;
@@ -19,6 +20,16 @@ public class DialogController : MonoBehaviour
     private List<Dialog> _dialogs = new List<Dialog>();
 
     private bool _isShown;
+
+    public void Show()
+    {
+        panel.SetPosition(PanelStates.Show, true);
+    }
+    
+    public void Hide()
+    {
+        panel.SetPosition(PanelStates.Hide, true);
+    }
     
     [ContextMenu("GenerateDialog")]
     public void GenerateDialog(string text)
@@ -72,6 +83,6 @@ public class DialogController : MonoBehaviour
         Vector2 dialogPos = scrollRect.transform.InverseTransformPoint(dialog.transform.position);
         Vector2 offset = contentPos - dialogPos;
         
-        contentRect.DOAnchorPosY(offset.y - 30, 0.25f);
+        contentRect.DOAnchorPosY(offset.y + 35, 0.25f);
     }
 }

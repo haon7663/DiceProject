@@ -46,4 +46,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73fa088bda2d955419c9997c2b00b8d3, type: 2}
   - {fileID: 11400000, guid: b592cb29e7b4d3d4e97ccc8ebbb7f8a9, type: 2}
   - {fileID: 11400000, guid: 95a523c820d2d674aa6fdf7a0ff45d0b, type: 2}
-  maxHp: 31
+  maxHp: 34

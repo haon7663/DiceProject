@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Map;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -44,6 +45,26 @@ public class RewardState : BattleState
 
     private List<Reward> CalculateReward() 
     {
+        switch (GameManager.Inst.currentNodeType)
+        {
+            case NodeType.MinorEnemy:
+                break;
+            case NodeType.EliteEnemy:
+                break;
+            case NodeType.RestSite:
+                break;
+            case NodeType.Store:
+                break;
+            case NodeType.Boss:
+                break;
+            case NodeType.Mystery:
+                break;
+            case NodeType.None:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
         var rewards = new List<Reward>();
         
         rewards.Add(new GoldReward(Random.Range(50, 101)));
@@ -67,20 +88,20 @@ public class RewardState : BattleState
 
         for (var i = 0; i < 3; i++)
         {
-            if (Random.value <= 0.2f)
+            if (Random.value <= 0.23f)
                 rewards.Add(new ItemReward(Resources.LoadAll<ItemSO>("Items").Random()));
         }
 
 
-        var count = Enumerable.Range(0, 5).Count(_ => Random.value <= 0.75f);
+        var count = Enumerable.Range(0, 5).Count(_ => Random.value <= 0.5f);
         if (count > 0)
             rewards.Add(new DiceReward(DiceType.Six, count));
         
-        count = Enumerable.Range(0, 4).Count(_ => Random.value <= 0.5f);
+        count = Enumerable.Range(0, 4).Count(_ => Random.value <= 0.3f);
         if (count > 0)
             rewards.Add(new DiceReward(DiceType.Eight, count));
         
-        count = Enumerable.Range(0, 3).Count(_ => Random.value <= 0.25f);
+        count = Enumerable.Range(0, 3).Count(_ => Random.value <= 0.12f);
         if (count > 0)
             rewards.Add(new DiceReward(DiceType.Twelve, count));
         

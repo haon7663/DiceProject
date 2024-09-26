@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6891f8709446bc54ea9da214ba6f8ca7, type: 3}
+  m_Name: Gaze Of Sin
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: fe8fa524d9d68414cb6179754ca6ec52, type: 3}
+  cardName: Gaze Of Sin
+  description: "<sprite=3> \uC774\uD558\uC758 \uB370\uBBF8\uC9C0\uB97C \uD68C\uD53C\uD569\uB2C8\uB2E4.\n\uC131\uACF5
+    \uC2DC \uC801\uC5D0\uAC8C \uC800\uC8FC 1, \n\uC2E4\uD328 \uC2DC \uD589\uC6B4
+    3\uC744 \uBD80\uC5EC\uD569\uB2C8\uB2E4."
+  type: 0
+  animationCount: 0
+  behaviourInfos:
+  - behaviourType: 2
+    statusEffectSO: {fileID: 0}
+    basicValue: 0
+    diceTypes: 03000000
+    compareInfo:
+      compareType: 2
+      specialCompareType: 0
+      compareTargetType: 1
+      value: 12
+    onSelf: 1
+    specialBehaviourType: 0
+  - behaviourType: 4
+    statusEffectSO: {fileID: 11400000, guid: 2617a207c0685ee4db3d37fb438676f3, type: 2}
+    basicValue: 1
+    diceTypes: 
+    compareInfo:
+      compareType: 2
+      specialCompareType: 0
+      compareTargetType: 1
+      value: 0
+    onSelf: 0
+    specialBehaviourType: 0
+  - behaviourType: 4
+    statusEffectSO: {fileID: 11400000, guid: 7cad5db77a2378f45b77ee5ad7367f33, type: 2}
+    basicValue: 3
+    diceTypes: 
+    compareInfo:
+      compareType: 3
+      specialCompareType: 0
+      compareTargetType: 1
+      value: 0
+    onSelf: 0
+    specialBehaviourType: 0
+  skillConditions:
+  - conditionType: 0
+    compareType: 4
+    compareValue: 35

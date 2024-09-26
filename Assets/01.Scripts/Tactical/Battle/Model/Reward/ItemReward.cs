@@ -18,6 +18,11 @@ public class ItemReward : Reward
     {
         return _itemSO.itemName;
     }
+    
+    public override Vector2 GetSizeDelta()
+    {
+        return Vector2.one * 125f;
+    }
 
     public override void Execute()
     {

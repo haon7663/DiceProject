@@ -11,6 +11,8 @@ public class UnitStat
         var finalValue = value;
         finalValue += _statModifiers.FindAll(stat => stat.statModifierType == StatModifierType.Add).Sum(statModifier => statModifier.value);
         finalValue = _statModifiers.FindAll(stat => stat.statModifierType == StatModifierType.Multiply).Aggregate(finalValue, (current, statModifier) => current * statModifier.value);
+        if (finalValue < 0)
+            finalValue = 0;
         return Mathf.RoundToInt(finalValue);
     }
     

@@ -15,6 +15,7 @@ MonoBehaviour:
   name: Poison
   description: 
   sprite: {fileID: -1432281970, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
+  effectSprite: {fileID: 21300000, guid: 6e8cec6a3c7378f428174ac40d80faaf, type: 3}
   label: "\uC911\uB3C5"
   statusEffectStackType: 100
   statusEffectStackDecreaseType: 100

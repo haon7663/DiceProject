@@ -61,7 +61,7 @@ public class InitState : BattleState
                 break;
             case NodeType.Boss:
                 owner.diceResultPanelController.ConnectPanel(owner.player);
-                InitEliteEnemy();
+                InitBoss();
                 yield return null;
                 owner.ChangeState<PrepareBattleState>();
                 break;
@@ -95,6 +95,21 @@ public class InitState : BattleState
         
         owner.eventObject.gameObject.SetActive(true);
         owner.eventObject.SetSprite(owner.eventData.eventSprite);
+    }
+    
+    private void InitBoss()
+    {
+        owner.enemyData = Resources.LoadAll<UnitSO>("Units/Boss").Random();
+        
+        owner.enemy.gameObject.SetActive(true);
+        owner.enemy.unitSO = owner.enemyData;
+        if (owner.enemy.TryGetComponent<Health>(out var enemyHealth))
+        {
+            enemyHealth.maxHp = enemyHealth.curHp = owner.enemy.unitSO.maxHp;
+            enemyHealth.OnDeath += owner.VictoryEventHandler;
+        }
+        owner.statPanelController.ConnectPanel(owner.enemy);
+        owner.diceResultPanelController.ConnectPanel(owner.enemy);
     }
     
     private void InitEliteEnemy()

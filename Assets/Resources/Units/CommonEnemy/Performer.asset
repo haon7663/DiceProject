@@ -45,4 +45,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eeaa3817530efb6498853391d5ca0730, type: 2}
   - {fileID: 11400000, guid: 6a4e89c056354cc469a01e375b3852f9, type: 2}
   - {fileID: 11400000, guid: 2bd6f81cce66248459e148517e355ebc, type: 2}
-  maxHp: 38
+  maxHp: 29

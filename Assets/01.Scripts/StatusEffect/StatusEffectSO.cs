@@ -11,6 +11,7 @@ public abstract class StatusEffectSO : ScriptableObject
     public new string name;
     [TextArea] public string description;
     public Sprite sprite;
+    public Sprite effectSprite;
     
     public string label;
     

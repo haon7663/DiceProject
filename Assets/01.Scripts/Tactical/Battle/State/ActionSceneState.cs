@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ActionSceneState : BattleState
@@ -18,10 +19,14 @@ public class ActionSceneState : BattleState
         // 유닛 정보 설정
         var from = Turn.isPlayer ? owner.player : owner.enemy;
         var to = Turn.isPlayer ? owner.enemy : owner.player;
-
+        
+        owner.dialogController.Show();
+        owner.diceResultPanelController.Hide();
+        
         // 행동 실행
         ExecuteAction(from, to);
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
+        
         
         if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to) &&
             BehaviourType.Counter.IsSatisfiedBehaviours(from, to))
@@ -93,8 +98,6 @@ public class ActionSceneState : BattleState
                     
                     toHealth.OnDamage(fromTotalDamage);
                     owner.hudController.PopDamage(to.transform.position, fromTotalDamage);
-                    if (BehaviourType.Defence.IsSatisfiedBehaviours(from, to))
-                        owner.hudController.PopDefence(to.transform.position, defenceValue);
 
                     var dialog = $"{to.unitSO.name}은(는) {from.cardSO.cardName}으로(로) {fromTotalDamage}의 피해를 입었다. ";
                     
@@ -127,8 +130,6 @@ public class ActionSceneState : BattleState
                 {
                     fromHealth.OnDamage(toTotalDamage);
                     owner.hudController.PopDamage(from.transform.position, toTotalDamage);
-                    if (BehaviourType.Defence.IsSatisfiedBehaviours(to, from))
-                        owner.hudController.PopDefence(from.transform.position, BehaviourType.Defence.GetSatisfiedBehavioursSum(to, from));
                 }
             }
         }
@@ -283,8 +284,6 @@ public class ActionSceneState : BattleState
                         
                     fromHealth.OnDamage(totalDamage);
                     owner.hudController.PopDamage(from.transform.position, totalDamage);
-                    if (BehaviourType.Defence.IsSatisfiedBehaviours(to, from))
-                        owner.hudController.PopDefence(from.transform.position, defenceValue);
 
                     var dialog = $"{to.unitSO.name}은(는) {totalDamage}의 피해로 반격했다. ";
                     
@@ -309,14 +308,16 @@ public class ActionSceneState : BattleState
     private void ExecuteUnitActions(Unit from, Unit to)
     {
         var isAvoid = BehaviourType.Avoid.IsSatisfiedBehaviours(from, to);
-        
-        owner.mainCameraMovement.VibrationForTime(0.65f);
-        owner.highlightCameraMovement.VibrationForTime(0.5f);
 
         if (!from.TryGetComponent<Act>(out var fromAct) || !to.TryGetComponent<Act>(out var toAct)) return;
+
+        var fromActAnimation = from.unitSO.attacks;
+        var toActAnimation = isAvoid ? to.unitSO.avoids : to.unitSO.hits;
+        var fromIndex = Mathf.Clamp(from.cardSO.animationCount, 0, fromActAnimation.Count - 1);
+        var toIndex = Mathf.Clamp(from.cardSO.animationCount, 0, toActAnimation.Count - 1);
             
-        fromAct.PerformAction(from.unitSO.attacks[from.cardSO.animationCount]);
-        toAct.PerformAction(isAvoid ? to.unitSO.avoids[to.cardSO.animationCount] : to.unitSO.hits[to.cardSO.animationCount]);
+        fromAct.PerformAction(fromActAnimation[fromIndex]);
+        toAct.PerformAction(toActAnimation[toIndex]);
     }
     
     // 카메라 연출 실행
@@ -328,17 +329,23 @@ public class ActionSceneState : BattleState
             if (CalculateDamage(from, to) > 7)
             {
                 owner.mainCameraVolumeSettings.SetGrayVolume();
+                owner.mainCameraMovement.VibrationForTime(0.85f);
+                owner.highlightCameraMovement.VibrationForTime(0.7f);
             }
             else
             {
                 intensity = 2.5f;
                 owner.mainCameraVolumeSettings.SetNormalVolume();
+                owner.mainCameraMovement.VibrationForTime(0.65f);
+                owner.highlightCameraMovement.VibrationForTime(0.5f);
             }
         }
         else
         {
             intensity = 0f;
             owner.mainCameraVolumeSettings.SetNormalVolume();
+            owner.mainCameraMovement.VibrationForTime(0.45f);
+            owner.highlightCameraMovement.VibrationForTime(0.35f);
         }
         
         var orderMultiplier = Turn.isPlayer ? 1 : -1;

@@ -287,8 +287,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.25
-      minScalar: 0.2
+      scalar: 0.4
+      minScalar: 0.35
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4929,6 +4929,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58daaefcd8e5ff7468ea229184581f4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 3013359122683603623}
+  trailRenderer: {fileID: 2304630628020810779}
+  particle: {fileID: 4523926520951902337}
   setRadius: 2.75
   getRadius: 1
   speedCurve:
@@ -4946,12 +4949,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.812777
       value: 0.34310207
-      inSlope: 1.119855
-      outSlope: 1.119855
+      inSlope: 1.2807789
+      outSlope: 1.2807789
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.44373453
+      outWeight: 0.45104122
     - serializedVersion: 3
       time: 1
       value: 1

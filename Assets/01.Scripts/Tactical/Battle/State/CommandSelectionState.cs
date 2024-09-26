@@ -27,8 +27,8 @@ public class CommandSelectionState : BattleState
     {
         var cards = Unit.unitSO.cards.Where(card => Turn.isPlayer
                     ? Unit.type == UnitType.Player ? card.type == CardType.Attack : card.type == CardType.Defence
-                    : Unit.type == UnitType.Player ? card.type == CardType.Defence : card.type == CardType.Attack)
-            .ToList();
+                    : Unit.type == UnitType.Player ? card.type == CardType.Defence : card.type == CardType.Attack &&
+                    card.IsSatisfied(Unit)).ToList();
         var card = cards[Random.Range(0, cards.Count)];
         owner.displayCardController.CopyCard(card, false);
 
