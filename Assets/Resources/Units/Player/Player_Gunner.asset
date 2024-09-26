@@ -14,18 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\uC9C0\uD0AC"
   description: 
-  standingSprite: {fileID: 21300000, guid: 8a129bbd1bcab72468e900f50ca41e7d, type: 3}
   idleSprite: {fileID: 21300000, guid: fb527f35c4f2369438b89db3c7b3b050, type: 3}
   attacks:
   - name: Default
     order: 1
+    audioClips:
+    - {fileID: 8300000, guid: d18b2e98414ebbc409663d1989b057bd, type: 3}
     actionSprite: {fileID: 21300000, guid: 649cd1f82a0be8541afab55112e5b721, type: 3}
     effectSprite: {fileID: 21300000, guid: 1cb329f87635b744290949b8819b6bb7, type: 3}
     startOffset: {x: 0.3, y: 0}
     endOffset: {x: 0.175, y: 0}
+  - name: Default_2
+    order: 1
+    audioClips:
+    - {fileID: 8300000, guid: d18b2e98414ebbc409663d1989b057bd, type: 3}
+    actionSprite: {fileID: 21300000, guid: 1b4d9fa31e6a59f469e4b66bb8f32381, type: 3}
+    effectSprite: {fileID: 21300000, guid: 3ae9c31778ff712479b48013a9fe5059, type: 3}
+    startOffset: {x: 0.5, y: 0}
+    endOffset: {x: 0.35, y: 0}
   hits:
   - name: Default
     order: 0
+    audioClips:
+    - {fileID: 8300000, guid: fff7aa0595146bf488c0bcec942b06e1, type: 3}
     actionSprite: {fileID: 21300000, guid: 7c72e9d7fe282554c867804a5825410a, type: 3}
     effectSprite: {fileID: 21300000, guid: 4296c36ed303f464aa9dbeadb73b1ad5, type: 3}
     startOffset: {x: 0, y: 0}
@@ -33,12 +44,14 @@ MonoBehaviour:
   avoids:
   - name: Default
     order: 0
+    audioClips:
+    - {fileID: 8300000, guid: 7b1ad90c69564444bbb1f5a676e13ca6, type: 3}
     actionSprite: {fileID: 21300000, guid: 7c72e9d7fe282554c867804a5825410a, type: 3}
     effectSprite: {fileID: 0}
     startOffset: {x: 0, y: 0}
     endOffset: {x: -0.2, y: 0}
   cards:
-  - {fileID: 11400000, guid: d5f58dae1c6b8d040b1e21be849c21cb, type: 2}
+  - {fileID: 11400000, guid: 8cf7ad694acc87f4fb6e4b07a47ddc41, type: 2}
   - {fileID: 11400000, guid: 70c68504fbe4c81459f3b9597ba7620d, type: 2}
   - {fileID: 11400000, guid: ba2df2153ab73c54dbf52bb8aaf91e6d, type: 2}
   - {fileID: 11400000, guid: 7cb4d578abde75a49a752bb9975a86c4, type: 2}

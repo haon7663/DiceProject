@@ -315,8 +315,8 @@ public class ActionSceneState : BattleState
 
         if (!from.TryGetComponent<Act>(out var fromAct) || !to.TryGetComponent<Act>(out var toAct)) return;
             
-        fromAct.PerformAction(from.unitSO.attacks.Random());
-        toAct.PerformAction(isAvoid ? to.unitSO.avoids.Random() : to.unitSO.hits.Random());
+        fromAct.PerformAction(from.unitSO.attacks[from.cardSO.animationCount]);
+        toAct.PerformAction(isAvoid ? to.unitSO.avoids[to.cardSO.animationCount] : to.unitSO.hits[to.cardSO.animationCount]);
     }
     
     // 카메라 연출 실행

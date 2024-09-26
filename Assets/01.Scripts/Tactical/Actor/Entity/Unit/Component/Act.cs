@@ -49,6 +49,11 @@ public class Act : MonoBehaviour
     public void PerformAction(AnimationData animationData)
     {
         DOTween.Kill(this);
+
+        foreach (var audioClip in animationData.audioClips)
+        {
+            SoundManager.Inst.Play(audioClip);
+        }
         
         _spriteRenderer.sprite = animationData.actionSprite;
         _spriteRenderer.sortingOrder = animationData.order;

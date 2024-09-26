@@ -8,6 +8,7 @@ public class AnimationData
 {
     public string name;
     public int order;
+    public AudioClip[] audioClips;
     public Sprite actionSprite;
     public Sprite effectSprite;
     public Vector2 startOffset;

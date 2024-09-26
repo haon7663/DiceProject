@@ -17,6 +17,7 @@ MonoBehaviour:
   description: "\uD53C\uD574\uB97C \uBC1B\uC73C\uBA74 \uC801\uC5D0\uAC8C \n<sprite=0>
     + 4 \uB9CC\uD07C \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
   type: 1
+  animationCount: 0
   behaviourInfos:
   - behaviourType: 3
     statusEffectSO: {fileID: 0}

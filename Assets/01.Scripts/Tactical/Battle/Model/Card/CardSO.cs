@@ -13,6 +13,7 @@ public class CardSO : ScriptableObject
     public string cardName;
     [TextArea] public string description;
     public CardType type;
+    public int animationCount;
     
     [Header("능력치")]
     public List<BehaviourInfo> behaviourInfos;

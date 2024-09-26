@@ -11,12 +11,11 @@ public class UnitSO : ScriptableObject
     public string description;
 
     [Header("스프라이트")]
-    public Sprite standingSprite;
     public Sprite idleSprite;
     public List<AnimationData> attacks;
     public List<AnimationData> hits;
     public List<AnimationData> avoids;
-
+    
     [Header("카드")] 
     public List<CardSO> cards;
 
