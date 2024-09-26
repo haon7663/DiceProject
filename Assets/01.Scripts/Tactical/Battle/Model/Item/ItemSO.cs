@@ -19,6 +19,7 @@ public class ItemSO : ScriptableObject
         foreach (var action in actions)
         {
             action.Execute();
+            BattleController.Inst.dialogController.GenerateDialog(action.GetDialog());
         }
     }
 }

@@ -42,6 +42,8 @@ public class BattleController : StateMachine
     public DialogController dialogController;
     public TutorialPanelController tutorialPanelController;
     public DeathPanelController deathPanelController;
+    public StatusEffectExplainPanel statusEffectExplainPanel;
+    public ItemPanel itemPanel;
     
     [Header("- Battle UI -")]
     public TurnOrderController turnOrderController;

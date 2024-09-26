@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: "\uBB34\uB108\uC9C4 \uACF5\uB4E0 \uD0D1"
   sprite: {fileID: -50433752, guid: 35e2ae8891414b14e9f1d1dfff4a83e4, type: 3}
+  description: "\uC8FC\uC0AC\uC704 \uAC12\uC774 2 \uC774\uD558\uC77C \uB54C, \uD798\uC744
+    2 \uC5BB\uC2B5\uB2C8\uB2E4."
   relicActiveType: 6
   statusEffectSO: {fileID: 0}
   behaviourInfos:

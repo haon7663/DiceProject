@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,7 @@ public class DialogController : MonoBehaviour
 
     private List<Dialog> _dialogs = new List<Dialog>();
 
+    private TextAlignmentOptions _textAlignmentOptions;
     private bool _isShown;
 
     public void Show()
@@ -30,9 +32,14 @@ public class DialogController : MonoBehaviour
     {
         panel.SetPosition(PanelStates.Hide, true);
     }
+
+    public void SetLogAlignment(TextAlignmentOptions textAlignmentOptions)
+    {
+        _textAlignmentOptions = textAlignmentOptions;
+    }
     
     [ContextMenu("GenerateDialog")]
-    public void GenerateDialog(string text)
+    public void GenerateDialog(string text, TweenCallback callback = null)
     {
         var logs = text.Split('\n');
 
@@ -43,12 +50,13 @@ public class DialogController : MonoBehaviour
             sequence.AppendCallback(() =>
             {
                 var dialog = Instantiate(dialogPrefab, contentRect.transform);
-                dialog.Initialize(log);
+                dialog.Initialize(log, _textAlignmentOptions);
                 _dialogs.Add(dialog);
                 SetParentPosition(dialog);
             });
             sequence.AppendInterval(1f);
         }
+        sequence.OnComplete(callback);
     }
 
     private void Update()

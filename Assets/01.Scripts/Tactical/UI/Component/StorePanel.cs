@@ -60,6 +60,7 @@ public class StorePanel : MonoBehaviour
 
     public void BuyActionHandler()
     {
+        SoundManager.Inst.Play("Click_S");
         switch (storeItemType)
         {
             case StoreItemType.Item:

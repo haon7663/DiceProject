@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Misfortune
   m_EditorClassIdentifier: 
   name: Misfortune
-  description: 
+  description: "\uC2A4\uD0DD\uB9CC\uD07C \uB2E4\uC74C \uD589\uB3D9\uC758 \uC8FC\uC0AC\uC704
+    \uAC12\uC774 \uC904\uC5B4\uB4ED\uB2C8\uB2E4."
   sprite: {fileID: -2027445364, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
+  effectSprite: {fileID: 0}
   label: "\uBD88\uC6B4"
   statusEffectStackType: 400
   statusEffectStackDecreaseType: 200

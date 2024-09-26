@@ -10,6 +10,8 @@ public class StorePanelController : MonoBehaviour
     [SerializeField] private StorePanel storePanelPrefab;
     [SerializeField] private Transform parent;
 
+    [SerializeField] private ItemPanel itemPanel;
+
     public void GeneratePanels(List<ItemSO> items, List<RelicSO> relics)
     {
         panel.SetPosition(PanelStates.Show, true);
@@ -17,48 +19,13 @@ public class StorePanelController : MonoBehaviour
         {
             var storePanel = Instantiate(storePanelPrefab, parent);
             storePanel.Initialize(item);
-            storePanel.BuyItem += BuyItem;
+            storePanel.BuyItem += itemPanel.InitializeToBuy;
         }
         foreach (var relic in relics)
         {
             var storePanel = Instantiate(storePanelPrefab, parent);
             storePanel.Initialize(relic);
-            storePanel.BuyRelic += BuyRelic;
-        }
-    }
-
-    public void BuyItem(StorePanel storePanel, ItemSO data, int price)
-    {
-        if (DataManager.Inst.playerData.Gold >= price)
-        {
-            for (var i = 0; i < 8; i++)
-            {
-                if (!string.IsNullOrEmpty(DataManager.Inst.playerData.Items[i])) continue;
-                DataManager.Inst.playerData.Items[i] = data.ToJson();
-                break;
-            }
-
-            DataManager.Inst.playerData.Gold -= price;
-            storePanel.Purchased();
-        }
-        else
-        {
-            //골드 부족
-        }
-    }
-    
-    public void BuyRelic(StorePanel storePanel, RelicSO data, int price)
-    {
-        if (DataManager.Inst.playerData.Gold >= price)
-        {
-            DataManager.Inst.playerData.Relics.Add(data.ToJson());
-            
-            DataManager.Inst.playerData.Gold -= price;
-            storePanel.Purchased();
-        }
-        else
-        {
-            //골드 부족
+            storePanel.BuyRelic += itemPanel.InitializeToBuy;
         }
     }
 }

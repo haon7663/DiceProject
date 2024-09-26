@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -21,20 +22,26 @@ public class ActionSceneState : BattleState
         var to = Turn.isPlayer ? owner.enemy : owner.player;
         
         owner.dialogController.Show();
+        owner.dialogController.SetLogAlignment(TextAlignmentOptions.BottomLeft);
         owner.diceResultPanelController.Hide();
         
         // 행동 실행
         ExecuteAction(from, to);
         yield return YieldInstructionCache.WaitForSeconds(1.2f);
-        
-        
-        if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to) &&
-            BehaviourType.Counter.IsSatisfiedBehaviours(from, to))
+
+        if (to.TryGetComponent<Health>(out var health))
         {
-            TakeCounter(from, to);
-            ExecuteUnitActions(to, from);
-            PerformCameraProduction(to, from);
-            yield return YieldInstructionCache.WaitForSeconds(1.2f);
+            if (health.curHp > 0)
+            {
+                if (BehaviourType.Attack.IsSatisfiedBehaviours(from, to) &&
+                    BehaviourType.Counter.IsSatisfiedBehaviours(from, to))
+                {
+                    TakeCounter(from, to);
+                    ExecuteUnitActions(to, from);
+                    PerformCameraProduction(to, from);
+                    yield return YieldInstructionCache.WaitForSeconds(1.2f);
+                }
+            }
         }
         
         // 카메라 리셋 및 UI 업데이트

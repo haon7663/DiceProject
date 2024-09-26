@@ -9,6 +9,9 @@ public class RelicSO : ScriptableObject
     [Header("정보")]
     public new string name;
     public Sprite sprite;
+
+    [TextArea]
+    public string description;
     
     [Header("조건")]
     public RelicActiveType relicActiveType;
@@ -24,6 +27,7 @@ public class RelicSO : ScriptableObject
         foreach (var action in actions)
         {
             action.Execute();
+            BattleController.Inst.dialogController.GenerateDialog(action.GetDialog());
         }
     }
 }

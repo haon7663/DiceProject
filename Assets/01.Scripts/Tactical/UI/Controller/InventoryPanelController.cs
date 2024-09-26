@@ -41,6 +41,7 @@ public class InventoryPanelController : MonoBehaviour
             
             var index = i;
             _inventoryFrames[i].button.onClick.AddListener(() => SelectItem(item, index));
+            _inventoryFrames[i].button.onClick.AddListener(() => SoundManager.Inst.Play("Click_S"));
         }
     }
 

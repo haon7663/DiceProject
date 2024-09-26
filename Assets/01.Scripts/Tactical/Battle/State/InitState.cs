@@ -55,7 +55,6 @@ public class InitState : BattleState
                 owner.ChangeState<EventSelectionState>();
                 break;
             case NodeType.Store:
-                InitEvent();
                 yield return null;
                 owner.ChangeState<StoreState>();
                 break;
@@ -82,6 +81,8 @@ public class InitState : BattleState
     
     private void InitRest()
     {
+        owner.interactionPanelController.Disable();
+        
         owner.eventData = Resources.Load<EventData>("Events_Rest/Rest Event");
         
         owner.eventObject.gameObject.SetActive(true);
@@ -91,6 +92,8 @@ public class InitState : BattleState
 
     private void InitEvent()
     {
+        owner.interactionPanelController.Disable();
+        
         owner.eventData = Resources.LoadAll<EventData>("Events").Random();
         
         owner.eventObject.gameObject.SetActive(true);
@@ -99,6 +102,8 @@ public class InitState : BattleState
     
     private void InitBoss()
     {
+        owner.interactionPanelController.Disable();
+        
         owner.enemyData = Resources.LoadAll<UnitSO>("Units/Boss").Random();
         
         owner.enemy.gameObject.SetActive(true);
@@ -114,6 +119,8 @@ public class InitState : BattleState
     
     private void InitEliteEnemy()
     {
+        owner.interactionPanelController.Disable();
+        
         owner.enemyData = Resources.LoadAll<UnitSO>("Units/EliteEnemy").Random();
         
         owner.enemy.gameObject.SetActive(true);
@@ -129,6 +136,8 @@ public class InitState : BattleState
 
     private void InitEnemy()
     {
+        owner.interactionPanelController.Disable();
+        
         owner.enemyData = Resources.LoadAll<UnitSO>("Units/CommonEnemy").Random();
         
         owner.enemy.gameObject.SetActive(true);

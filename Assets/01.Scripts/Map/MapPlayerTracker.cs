@@ -34,6 +34,8 @@ namespace Map
         
         private void SendPlayerToNode(MapNode mapNode)
         {
+            SoundManager.Inst.Play("Click_S");
+            
             mapNode.OnSelect();
             mapController.CurrentMap.path.Add(mapNode.Node.point);
             view.SetNodeColor();

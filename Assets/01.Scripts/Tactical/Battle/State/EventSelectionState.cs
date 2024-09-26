@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class EventSelectionState : BattleState
@@ -17,7 +18,9 @@ public class EventSelectionState : BattleState
         owner.eventChoicesController.ShowEventChoices(owner.eventData);
         owner.eventChoicesController.OnExecute += Execute;
         
-        owner.dialogController.GenerateDialog(owner.eventData.eventDescription);
+        owner.dialogController.Show();
+        owner.dialogController.SetLogAlignment(TextAlignmentOptions.Center);
+        owner.dialogController.GenerateDialog(owner.eventData.eventDescription, () => owner.interactionPanelController.Enable());
     }
 
     public override void Exit()
@@ -40,7 +43,7 @@ public class EventSelectionState : BattleState
         }
         else
         {
-            GetReward(eventChoice, 0);
+            StartCoroutine(GetReward(eventChoice, 0));
         }
     }
     
@@ -54,7 +57,7 @@ public class EventSelectionState : BattleState
 
         var totalValue = 0;
         var index = 0;
-        var maxIndex = eventChoice.needDices.Count(diceType => owner.PlayerData.Dices[diceType] > 0);
+        var maxIndex = eventChoice.needDices.Count;
         
         foreach (var diceType in eventChoice.needDices)
         {
@@ -66,7 +69,6 @@ public class EventSelectionState : BattleState
             
             yield return YieldInstructionCache.WaitForSeconds(Random.Range(0.15f, 0.225f));
             
-            Debug.Log($"기존 주사위 값: {totalValue}, 행운 보너스: {owner.player.Stats[StatType.Fortune].GetValue(totalValue)}");
             totalValue = owner.player.Stats[StatType.Fortune].GetValue(totalValue);
         }
         
@@ -80,16 +82,16 @@ public class EventSelectionState : BattleState
             _diceObjects.Clear();
         }
         
-        owner.interactionPanelController.Show();
+        owner.interactionPanelController.Disable();
         owner.topPanelController.Show();
         owner.diceResultPanelController.HideTop();
         
         yield return YieldInstructionCache.WaitForSeconds(1.5f);
 
-        GetReward(eventChoice, totalValue);
+        StartCoroutine(GetReward(eventChoice, totalValue));
     }
 
-    private void GetReward(EventChoice eventChoice, int value)
+    private IEnumerator GetReward(EventChoice eventChoice, int value)
     {
         foreach (var action in eventChoice.actions)
         {
@@ -99,8 +101,12 @@ public class EventSelectionState : BattleState
                 owner.dialogController.GenerateDialog(action.description);
             }
         }
-        eventChoice.ExecuteActions(value);
+        
         StartCoroutine(EndEvent());
+
+        yield return YieldInstructionCache.WaitForSeconds(0.75f);
+        
+        eventChoice.ExecuteActions(value);
     }
 
     private IEnumerator EndEvent()

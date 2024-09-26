@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PanelChangeController : MonoBehaviour
@@ -46,5 +47,10 @@ public class PanelChangeController : MonoBehaviour
                 relicContentPanel.SetPosition(PanelStates.Show, true);
                 break;
         }
+    }
+
+    public void ClickSound()
+    {
+        SoundManager.Inst.Play("Click_L");
     }
 }

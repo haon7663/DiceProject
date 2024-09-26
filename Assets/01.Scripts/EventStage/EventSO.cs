@@ -47,6 +47,7 @@ public class EventChoice
             if (action.compareInfo.IsSatisfied(value))
             {
                 action.Value.Execute();
+                BattleController.Inst.dialogController.GenerateDialog(action.Value.GetDialog());
             }
         }
     }

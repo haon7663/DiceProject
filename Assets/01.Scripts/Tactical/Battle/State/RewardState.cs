@@ -11,6 +11,7 @@ public class RewardState : BattleState
     public override void Enter()
     {
         base.Enter();
+        owner.statPanelController.secondaryPanel.gameObject.SetActive(false);
         owner.rewardPanelController.Show(CalculateReward());
         owner.tutorialPanelController.TryToShow("전리품");
     }
@@ -105,7 +106,7 @@ public class RewardState : BattleState
         if (count > 0)
             rewards.Add(new DiceReward(DiceType.Twelve, count));
         
-        count = Enumerable.Range(0, 2).Count(_ => Random.value <= 0.05f);
+        count = Enumerable.Range(0, 2).Count(_ => Random.value <= 0.03f);
         if (count > 0)
             rewards.Add(new DiceReward(DiceType.Twenty, count));
         

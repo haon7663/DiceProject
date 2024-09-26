@@ -62,6 +62,7 @@ public class EventChoiceButton : MonoBehaviour
 
     public void Execute()
     {
+        SoundManager.Inst.Play("Click_S");
         OnExecute?.Invoke(_eventChoice);
     }
 }

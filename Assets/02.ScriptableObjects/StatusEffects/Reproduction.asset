@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Reproduction
   m_EditorClassIdentifier: 
   name: Reproduction
-  description: 
+  description: "\uC2A4\uD0DD\uB9CC\uD07C \uD68C\uBCF5\uD558\uACE0 \uC18C\uBA78\uD569\uB2C8\uB2E4."
   sprite: {fileID: -117338925, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
   effectSprite: {fileID: 21300000, guid: 695f09b15afaa2b42ad8811765f4cdfc, type: 3}
   label: "\uC7AC\uC0DD"

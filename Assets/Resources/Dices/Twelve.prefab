@@ -181,6 +181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5594884218542104825}
   - component: {fileID: 8974166571489343437}
+  - component: {fileID: 5200357527553773361}
   m_Layer: 0
   m_Name: Twelve
   m_TagString: Untagged
@@ -218,6 +219,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceModel: {fileID: 7527896578125590780}
   countLabel: {fileID: 6436191189528076561}
+  luckColor: {r: 0.7, g: 1, b: 0.4, a: 1}
+  misfortuneColor: {r: 0.6, g: 0.5, b: 1, a: 1}
+--- !u!114 &5200357527553773361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7078415200482823323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 911b9dc1cf518224693c91d96b8862cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8901864113941641217
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +245,7 @@ GameObject:
   - component: {fileID: 7705595948742193692}
   - component: {fileID: 7527896578125590780}
   - component: {fileID: 3585842406163143645}
+  - component: {fileID: 3224819880953441252}
   m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
@@ -324,3 +340,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3224819880953441252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8901864113941641217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 911b9dc1cf518224693c91d96b8862cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

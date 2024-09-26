@@ -59,14 +59,14 @@ public class DiceRollingState : BattleState
                     var diceObject = diceType.RollingDice(pos);
                     _diceObjects.Add(diceObject);
                     totalValue += diceObject.GetValue();
+                    totalValue = owner.player.Stats[StatType.Fortune].GetValue(totalValue);
                     yield return YieldInstructionCache.WaitForSeconds(Random.Range(0.15f, 0.225f));
                 }
                 else
                 {
                     totalValue += diceType.GetDiceValue();
+                    totalValue = owner.player.Stats[StatType.Fortune].GetValue(totalValue);
                 }
-                Debug.Log($"기존 주사위 값: {totalValue}, 행운 보너스: {unit.Stats[StatType.Fortune].GetValue(totalValue)}");
-                totalValue = unit.Stats[StatType.Fortune].GetValue(totalValue);
             }
 
             unit.behaviourValues.Add(behaviourInfo, totalValue);

@@ -9,4 +9,9 @@ public class AddCardAction : GameAction
     {
         DataManager.Inst.playerData.Cards.Add(cardSO.ToJson());
     }
+
+    public override string GetDialog()
+    {
+        return AddColor($"\"{cardSO.cardName}\" 카드 획득");
+    }
 }

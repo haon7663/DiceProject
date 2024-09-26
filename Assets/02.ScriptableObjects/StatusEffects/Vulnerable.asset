@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Vulnerable
   m_EditorClassIdentifier: 
   name: Vulnerable
-  description: 
+  description: "\uB2E4\uC74C \uACF5\uACA9\uC73C\uB85C\uBD80\uD130 \uBC1B\uB294 \uD53C\uD574\uB7C9\uC774
+    50% \uC99D\uAC00\uD569\uB2C8\uB2E4."
   sprite: {fileID: -604111294, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
+  effectSprite: {fileID: 0}
   label: "\uCDE8\uC57D"
   statusEffectStackType: 300
   statusEffectStackDecreaseType: 100

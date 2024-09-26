@@ -41,6 +41,7 @@ public class InteractionCard : Card, IPointerDownHandler, IPointerUpHandler, IPo
         Interact?.Invoke(this);
         if (_isPrepared)
         {
+            SoundManager.Inst.Play("Click_M");
             Prepare?.Invoke(true);
             panel.SetPosition("Use", true, 0.5f);
             _isPrepared = false;
@@ -48,6 +49,7 @@ public class InteractionCard : Card, IPointerDownHandler, IPointerUpHandler, IPo
         }
         else
         {
+            SoundManager.Inst.Play("Click_S");
             Copy?.Invoke(Data, true);
             panel.SetPosition("Ready", true);
             _isPrepared = true;

@@ -26,6 +26,7 @@ public class DiceResultPanelController : MonoBehaviour
     
     public void AddValue(Unit unit, int value)
     {
+        SoundManager.Inst.Play("Ding");
         var isPlayer = unit.type == UnitType.Player;
         var panel = isPlayer ? primaryPanel : secondaryPanel;
         panel.AddValue(value);

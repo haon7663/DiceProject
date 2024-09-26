@@ -31,7 +31,7 @@ public static class DiceFactory
 
         var value = diceType.GetDiceValue();
         var diceObject = dice.GetComponent<DiceObject>();
-        diceObject.Initialize(value);
+        diceObject.Initialize(value, BattleController.Inst.player.Stats[StatType.Fortune].GetValue(value));
 
         return diceObject;
     }

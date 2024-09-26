@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Strength
   m_EditorClassIdentifier: 
   name: Strength
-  description: 
+  description: "\uC2A4\uD0DD\uB9CC\uD07C \uAC00\uD558\uB294 \uD53C\uD574\uB7C9\uC774
+    \uC0C1\uC2B9\uD569\uB2C8\uB2E4."
   sprite: {fileID: 375558094, guid: 4e97f2380f492c8498f059f6ad6e9858, type: 3}
+  effectSprite: {fileID: 0}
   label: "\uD798"
   statusEffectStackType: 100
   statusEffectStackDecreaseType: 300
